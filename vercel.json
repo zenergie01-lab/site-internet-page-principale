@@ -1,9 +1,9 @@
 {
   "version": 2,
   "env": {
-    "N8N_WEBHOOK_URL": "@n8n_contact_webhook",
-    "N8N_CHAT_WEBHOOK_URL": "@n8n_chat_webhook",
-    "ALLOWED_ORIGIN": "@allowed_origin"
+    "N8N_WEBHOOK_URL": "https://n8n.srv999617.hstgr.cloud/webhook/TESTASSO",
+    "N8N_CHAT_WEBHOOK_URL": "https://n8n.srv999617.hstgr.cloud/webhook/fb5cd438-811e-446c-8551-6004c63c69bf",
+    "ALLOWED_ORIGIN": "https://site-internet-page-principale.vercel.app"
   },
   "builds": [
     { "src": "api/**/*.js", "use": "@vercel/node" },
