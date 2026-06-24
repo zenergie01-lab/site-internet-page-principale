@@ -1,5 +1,4 @@
-// Vercel Serverless Function - Chat API Route
-// Deploy this to: /api/chat.js
+import crypto from 'crypto';
 
 export default async function handler(req, res) {
   // Activer CORS
@@ -105,6 +104,5 @@ function generateRequestId() {
 }
 
 function hashIP(ip) {
-  const crypto = require('crypto');
   return crypto.createHash('sha256').update(ip).digest('hex').substring(0, 16);
 }

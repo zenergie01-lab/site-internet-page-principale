@@ -1,5 +1,4 @@
-// Vercel Serverless Function - API Route
-// Deploy this to: /api/contact.js
+import crypto from 'crypto';
 
 export default async function handler(req, res) {
   // Activer CORS
@@ -117,6 +116,5 @@ function generateRequestId() {
 
 // Hash simple de l'IP (non réversible, pour la confidentialité)
 function hashIP(ip) {
-  const crypto = require('crypto');
   return crypto.createHash('sha256').update(ip).digest('hex').substring(0, 16);
 }

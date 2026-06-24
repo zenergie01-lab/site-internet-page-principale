@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Site officiel de la Paroisse Indépendante Orthodoxe Sainte Marie",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "echo 'Static site - no build needed'",
     "start": "npm run dev",
-    "dev": "vercel dev"
+    "dev": "echo dev"
   },
   "keywords": [
     "paroisse",
@@ -17,6 +18,6 @@
   "author": "Mgr Anthony Jésus Marie",
   "license": "MIT",
   "engines": {
-    "node": "18.x"
+    "node": ">=18.x"
   }
 }
