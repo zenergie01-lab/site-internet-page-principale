@@ -1,8 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
   "outputDirectory": ".",
-  "framework": "static",
   "env": {
     "N8N_WEBHOOK_URL": "@n8n_contact_webhook",
     "N8N_CHAT_WEBHOOK_URL": "@n8n_chat_webhook",
