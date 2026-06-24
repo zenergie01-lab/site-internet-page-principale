@@ -3,26 +3,16 @@
   "env": {
     "N8N_WEBHOOK_URL": "https://n8n.srv999617.hstgr.cloud/webhook/TESTASSO",
     "N8N_CHAT_WEBHOOK_URL": "https://n8n.srv999617.hstgr.cloud/webhook/fb5cd438-811e-446c-8551-6004c63c69bf",
-    "ALLOWED_ORIGIN": "https://site-internet-page-principale.vercel.app"
+    "ALLOWED_ORIGIN": "https://site-internet-page-principale-01.vercel.app"
   },
-  "builds": [
-    { "src": "api/**/*.js", "use": "@vercel/node" },
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "assets/**", "use": "@vercel/static" }
-  ],
-  "routes": [
+  "headers": [
     {
-      "src": "/api/(.*)",
-      "headers": {
-        "Content-Type": "application/json",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
-      },
-      "dest": "/api/$1"
-    },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" }
+      ]
+    }
   ]
 }

@@ -1,7 +1,7 @@
 // Vercel Serverless Function - Health Check
 // Utilité: Vérifier que le serveur proxy fonctionne correctement
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Access-Control-Allow-Origin', '*');
 

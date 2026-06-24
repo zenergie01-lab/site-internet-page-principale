@@ -1,6 +1,6 @@
-import crypto from 'crypto';
+const crypto = require('crypto');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Activer CORS
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || 'https://votre-domaine.com');
@@ -78,11 +78,19 @@ export default async function handler(req, res) {
       });
     }
 
-    const responseData = await n8nResponse.json();
+    const rawText = await n8nResponse.text();
+
+    let responseText;
+    try {
+      const responseData = JSON.parse(rawText);
+      responseText = responseData.response || responseData.message || responseData.output || rawText;
+    } catch {
+      responseText = rawText;
+    }
 
     // Retourner la réponse de Spirit
     return res.status(200).json({
-      response: responseData.response || responseData.message || 'Je n\'ai pas bien compris votre message.',
+      response: responseText || 'Je n\'ai pas bien compris votre message.',
       requestId: generateRequestId()
     });
 

@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Site officiel de la Paroisse Indépendante Orthodoxe Sainte Marie",
   "private": true,
-  "type": "module",
-  "scripts": {
+"scripts": {
     "build": "echo 'Static site - no build needed'",
     "start": "npm run dev",
     "dev": "echo dev"
