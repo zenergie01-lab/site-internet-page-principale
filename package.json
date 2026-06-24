@@ -1,0 +1,22 @@
+{
+  "name": "paroisse-sainte-marie",
+  "version": "1.0.0",
+  "description": "Site officiel de la Paroisse Indépendante Orthodoxe Sainte Marie",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static site - no build needed'",
+    "start": "npm run dev",
+    "dev": "vercel dev"
+  },
+  "keywords": [
+    "paroisse",
+    "orthodoxe",
+    "spirituel",
+    "église"
+  ],
+  "author": "Mgr Anthony Jésus Marie",
+  "license": "MIT",
+  "engines": {
+    "node": "18.x"
+  }
+}

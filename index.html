@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paroisse Indépendante Orthodoxe Sainte Marie – Patriarcat Marial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8cc7a;
+      --gold-dark: #8b6914;
+      --deep: #0d0a06;
+      --dark: #1a1409;
+      --mid: #2a1f0a;
+      --parchment: #f5ead8;
+      --parchment-dark: #e8d5b0;
+      --ivory: #fdf8ef;
+      --accent: #6b1a1a;
+      --accent-light: #a02828;
+      --text: #2c1f0a;
+      --text-light: #5a4020;
+      --muted: #8a7050;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'EB Garamond', serif;
+      background: var(--deep);
+      color: var(--parchment);
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    header {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(107,26,26,0.25) 0%, transparent 50%),
+        linear-gradient(180deg, #0d0a06 0%, #1a1409 60%, #0d0a06 100%);
+      text-align: center;
+      padding: 2rem;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(201,168,76,0.05) 59px, rgba(201,168,76,0.05) 60px),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(201,168,76,0.05) 59px, rgba(201,168,76,0.05) 60px);
+      pointer-events: none;
+    }
+
+    .cross-bg {
+      position: absolute;
+      font-size: 28rem;
+      color: rgba(201,168,76,0.03);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      font-family: serif;
+      line-height: 1;
+    }
+
+    .header-badge {
+      border: 1px solid rgba(201,168,76,0.4);
+      padding: 0.4rem 1.2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .logo-cross {
+      font-size: 3.5rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    header h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.6rem, 4vw, 3.2rem);
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+      line-height: 1.3;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+      text-shadow: 0 0 60px rgba(201,168,76,0.3);
+    }
+
+    header h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+      color: var(--gold);
+      letter-spacing: 0.25em;
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .header-line {
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.8rem auto;
+      opacity: 0;
+      animation: fadeUp 0.8s 1s forwards;
+    }
+
+    .header-tagline {
+      font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+      color: var(--parchment-dark);
+      font-style: italic;
+      max-width: 600px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.2s forwards;
+    }
+
+    .header-cta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.4s forwards;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-dark));
+      color: var(--deep);
+      padding: 0.85rem 2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-gold:hover {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,168,76,0.3);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.85rem 2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: rgba(201,168,76,0.1);
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(13,10,6,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: var(--parchment-dark);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+      transition: all 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      color: var(--gold-light);
+      line-height: 1.25;
+      margin-bottom: 1.5rem;
+    }
+
+    .gold-divider {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+      margin: 1.5rem 0 2.5rem;
+    }
+
+    /* ── PRESENTATION ── */
+    #presentation {
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .pres-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    @media (max-width: 700px) {
+      .pres-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .pres-text p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--parchment-dark);
+      margin-bottom: 1.2rem;
+    }
+
+    .pres-text em { color: var(--gold-light); font-style: italic; }
+
+    .info-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .info-card {
+      border: 1px solid rgba(201,168,76,0.2);
+      background: rgba(201,168,76,0.04);
+      padding: 1.2rem 1.5rem;
+      position: relative;
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--gold);
+    }
+
+    .info-card h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-card p {
+      font-size: 0.95rem;
+      color: var(--parchment-dark);
+      line-height: 1.6;
+    }
+
+    /* ── FAQ ── */
+    #faq {
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 1.5rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .faq-question span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.92rem;
+      color: var(--parchment);
+      letter-spacing: 0.03em;
+      line-height: 1.4;
+    }
+
+    .faq-icon {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 1.2rem;
+      transition: transform 0.3s;
+    }
+
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .faq-item.open .faq-answer { max-height: 600px; }
+
+    .faq-answer-inner {
+      padding: 0 0 1.5rem;
+      font-size: 1rem;
+      color: var(--parchment-dark);
+      line-height: 1.85;
+    }
+
+    .faq-answer-inner strong { color: var(--gold-light); }
+
+    /* ── TIMELINE ── */
+    #genealogie {
+      border-top: 1px solid rgba(201,168,76,0.15);
+      background: rgba(201,168,76,0.02);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, var(--gold), rgba(201,168,76,0.1));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(201,168,76,0.5);
+    }
+
+    .timeline-date {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      color: var(--parchment);
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-body {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── MISSIONS ── */
+    #missions {
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .missions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 700px) {
+      .missions-grid { grid-template-columns: 1fr; }
+    }
+
+    .mission-card {
+      background: rgba(201,168,76,0.04);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .mission-card:hover {
+      border-color: rgba(201,168,76,0.4);
+      background: rgba(201,168,76,0.08);
+      transform: translateY(-4px);
+    }
+
+    .mission-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .mission-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .mission-card p {
+      font-size: 0.92rem;
+      color: var(--parchment-dark);
+      line-height: 1.7;
+    }
+
+    /* ── FORMATIONS ── */
+    #formations {
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .formations-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 700px) {
+      .formations-grid { grid-template-columns: 1fr; }
+    }
+
+    .formation-card {
+      border: 1px solid rgba(201,168,76,0.2);
+      background: rgba(13,10,6,0.6);
+      padding: 2rem;
+      text-decoration: none;
+      display: block;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .formation-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .formation-card:hover::after { transform: scaleX(1); }
+
+    .formation-card:hover {
+      border-color: rgba(201,168,76,0.4);
+      background: rgba(201,168,76,0.06);
+    }
+
+    .formation-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.5rem;
+      color: rgba(201,168,76,0.15);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .formation-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--gold-light);
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .formation-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .formation-link {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* ── CONTACT FORM MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--dark);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 4px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover { color: var(--gold-light); }
+
+    .modal-header {
+      margin-bottom: 1.5rem;
+      padding-right: 2rem;
+    }
+
+    .modal-header h3 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.5rem;
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-header p {
+      font-size: 0.9rem;
+      color: var(--parchment-dark);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(201,168,76,0.04);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--parchment);
+      font-family: 'EB Garamond', serif;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+
+    .form-group select {
+      color: var(--parchment);
+    }
+
+    .form-group select option {
+      background: var(--dark);
+      color: var(--parchment);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: rgba(201,168,76,0.5);
+      background: rgba(201,168,76,0.08);
+      box-shadow: 0 0 12px rgba(201,168,76,0.2);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.8rem;
+    }
+
+    .btn-submit {
+      flex: 1;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-dark));
+      color: var(--deep);
+      padding: 0.85rem 1.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(201,168,76,0.3);
+    }
+
+    .btn-cancel {
+      flex: 1;
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold);
+      padding: 0.85rem 1.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-cancel:hover {
+      background: rgba(201,168,76,0.1);
+      border-color: rgba(201,168,76,0.5);
+    }
+
+    .form-status {
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .form-status.success {
+      background: rgba(107,200,107,0.15);
+      border: 1px solid rgba(107,200,107,0.3);
+      color: #6bc86b;
+      display: block;
+    }
+
+    .form-status.error {
+      background: rgba(200,107,107,0.15);
+      border: 1px solid rgba(200,107,107,0.3);
+      color: #c86b6b;
+      display: block;
+    }
+
+    /* ── FLOATING CHAT BUBBLE ── */
+    .floating-chat {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 150;
+      font-family: 'EB Garamond', serif;
+    }
+
+    .chat-bubble {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.4);
+      transition: all 0.3s;
+      border: 2px solid var(--gold-light);
+    }
+
+    .chat-bubble:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(201,168,76,0.6);
+    }
+
+    .chat-bubble-icon {
+      font-size: 1.8rem;
+    }
+
+    .chat-bubble.open {
+      display: none;
+    }
+
+    .floating-chat-window {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 380px;
+      max-height: 600px;
+      background: var(--dark);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      overflow: hidden;
+      transform: translateY(10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+
+    .floating-chat-window.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .floating-chat-header {
+      background: rgba(201,168,76,0.08);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .floating-chat-header-title {
+      flex: 1;
+    }
+
+    .floating-chat-header-title h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    .floating-chat-header-title p {
+      font-size: 0.75rem;
+      color: var(--parchment-dark);
+    }
+
+    .chat-status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .floating-chat-close {
+      background: none;
+      border: none;
+      color: var(--gold);
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .floating-chat-close:hover {
+      color: var(--gold-light);
+    }
+
+    .floating-chat-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      background: rgba(13,10,6,0.5);
+    }
+
+    .floating-chat-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .floating-chat-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .floating-chat-body::-webkit-scrollbar-thumb {
+      background: rgba(201,168,76,0.2);
+      border-radius: 3px;
+    }
+
+    .floating-chat-body::-webkit-scrollbar-thumb:hover {
+      background: rgba(201,168,76,0.4);
+    }
+
+    .chat-message {
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-message.user {
+      justify-content: flex-end;
+    }
+
+    .chat-message-content {
+      max-width: 80%;
+      padding: 0.7rem 1rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .chat-message.bot .chat-message-content {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--parchment);
+    }
+
+    .chat-message.user .chat-message-content {
+      background: rgba(201,168,76,0.25);
+      color: var(--deep);
+      border-radius: 4px 0 4px 4px;
+    }
+
+    .floating-chat-input {
+      border-top: 1px solid rgba(201,168,76,0.2);
+      padding: 1rem;
+      background: rgba(13,10,6,0.7);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .floating-chat-input input {
+      flex: 1;
+      background: rgba(201,168,76,0.04);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--parchment);
+      padding: 0.6rem 0.8rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+
+    .floating-chat-input input:focus {
+      outline: none;
+      border-color: rgba(201,168,76,0.5);
+      background: rgba(201,168,76,0.08);
+    }
+
+    .floating-chat-send {
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      color: var(--deep);
+      border: none;
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .floating-chat-send:hover {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+      .floating-chat {
+        bottom: 1rem;
+        right: 1rem;
+      }
+
+      .floating-chat-window {
+        width: calc(100vw - 2rem);
+        max-height: 70vh;
+      }
+
+      .modal-content {
+        width: 95%;
+      }
+    }
+
+    /* ── CHATBOT ── */
+    #contact {
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .chatbot-wrapper {
+      background: rgba(26,20,9,0.8);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 0;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .chatbot-header {
+      background: rgba(201,168,76,0.08);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .chatbot-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .chatbot-header span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Embed placeholder ── */
+    .n8n-embed {
+      width: 100%;
+      height: 520px;
+      border: none;
+      display: block;
+      background: #12100a;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: rgba(0,0,0,0.6);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    footer .footer-cross {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    footer p {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.4rem;
+    }
+
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    footer .footer-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    footer .footer-links a:hover { color: var(--gold-light); }
+
+    /* ── SCROLL ANIMATION ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── QUOTE BLOCK ── */
+    blockquote {
+      border-left: 3px solid var(--gold);
+      margin: 2rem 0;
+      padding: 1rem 1.5rem;
+      background: rgba(201,168,76,0.04);
+      font-style: italic;
+      color: var(--parchment-dark);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="index.html">✝ Sainte Marie</a>
+  <ul class="nav-links">
+    <li><a href="#presentation">Présentation</a></li>
+    <li><a href="#genealogie">Généalogie</a></li>
+    <li><a href="#faq">Questions</a></li>
+    <li><a href="#missions">Missions</a></li>
+    <li><a href="#formations">Formations</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<header>
+  <div class="cross-bg">✝</div>
+  <div class="header-badge">Eglise Associative N°173010600</div>
+  <img src="https://i.imghos.co/zcRxQxAB.png" alt="Logo Paroisse Sainte Marie" class="logo-image" style="max-width: 200px; height: auto; margin-bottom: 1rem; opacity: 0; animation: fadeUp 0.8s 0.4s forwards;">
+  <h1>Paroisse Indépendante<br/>Orthodoxe Sainte Marie</h1>
+  <h2>Patriarcat Marial — Fondée le 18 Mars 2024</h2>
+  <div class="header-line"></div>
+  <p class="header-tagline">
+    Guidée par la Mère des Mères · Ancrée dans la Tradition Apostolique<br/>
+    Ouverte à tous · Itinérante · Autocéphale
+  </p>
+  <div class="header-cta">
+    <a href="#presentation" class="btn-gold">Découvrir la Paroisse</a>
+    <a href="#formations" class="btn-outline">Nos Formations</a>
+  </div>
+</header>
+
+<!-- PRÉSENTATION -->
+<section id="presentation">
+  <div class="section-label">Qui sommes-nous</div>
+  <h2 class="section-title">Une Église du XXIe Siècle</h2>
+  <div class="gold-divider"></div>
+  <div class="pres-grid reveal">
+    <div class="pres-text">
+      <p>
+        La Paroisse Indépendante Orthodoxe Sainte Marie est une <em>Église autocéphale</em> —
+        c'est-à-dire souveraine, avec sa propre tête. Imaginez une nation qui rédige sa propre
+        constitution sans dépendre d'aucune loi étrangère : c'est l'esprit de notre Paroisse.
+      </p>
+      <p>
+        Fondée le 18 mars 2024 par Mgr Anthony Jésus Marie, elle s'enracine dans la tradition
+        orthodoxe apostolique tout en ouvrant ses portes à toutes les confessions chrétiennes.
+        Elle est <em>déclarée en Préfecture comme Église Itinérante</em> : elle n'est pas liée
+        à un bâtiment, mais à une communauté vivante.
+      </p>
+      <p>
+        Son Patriarcat est <em>Marial</em>, car placé sous la guidance et la protection de la
+        Mère des Mères — Marie, modèle de foi, d'humilité et de service. Elle suit les
+        préceptes du Christ et ne reconnaît que cette autorité.
+      </p>
+      <blockquote>
+        « C'est une Église indépendante qui n'est reconnue que par le Christ et notre Mère Marie. »
+      </blockquote>
+    </div>
+    <div class="info-cards">
+      <div class="info-card">
+        <h4>Fondateur</h4>
+        <p>Mgr Anthony Jésus Marie, sacré Évêque orthodoxe du Patriarcat Latin en février 2024 à Monatélé (Cameroun), nommé Métropolite en France.</p>
+      </div>
+      <div class="info-card">
+        <h4>Statut Légal</h4>
+        <p>Église associative N°173010600 · Déclarée en Préfecture comme Église Itinérante · Autocéphale et indépendante.</p>
+      </div>
+      <div class="info-card">
+        <h4>Présence Internationale</h4>
+        <p>France · Belgique · Gabon · Mexique · Congo · Guyane française</p>
+      </div>
+      <div class="info-card">
+        <h4>Liturgie</h4>
+        <p>Rite Orthodoxe traditionnel, revu et simplifié pour être compris du plus grand nombre, tout en restant fidèle à la Tradition apostolique.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GÉNÉALOGIE -->
+<section id="genealogie" style="max-width:100%; padding:6rem 2rem; background:rgba(201,168,76,0.02); border-top:1px solid rgba(201,168,76,0.15);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="section-label">Généalogie & Succession</div>
+    <h2 class="section-title">Naissance du Patriarcat Marial</h2>
+    <div class="gold-divider"></div>
+    <p style="color:var(--parchment-dark);font-size:1rem;line-height:1.8;margin-bottom:3rem;max-width:700px;" class="reveal">
+      Comme un arbre généalogique familial qui remonte aux ancêtres fondateurs, la succession
+      apostolique retrace la transmission ininterrompue de l'autorité spirituelle depuis les
+      premiers apôtres. Voici les étapes clés de notre histoire.
+    </p>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-date">13 Août 2021</div>
+        <div class="timeline-title">Ordination Sacerdotale</div>
+        <div class="timeline-body">Le Diacre Anthony Michel est ordonné prêtre par Sa Grâce Jean VI, Patriarche de l'Église Orthodoxe Autocéphale Assyrienne (Patriarcat Orthodoxe du Congo), à Brazzaville. <strong>Succession Apostolique de Thomas et Jean Chrysostome.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">5 Octobre 2021</div>
+        <div class="timeline-title">Mandat Spirituel</div>
+        <div class="timeline-body">Nommé Conseiller Spirituel de l'Église Orthodoxe Orientale du Brésil, Nonciature Patriarcale Apostolique d'Afrique (RDC). <strong>Succession Apostolique de Marc.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">5 Novembre 2023</div>
+        <div class="timeline-title">Vicaire Épiscopal</div>
+        <div class="timeline-body">Nommé Vicaire Épiscopal pour l'alliance entre l'Église Orthodoxe du Patriarcat Latin en France et l'Église Apostolique Orthodoxe Syriaque du Mexique, par Mgr Tau Abu L Hasan à Mexico. <strong>Succession Apostolique de Pierre et Paul.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">8 Février 2024</div>
+        <div class="timeline-title">Sacre Épiscopal</div>
+        <div class="timeline-body">Sacre épiscopal du Père Anthony Toucheteau par Mgr Luc Eloundou Mbassi, Métropolite de l'Église Orthodoxe du Patriarcat Latin au Cameroun, à Monatélé, devant de nombreux témoins et la télévision locale. <strong>Succession Apostolique de Pierre.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">15 Février 2024</div>
+        <div class="timeline-title">Métropolite en France</div>
+        <div class="timeline-body">Par Décret Patriarcal N°14.052.2024, nommé Métropolite de l'Église Orthodoxe Patriarcat Latin en France par Sa Béatitude Luc Ier.</div>
+      </div>
+        <div class="timeline-item">
+        <div class="timeline-date">18 Mars 2024 ✦ Fondation</div>
+        <div class="timeline-title">Création du Patriarcat Marial</div>
+        <div class="timeline-body">Création de la Paroisse Indépendante Orthodoxe Sainte Marie et de son Patriarcat Marial par le Métropolite Mgr Anthony Jésus Marie. Le Patriarcat Marial hérite de la succession apostolique de Pierre, Thomas et Chrysostome.</div>
+      </div>
+      
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-label">Vos Questions</div>
+  <h2 class="section-title">Questions Fréquentes sur la Paroisse</h2>
+  <div class="gold-divider"></div>
+  <p style="color:var(--parchment-dark);font-size:1rem;line-height:1.8;margin-bottom:2.5rem;" class="reveal">
+    Voici les questions que les nouveaux membres et les curieux posent le plus souvent.
+  </p>
+
+  <div id="faq-list" class="reveal">
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Qu'est-ce qu'une Église autocéphale ? En quoi est-ce différent d'une paroisse ordinaire ?</span>
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <strong>Notre Paroisse est autocéphale : elle ne dépend d'aucune autre institution religieuse. Elle obéit à son propre Code Canon, rédigé par son fondateur et validé par le Synode. Cela lui permet de définir sa propre liturgie, sa hiérarchie et sa théologie sans en référer à une autorité extérieure.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Qu'est-ce que la "succession apostolique" et pourquoi est-elle importante ?</span>
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <strong>Analogie simple :</strong> c'est comme un diplôme transmis de maître à disciple depuis les origines. Un avocat est habilité à plaider parce qu'il a obtenu son barreau d'une institution reconnue, qui l'a elle-même reçu d'une autre, remontant aux premières universités. La succession apostolique, c'est cette chaîne de transmission de l'autorité spirituelle depuis les Apôtres jusqu'à aujourd'hui.<br/><br/>
+          Notre Patriarcat Marial hérite de la succession apostolique de <strong>Pierre</strong> (via le Patriarcat Latin), de <strong>Thomas</strong> et de <strong>Jean Chrysostome</strong> (via le Patriarcat du Congo), et de <strong>Marc</strong> (via l'Église Orthodoxe Orientale). Chaque sacre épiscopal est un maillon dans cette chaîne ininterrompue depuis les origines du christianisme.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Que signifie "Patriarcat Marial" ? Pourquoi Marie est-elle au centre ?</span>
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Un patriarcat traditionnel (Rome, Constantinople, Moscou) est centré sur une lignée apostolique masculine et géographique. Notre Patriarcat est dit <strong>Marial</strong> parce qu'il se place sous la guidance et la protection de la Vierge Marie, la « Mère des Mères ».<br/><br/>
+          Ce choix n'est pas simplement symbolique : il traduit une spiritualité où <strong>la compassion, l'intuition, l'accueil et le soin de l'autre</strong> — qualités souvent associées à Marie — sont au cœur de la foi et des pratiques. Marie est ainsi modèle de foi, d'humilité et de service pour tous les membres de la Paroisse.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Est-ce que je dois être orthodoxe pour rejoindre la Paroisse ?</span>
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <strong>Non.</strong> La Paroisse Sainte Marie est fondée sur un principe d'accueil radical et œcuménique. Elle reçoit des personnes de confessions orthodoxe, catholique, protestante, anglicane, et de toutes les autres Églises chrétiennes — ainsi que des <em>non-croyants</em> en quête de chemin spirituel.<br/><br/>
+          <strong>Analogie :</strong> c'est comme une maison commune où chacun apporte ses propres traditions et recettes. Tout le monde est accueilli avec son titre et ses coutumes propres, à condition d'accepter les règles de la maison (le Code Canon) qui garantissent l'harmonie de l'ensemble.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Comment fonctionne la gouvernance de la Paroisse ? Qui prend les décisions ?</span>
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          La gouvernance s'organise comme un État avec ses institutions :<br/><br/>
+          • <strong>Le Fondateur / Patriarche</strong> (Mgr Anthony Jésus Marie) : figure centrale, Président et Métropolite. Il détient l'autorité ultime pour valider les lois et signer les documents importants.<br/>
+          • <strong>La Chambre Haute</strong> : conseil dirigeant, à parité homme/femme. Quand elle atteindra 10 membres, elle deviendra la « Table Ronde Patriarcale » — référence arthurienne symbolisant l'égalité dans la quête de sagesse.<br/>
+          • <strong>Le Synode</strong> : assemblée générale tous les deux ans, où les décisions importantes sont prises, les lois peuvent être modifiées et les sacres épiscopaux célébrés. C'est un mécanisme participatif démocratique au sein d'une structure spirituelle.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Qu'est-ce qu'une "Église Itinérante" ? Où se tiennent les offices ?</span>
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          La Paroisse est déclarée en Préfecture comme <strong>Église Itinérante</strong>, ce qui signifie qu'elle n'est pas liée à un bâtiment fixe.<br/><br/>
+          <strong>Analogie :</strong> comme un médecin qui fait des visites à domicile plutôt que d'attendre les patients dans un cabinet, notre Paroisse va là où la communauté se trouve. Elle peut célébrer ses rites <em>partout où elle est la bienvenue</em> : salles associatives, domiciles privés, espaces publics. Cette flexibilité est une force — elle permet à toute localité, même non représentée, de demander son adhésion et de bénéficier d'un représentant local nommé par le Patriarcat.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Quelles sont les missions concrètes de la Paroisse ?</span>
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          Les missions premières sont au nombre de six :<br/><br/>
+          1. <strong>L'aide aux plus démunis</strong> — priorité absolue. La Paroisse possède sa propre association d'aide aux sans-abris et organise des maraudes tout au long de l'année.<br/>
+          2. <strong>Bénir</strong> — accompagnement spirituel de chaque moment de la vie.<br/>
+          3. <strong>Baptiser</strong> — célébration de l'entrée dans la foi.<br/>
+          4. <strong>Unir</strong> — célébration des mariages et des unions.<br/>
+          5. <strong>Lutter contre le mal</strong> — exorcismes et guérisons de l'âme, pratiqués par des « médecins spirituels » (exorcistes) rigoureusement formés.<br/>
+          6. <strong>Enseigner</strong> — via l'École des Connaissances, qui dispense théologie, liturgie, philosophie, psychologie et spiritualité.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        <span>Est-ce que les membres sont rémunérés par la Paroisse ?</span>
+        <div class="faq-icon">+</div>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          <strong>Non.</strong> Chaque frère et sœur se doit de subvenir lui-même à ses besoins et ceux de sa famille. La Paroisse ne rémunère personne.<br/><br/>
+          Les cotisations annuelles (dont le montant est fixé par le Synode) servent exclusivement à couvrir les frais de fonctionnement, l'achat de matériel liturgique et le financement des missions caritatives. Cette transparence financière est une garantie de confiance pour toute la communauté.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MISSIONS -->
+<section id="missions">
+  <div class="section-label">Nos Engagements</div>
+  <h2 class="section-title">Missions & Vocation</h2>
+  <div class="gold-divider"></div>
+  <div class="missions-grid reveal">
+    <div class="mission-card">
+      <span class="mission-icon">🤲</span>
+      <h3>Aide aux Démunis</h3>
+      <p>Association d'aide aux sans-abris intégrée. Maraudes et actions caritatives tout au long de l'année. Priorité absolue de la Paroisse.</p>
+    </div>
+    <div class="mission-card">
+      <span class="mission-icon">✝</span>
+      <h3>Sacrements</h3>
+      <p>Baptême, Eucharistie, Mariage, Confession, Onction des malades, Ordinations. Célébrés selon le rite orthodoxe revu et accessible.</p>
+    </div>
+    <div class="mission-card">
+      <span class="mission-icon">🕊</span>
+      <h3>Guérison Spirituelle</h3>
+      <p>Exorcismes et guérisons de l'âme pratiqués par des médecins spirituels formés selon un encadrement rigoureux prévu par le Code Canon.</p>
+    </div>
+    <div class="mission-card">
+      <span class="mission-icon">📖</span>
+      <h3>École des Connaissances</h3>
+      <p>Formation en théologie, liturgie, philosophie, psychologie et spiritualité. Ouverte à toute forme de savoir pouvant aider à l'épanouissement humain.</p>
+    </div>
+    <div class="mission-card">
+      <span class="mission-icon">🌍</span>
+      <h3>Expansion Mondiale</h3>
+      <p>Présence en France, Guyane Française, Belgique,Congo, Gabon, Mexique.</p>
+    </div>
+    <div class="mission-card">
+      <span class="mission-icon">🤝</span>
+      <h3>Fraternité Œcuménique</h3>
+      <p>Accueil de toutes les confessions chrétiennes. Relations fraternelles avec d'autres communautés, dans le respect de l'indépendance canonique.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATIONS -->
+<section id="formations">
+  <div class="section-label">École des Connaissances</div>
+  <h2 class="section-title">Catalogue de Formations</h2>
+  <div class="gold-divider"></div>
+  <p style="color:var(--parchment-dark);font-size:1rem;line-height:1.8;margin-bottom:2.5rem;" class="reveal">
+    La Paroisse dispose de sa propre École des Connaissances. Chaque formation est conçue pour
+    être accessible à tous, croyants comme non-croyants, avec des enseignements pratiques et théoriques.
+  </p>
+  <div class="formations-grid reveal">
+    <a href="pages/liturgie.html" class="formation-card">
+      <div class="formation-num">01</div>
+      <h3>Liturgie Orthodoxe</h3>
+      <p>Découvrez le rite orthodoxe, la structure des offices, le calendrier liturgique et les grandes fêtes chrétiennes. Formation adaptée aux débutants.</p>
+      <div class="formation-link">Accéder au catalogue →</div>
+    </a>
+    <a href="pages/theologie.html" class="formation-card">
+      <div class="formation-num">02</div>
+      <h3>Théologie & Dogme</h3>
+      <p>Les fondements de la foi chrétienne orthodoxe : théologie trinitaire, christologie, mariologie et tradition patristique des premiers siècles.</p>
+      <div class="formation-link">Accéder au catalogue →</div>
+    </a>
+    <a href="pages/pretrise.html" class="formation-card">
+      <div class="formation-num">03</div>
+      <h3>Formation au Sacerdoce</h3>
+      <p>Parcours complet pour ceux qui ressentent une vocation au ministère : diaconat, sacerdoce, encadrement pastoral et célébration des sacrements.</p>
+      <div class="formation-link">Accéder au catalogue →</div>
+    </a>
+    <a href="pages/spiritualite.html" class="formation-card">
+      <div class="formation-num">04</div>
+      <h3>Spiritualité & Ésotérisme</h3>
+      <p>Philosophie, psychologie spirituelle, méditation, prière contemplative et ouverture à d'autres formes de spiritualité bénéfiques à l'épanouissement humain.</p>
+      <div class="formation-link">Accéder au catalogue →</div>
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT FORM MODAL -->
+<div id="contactModal" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeContactModal()">✕</button>
+    <div class="modal-header">
+      <h3>Formulaire de Contact</h3>
+      <p>Envoyez-nous votre message, nous vous répondrons rapidement.</p>
+    </div>
+    <div id="formStatus" class="form-status"></div>
+    <form id="contactForm" onsubmit="handleContactSubmit(event)">
+      <div class="form-group">
+        <label for="contactNom">Nom *</label>
+        <input type="text" id="contactNom" name="nom" required placeholder="Votre nom">
+      </div>
+      <div class="form-group">
+        <label for="contactPrenom">Prénom *</label>
+        <input type="text" id="contactPrenom" name="prenom" required placeholder="Votre prénom">
+      </div>
+      <div class="form-group">
+        <label for="contactEmail">Email *</label>
+        <input type="email" id="contactEmail" name="email" required placeholder="votre@email.com">
+      </div>
+      <div class="form-group">
+        <label for="contactMotif">Motif du Contact *</label>
+        <select id="contactMotif" name="motif" required>
+          <option value="">-- Sélectionnez un motif --</option>
+          <option value="information">Information sur la Paroisse</option>
+          <option value="formation">Demande de Formation</option>
+          <option value="adhesion">Demande d'Adhésion</option>
+          <option value="sacrement">Demande de Sacrement</option>
+          <option value="spirit">recevoir le code pour le chat spirit</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="contactMessage">Message *</label>
+        <textarea id="contactMessage" name="message" required placeholder="Votre message..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Envoyer</button>
+        <button type="button" class="btn-cancel" onclick="closeContactModal()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- FLOATING CHAT WIDGET FOR SPIRIT -->
+<div class="floating-chat">
+  <div class="chat-bubble" id="chatBubble" onclick="toggleFloatingChat()">
+    <div class="chat-bubble-icon">💬</div>
+  </div>
+
+  <div class="floating-chat-window" id="floatingChatWindow">
+    <div class="floating-chat-header">
+      <div class="floating-chat-header-title">
+        <h4>Spirit</h4>
+        <p>Assistant Spirituel</p>
+      </div>
+      <div class="chat-status-dot"></div>
+      <button class="floating-chat-close" onclick="toggleFloatingChat()">✕</button>
+    </div>
+    <div class="floating-chat-body" id="chatBody">
+      <div class="chat-message bot">
+        <div class="chat-message-content">
+          Bonjour ! Je suis Spirit, assistant spirituel de la Paroisse Sainte Marie. Comment puis-je vous aider aujourd'hui ? 🙏
+        </div>
+      </div>
+    </div>
+    <div class="floating-chat-input">
+      <input type="text" id="chatInput" placeholder="Écrivez votre message..." onkeypress="handleChatKeypress(event)">
+      <button class="floating-chat-send" onclick="sendChatMessage()">→</button>
+    </div>
+  </div>
+</div>
+
+<section id="contact">
+  <div class="section-label">Nous Rejoindre</div>
+  <h2 class="section-title">Entrez en Contact</h2>
+  <div class="gold-divider"></div>
+  <p style="color:var(--parchment-dark);font-size:1rem;line-height:1.8;margin-bottom:2rem;" class="reveal">
+    Remplissez le formulaire de contact pour nous rejoindre, ou discutez directement avec Spirit, notre assistant spirituel en bas à droite.
+  </p>
+
+  <!-- Bouton Formulaire de Contact -->
+  <div style="text-align:center;margin-bottom:3rem;" class="reveal">
+    <button class="btn-gold" onclick="openContactModal()" style="cursor:pointer;">
+      Formulaire de Contact
+    </button>
+  </div>
+
+  <div style="text-align:center;" class="reveal">
+    <p style="color:var(--muted);font-size:0.9rem;font-family:'Cinzel',serif;letter-spacing:0.1em;">
+      💬 Vous pouvez aussi discuter avec Spirit dans la fenêtre de chat flottante en bas à droite.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-cross">✝</div>
+  <p style="font-family:'Cinzel Decorative',serif;color:var(--gold);font-size:0.85rem;margin-bottom:0.5rem;">Paroisse Indépendante Orthodoxe Sainte Marie</p>
+  <p>Patriarcat Marial · Église Associative N°173010600</p>
+  <p style="margin-top:0.5rem;">Fondée le 18 Mars 2024 · Déclarée Église Itinérante</p>
+  <div class="footer-links">
+    <a href="index.html">Accueil</a>
+    <a href="#presentation">Présentation</a>
+    <a href="#genealogie">Généalogie</a>
+    <a href="#formations">Formations</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <p style="margin-top:1rem;font-size:0.65rem;opacity:0.5;">
+    « Que nul n'en ignore. » · Sous la protection de la Sainte Mère de Dieu
+  </p>
+</footer>
+
+<script>
+  // ── WEBHOOK SECURITY ──
+  // Génère un token de sécurité basé sur les données du formulaire
+  function generateSecurityToken(data) {
+    const timestamp = Math.floor(Date.now() / 60000); // Token valid for 1 minute
+    return btoa(`${timestamp}:${data.length}`);
+  }
+
+  // Obfusque l'URL du webhook pour éviter le reverse-engineering
+  function obfuscateWebhook(url) {
+    // Retourne l'URL de manière sécurisée
+    // En production, utilisez une proxy côté serveur pour masquer complètement l'URL
+    return url;
+  }
+
+  // Limite les appels API pour prévenir les abus (rate limiting)
+  const apiCallTracker = {};
+  function checkRateLimit(identifier) {
+    const now = Date.now();
+    if (!apiCallTracker[identifier]) {
+      apiCallTracker[identifier] = [];
+    }
+
+    // Garder seulement les appels des 60 dernières secondes
+    apiCallTracker[identifier] = apiCallTracker[identifier].filter(t => now - t < 60000);
+
+    // Limiter à 5 appels par minute
+    if (apiCallTracker[identifier].length >= 5) {
+      return false;
+    }
+
+    apiCallTracker[identifier].push(now);
+    return true;
+  }
+
+  // ── FAQ Toggle ──
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ── Scroll Reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Nav shrink on scroll ──
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 60) {
+      nav.style.height = '52px';
+    } else {
+      nav.style.height = '64px';
+    }
+  });
+
+  // ── Mobile nav ──
+  const navLinks = document.querySelector('.nav-links');
+  if (navLinks) {
+    navLinks.style.cssText = '';
+  }
+
+  document.addEventListener('click', (e) => {
+    if (navLinks && navLinks.classList.contains('mobile-open') && !e.target.closest('nav')) {
+      navLinks.classList.remove('mobile-open');
+    }
+  });
+
+  const style = document.createElement('style');
+  style.textContent = `
+    @media (max-width: 768px) {
+      .nav-links.mobile-open {
+        display: flex !important;
+        flex-direction: column;
+        position: fixed;
+        top: 64px;
+        left: 0; right: 0;
+        background: rgba(13,10,6,0.97);
+        border-bottom: 1px solid rgba(201,168,76,0.2);
+        padding: 1rem 2rem 2rem;
+        gap: 1.2rem;
+        z-index: 99;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // ── iframe error fallback ──
+  const iframe = document.querySelector('.n8n-embed');
+  if (iframe) {
+    iframe.addEventListener('error', () => {
+      iframe.style.display = 'none';
+      document.getElementById('chat-fallback').style.display = 'block';
+    });
+  }
+
+  // ── CONTACT FORM MODAL ──
+  function openContactModal() {
+    document.getElementById('contactModal').classList.add('active');
+  }
+
+  function closeContactModal() {
+    document.getElementById('contactModal').classList.remove('active');
+    document.getElementById('contactForm').reset();
+    document.getElementById('formStatus').classList.remove('success', 'error');
+  }
+
+  async function handleContactSubmit(e) {
+    e.preventDefault();
+    const statusEl = document.getElementById('formStatus');
+
+    // Vérifier le rate limiting
+    if (!checkRateLimit('contact-form')) {
+      statusEl.classList.remove('success');
+      statusEl.classList.add('error');
+      statusEl.textContent = '✗ Trop de tentatives. Veuillez attendre quelques secondes avant de réessayer.';
+      return;
+    }
+
+    const formData = {
+      nom: document.getElementById('contactNom').value,
+      prenom: document.getElementById('contactPrenom').value,
+      email: document.getElementById('contactEmail').value,
+      motif: document.getElementById('contactMotif').value,
+      message: document.getElementById('contactMessage').value,
+      timestamp: new Date().toISOString()
+    };
+
+    // Validation basique côté client
+    if (!formData.nom.trim() || !formData.prenom.trim() || !formData.email.trim()) {
+      statusEl.classList.remove('success');
+      statusEl.classList.add('error');
+      statusEl.textContent = '✗ Veuillez remplir tous les champs requis.';
+      return;
+    }
+
+    try {
+      const dataString = JSON.stringify(formData);
+      // Appel à l'API proxy Vercel (masque l'URL N8N réelle)
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Request-Verify': generateSecurityToken(dataString)
+        },
+        body: dataString
+      });
+
+      if (response.ok) {
+        statusEl.classList.remove('error');
+        statusEl.classList.add('success');
+        statusEl.textContent = '✓ Message envoyé avec succès ! Nous vous répondrons bientôt.';
+        document.getElementById('contactForm').reset();
+        setTimeout(() => {
+          closeContactModal();
+        }, 2000);
+      } else {
+        throw new Error('Erreur lors de l\'envoi');
+      }
+    } catch (error) {
+      statusEl.classList.remove('success');
+      statusEl.classList.add('error');
+      statusEl.textContent = '✗ Erreur lors de l\'envoi. Veuillez réessayer ou contacter directement la Paroisse.';
+    }
+  }
+
+  // ── FLOATING CHAT WIDGET ──
+  function toggleFloatingChat() {
+    const window = document.getElementById('floatingChatWindow');
+    const bubble = document.getElementById('chatBubble');
+    window.classList.toggle('active');
+  }
+
+  function sendChatMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+
+    if (!message) return;
+
+    const chatBody = document.getElementById('chatBody');
+
+    // Afficher le message de l'utilisateur
+    const userMsgEl = document.createElement('div');
+    userMsgEl.className = 'chat-message user';
+    userMsgEl.innerHTML = `<div class="chat-message-content">${escapeHtml(message)}</div>`;
+    chatBody.appendChild(userMsgEl);
+    input.value = '';
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    // Envoyer le message à N8N et obtenir la réponse
+    sendMessageToSpirit(message).then(response => {
+      const botMsgEl = document.createElement('div');
+      botMsgEl.className = 'chat-message bot';
+      botMsgEl.innerHTML = `<div class="chat-message-content">${escapeHtml(response)}</div>`;
+      chatBody.appendChild(botMsgEl);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }).catch(error => {
+      const botMsgEl = document.createElement('div');
+      botMsgEl.className = 'chat-message bot';
+      botMsgEl.innerHTML = `<div class="chat-message-content">Désolé, une erreur s'est produite. Veuillez réessayer.</div>`;
+      chatBody.appendChild(botMsgEl);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    });
+  }
+
+  async function sendMessageToSpirit(message) {
+    // Appel à l'API proxy Vercel (masque l'URL N8N réelle)
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: message,
+        timestamp: new Date().toISOString()
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Erreur réseau');
+    }
+
+    const data = await response.json();
+    return data.response || 'Je n\'ai pas compris votre message.';
+  }
+
+  function handleChatKeypress(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendChatMessage();
+    }
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // Fermer le modal en cliquant en dehors
+  document.getElementById('contactModal').addEventListener('click', (e) => {
+    if (e.target.id === 'contactModal') {
+      closeContactModal();
+    }
+  });
+</script>
+</body>
+</html>
