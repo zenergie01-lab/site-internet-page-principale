@@ -73,18 +73,6 @@ git push -u origin main
 
 ### Variables d'environnement requises
 
-Créer un fichier `.env.local` (ou le configurer dans Vercel) :
-
-```env
-# N8N Webhooks
-N8N_WEBHOOK_URL=https://n8n.srv999617.hstgr.cloud/webhook/TESTASSO
-N8N_CHAT_WEBHOOK_URL=https://n8n.srv999617.hstgr.cloud/webhook/dd293465-959d-4c3a-94ee-f5c9a632bde7/chat
-
-# CORS - Votre domaine
-ALLOWED_ORIGIN=https://paroisse-saintemarie.vercel.app
-# En production avec domaine personnalisé:
-# ALLOWED_ORIGIN=https://paroisse-saintemarie.fr
-```
 
 ## 🛡️ Sécurité
 
