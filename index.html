@@ -1480,14 +1480,19 @@
       </div>
       <div class="form-group">
         <label for="contactMotif">Motif du Contact *</label>
-        <select id="contactMotif" name="motif" required>
+        <select id="contactMotif" name="motif" required onchange="updateContactPrecision()">
           <option value="">-- Sélectionnez un motif --</option>
           <option value="information">Information sur la Paroisse</option>
-          <option value="formation">Demande de Formation</option>
           <option value="adhesion">Demande d'Adhésion</option>
+          <option value="formation">Demande de Formation</option>
           <option value="sacrement">Demande de Sacrement</option>
-          <option value="spirit">recevoir le code pour le chat spirit</option>
           <option value="autre">Autre</option>
+        </select>
+      </div>
+      <div class="form-group" id="contactPrecisionGroup" style="display:none;">
+        <label for="contactPrecision">Précision *</label>
+        <select id="contactPrecision" name="precision">
+          <option value="">-- Sélectionnez --</option>
         </select>
       </div>
       <div class="form-group">
@@ -1685,6 +1690,48 @@
     document.getElementById('contactModal').classList.remove('active');
     document.getElementById('contactForm').reset();
     document.getElementById('formStatus').classList.remove('success', 'error');
+    updateContactPrecision();
+  }
+
+  // ── PRÉCISION DYNAMIQUE SELON LE MOTIF ──
+  const contactPrecisionOptions = {
+    formation: [
+      ['liturgie', 'Liturgie Orthodoxe'],
+      ['theologie', 'Théologie & Dogme'],
+      ['pretrise', 'Formation au Sacerdoce'],
+      ['spiritualite', 'Spiritualité & Ésotérisme']
+    ],
+    sacrement: [
+      ['bapteme', 'Baptême'],
+      ['diaconat', 'Diaconat'],
+      ['mariage', 'Mariage'],
+      ['confession', 'Confession'],
+      ['onction', 'Onction des Malades'],
+      ['sacerdoce', 'Ordination Sacerdotale']
+    ]
+  };
+
+  function updateContactPrecision() {
+    const motif = document.getElementById('contactMotif').value;
+    const group = document.getElementById('contactPrecisionGroup');
+    const select = document.getElementById('contactPrecision');
+    const options = contactPrecisionOptions[motif];
+
+    select.innerHTML = '<option value="">-- Sélectionnez --</option>';
+
+    if (options) {
+      options.forEach(([value, label]) => {
+        const opt = document.createElement('option');
+        opt.value = value;
+        opt.textContent = label;
+        select.appendChild(opt);
+      });
+      group.style.display = '';
+      select.required = true;
+    } else {
+      group.style.display = 'none';
+      select.required = false;
+    }
   }
 
   async function handleContactSubmit(e) {
@@ -1704,6 +1751,7 @@
       prenom: document.getElementById('contactPrenom').value,
       email: document.getElementById('contactEmail').value,
       motif: document.getElementById('contactMotif').value,
+      precision: document.getElementById('contactPrecision').value,
       message: document.getElementById('contactMessage').value,
       timestamp: new Date().toISOString()
     };
