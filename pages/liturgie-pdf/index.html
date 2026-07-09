@@ -3,72 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LiturgoForm - Formateur Liturgique Intelligent</title>
-    <!-- Tailwind CSS pour une interface moderne et soignée -->
+    <title>Formateur Liturgique Intelligent – Paroisse Sainte Marie</title>
+    <!-- Tailwind CSS pour la mise en page utilitaire -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts pour une typographie liturgique soignée -->
+    <!-- Google Fonts — identiques à la page principale -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        
-        /* Styles de la zone de rendu (Document Liturgique) */
-        .liturgical-preview {
-            font-family: 'Playfair Display', Georgia, serif;
+        :root {
+            --gold:#c9a84c;--gold-light:#e8cc7a;--gold-dark:#8b6914;
+            --deep:#0d0a06;--dark:#1a1409;--parchment:#f5ead8;
+            --parchment-dark:#e8d5b0;--muted:#8a7050;--accent:#6b1a1a;
         }
 
-        .liturgical-title {
+        body {
+            font-family: 'EB Garamond', serif;
+            background: var(--deep);
+            color: var(--parchment);
+        }
+
+        .liturgical-title, h1, h2, h3, .brand {
             font-family: 'Cinzel', serif;
         }
 
-        /* Thèmes d'accents dynamiques */
+        .liturgical-preview {
+            font-family: 'EB Garamond', Georgia, serif;
+        }
+
+        nav.top-nav {
+            background: rgba(13,10,6,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(201,168,76,0.2);
+        }
+        .nav-brand{font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold);letter-spacing:0.1em;text-decoration:none;}
+        .nav-back{font-family:'Cinzel',serif;font-size:0.72rem;color:var(--parchment-dark);letter-spacing:0.12em;text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+        .nav-back:hover{color:var(--gold);}
+
+        /* Thèmes d'accents dynamiques — déclinaisons de la palette du site */
         .theme-gold {
-            --primary: #b38600;
-            --accent: #8e44ad;
-            --rubrique-bg: #fffbf0;
-            --rubrique-border: #d4af37;
-            --bg-liturgic: #fdfcf9;
+            --primary: #8b6914;
+            --accent: #6b1a1a;
+            --rubrique-bg: #fdf8ef;
+            --rubrique-border: #c9a84c;
+            --bg-liturgic: #fdf8ef;
         }
 
         .theme-red {
-            --primary: #c0392b;
-            --accent: #2c3e50;
-            --rubrique-bg: #fdf2f2;
-            --rubrique-border: #e74c3c;
-            --bg-liturgic: #fffafb;
+            --primary: #6b1a1a;
+            --accent: #8b6914;
+            --rubrique-bg: #fdf3f0;
+            --rubrique-border: #a02828;
+            --bg-liturgic: #fdf8ef;
         }
 
         .theme-purple {
-            --primary: #6c5ce7;
-            --accent: #d63031;
-            --rubrique-bg: #f8f6ff;
-            --rubrique-border: #a29bfe;
-            --bg-liturgic: #faf9ff;
+            --primary: #5b3a7a;
+            --accent: #6b1a1a;
+            --rubrique-bg: #f7f3fb;
+            --rubrique-border: #8a6bab;
+            --bg-liturgic: #fdf8ef;
         }
 
         .theme-minimal {
-            --primary: #2d3748;
-            --accent: #4a5568;
-            --rubrique-bg: #f7fafc;
-            --rubrique-border: #cbd5e0;
-            --bg-liturgic: #ffffff;
+            --primary: #3a3126;
+            --accent: #5a4020;
+            --rubrique-bg: #f5f2ec;
+            --rubrique-border: #8a7050;
+            --bg-liturgic: #fdfcf9;
         }
 
         /* Styles appliqués dynamiquement au contenu généré */
         .rendered-page {
             background-color: var(--bg-liturgic);
-            color: #1a202c;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            color: #2c1f0a;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
         }
 
         .rendered-rubrique {
             background-color: var(--rubrique-bg);
             border-left: 4px solid var(--rubrique-border);
-            color: #4a5568;
+            color: #5a4020;
         }
 
         .rendered-title {
@@ -86,13 +102,18 @@
             cursor: help;
             transition: all 0.2s;
             padding: 0 2px;
-            background-color: rgba(212, 175, 55, 0.08);
+            background-color: rgba(201,168,76,0.1);
         }
         .lexicon-term:hover {
             background-color: var(--primary);
             color: white !important;
             border-radius: 4px;
         }
+
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(201,168,76,0.5); }
 
         /* Masquage des éléments d'interface à l'impression */
         @media print {
@@ -113,89 +134,104 @@
         }
     </style>
 </head>
-<body class="bg-slate-900 min-h-screen flex flex-col theme-gold">
+<body class="min-h-screen flex flex-col theme-gold">
+
+    <!-- NAVIGATION -->
+    <nav class="no-print top-nav flex items-center justify-between px-6 py-3 shrink-0">
+        <a class="nav-brand" href="../../index.html">✝ Sainte Marie</a>
+        <a class="nav-back" href="../liturgie.html">← Retour à la Formation Liturgie</a>
+    </nav>
 
     <!-- HEADER DE L'APPLI -->
-    <header class="no-print bg-slate-950 border-b border-slate-800 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 shrink-0">
+    <header class="no-print px-6 py-5 flex flex-col sm:flex-row justify-between items-center gap-4 shrink-0" style="background:var(--dark);border-bottom:1px solid rgba(201,168,76,0.2);">
         <div class="flex items-center gap-3">
-            <div class="p-2 bg-amber-500/10 text-amber-500 rounded-lg">
+            <div class="p-2 rounded-lg" style="background:rgba(201,168,76,0.1);color:var(--gold);">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
             </div>
             <div>
-                <h1 class="text-white font-bold text-lg leading-tight">LiturgoForm</h1>
-                <p class="text-slate-400 text-xs">Convertisseur de manuscrits liturgiques bruts en documents d'étude modernes</p>
+                <h1 class="font-bold text-lg leading-tight" style="color:var(--gold-light);">Formateur Liturgique Intelligent</h1>
+                <p class="text-xs" style="color:var(--muted);">Convertisseur de manuscrits liturgiques bruts en documents d'étude modernes</p>
             </div>
         </div>
-        
+
         <!-- Palette Thème & Actions -->
         <div class="flex flex-wrap items-center gap-3">
-            <span class="text-slate-400 text-xs font-semibold mr-1">THÈME VISUEL :</span>
-            <div class="flex bg-slate-900 p-1 rounded-lg border border-slate-800 gap-1">
-                <button onclick="changeTheme('gold')" class="w-7 h-7 rounded-md bg-amber-500 border border-amber-600 focus:outline-none" title="Or Liturgique"></button>
-                <button onclick="changeTheme('red')" class="w-7 h-7 rounded-md bg-red-600 border border-red-700 focus:outline-none" title="Rouge Pascal"></button>
-                <button onclick="changeTheme('purple')" class="w-7 h-7 rounded-md bg-indigo-600 border border-indigo-700 focus:outline-none" title="Violet de Carême"></button>
-                <button onclick="changeTheme('minimal')" class="w-7 h-7 rounded-md bg-slate-700 border border-slate-600 focus:outline-none" title="Noir & Blanc Pur"></button>
+            <span class="text-xs font-semibold mr-1" style="color:var(--muted);letter-spacing:0.08em;">THÈME VISUEL :</span>
+            <div class="flex p-1 rounded-lg gap-1" style="background:var(--deep);border:1px solid rgba(201,168,76,0.2);">
+                <button onclick="changeTheme('gold')" class="w-7 h-7 rounded-md focus:outline-none" style="background:#c9a84c;border:1px solid #8b6914;" title="Or Liturgique"></button>
+                <button onclick="changeTheme('red')" class="w-7 h-7 rounded-md focus:outline-none" style="background:#8b1f1f;border:1px solid #6b1a1a;" title="Rouge Pascal"></button>
+                <button onclick="changeTheme('purple')" class="w-7 h-7 rounded-md focus:outline-none" style="background:#5b3a7a;border:1px solid #4a2f66;" title="Violet de Carême"></button>
+                <button onclick="changeTheme('minimal')" class="w-7 h-7 rounded-md focus:outline-none" style="background:#5a4020;border:1px solid #3a3126;" title="Sobre & Parchemin"></button>
             </div>
-            
-            <button onclick="window.print()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm rounded-lg flex items-center gap-2 transition duration-200">
+
+            <button onclick="window.print()" class="px-4 py-2 font-bold text-sm rounded-lg flex items-center gap-2 transition duration-200" style="background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-dark));color:var(--deep);">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                 </svg>
                 Imprimer / PDF
             </button>
+
+            <a href="livrepdf/index.html" class="px-4 py-2 font-bold text-sm rounded-lg flex items-center gap-2 transition duration-200" style="background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid rgba(201,168,76,0.3);text-decoration:none;">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                Étudier les 7 Pages du Livret
+            </a>
         </div>
     </header>
 
     <!-- ZONE DE TRAVAIL PRINCIPALE -->
     <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
-        
+
         <!-- PANNEAU DE SAISIE (GAUCHE) -->
-        <section class="no-print w-full lg:w-5/12 bg-slate-950/40 p-4 sm:p-6 flex flex-col gap-4 border-r border-slate-800 overflow-y-auto">
+        <section class="no-print w-full lg:w-5/12 p-4 sm:p-6 flex flex-col gap-4 overflow-y-auto" style="background:rgba(26,20,9,0.6);border-right:1px solid rgba(201,168,76,0.15);">
             <div class="flex justify-between items-center">
-                <span class="text-slate-200 text-sm font-semibold flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Texte d'origine (Brut)
+                <span class="text-sm font-semibold flex items-center gap-2" style="color:var(--parchment-dark);">
+                    <span class="w-2.5 h-2.5 rounded-full" style="background:#4a9d6f;"></span> Texte d'origine (Brut)
                 </span>
-                <div class="flex gap-2">
-                    <button onclick="loadSample(3)" class="text-xs text-amber-500 hover:text-amber-400 bg-amber-500/10 px-2.5 py-1.5 rounded-md transition font-medium">Charger Page 3</button>
-                    <button onclick="loadSample(4)" class="text-xs text-amber-500 hover:text-amber-400 bg-amber-500/10 px-2.5 py-1.5 rounded-md transition font-medium">Charger Page 4</button>
-                    <button onclick="loadSample('both')" class="text-xs text-amber-500 hover:text-amber-400 bg-amber-500/10 px-2.5 py-1.5 rounded-md transition font-medium">Les Deux Pages</button>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="loadSample(3)" class="text-xs px-2.5 py-1.5 rounded-md transition font-medium" style="color:var(--gold);background:rgba(201,168,76,0.1);">Page 3</button>
+                    <button onclick="loadSample(4)" class="text-xs px-2.5 py-1.5 rounded-md transition font-medium" style="color:var(--gold);background:rgba(201,168,76,0.1);">Page 4</button>
+                    <button onclick="loadSample(5)" class="text-xs px-2.5 py-1.5 rounded-md transition font-medium" style="color:var(--gold);background:rgba(201,168,76,0.1);">Page 5</button>
+                    <button onclick="loadSample(6)" class="text-xs px-2.5 py-1.5 rounded-md transition font-medium" style="color:var(--gold);background:rgba(201,168,76,0.1);">Page 6</button>
+                    <button onclick="loadSample(7)" class="text-xs px-2.5 py-1.5 rounded-md transition font-medium" style="color:var(--gold);background:rgba(201,168,76,0.1);">Page 7</button>
                 </div>
             </div>
 
             <div class="relative flex-1 min-h-[300px] flex flex-col">
                 <!-- Glisser déposer un fichier -->
-                <div id="dropZone" class="absolute inset-0 bg-slate-900/90 border-2 border-dashed border-slate-700 rounded-xl flex flex-col items-center justify-center p-4 text-center pointer-events-none opacity-0 transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-amber-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div id="dropZone" class="absolute inset-0 rounded-xl flex flex-col items-center justify-center p-4 text-center pointer-events-none opacity-0 transition-all duration-300" style="background:rgba(13,10,6,0.94);border:2px dashed rgba(201,168,76,0.3);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2" style="color:var(--gold);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>
-                    <span class="text-sm font-semibold text-white">Déposez votre fichier .txt ici</span>
-                    <span class="text-xs text-slate-400 mt-1">Analyse et formatage automatique</span>
+                    <span class="text-sm font-semibold" style="color:var(--parchment);">Déposez votre fichier .txt ici</span>
+                    <span class="text-xs mt-1" style="color:var(--muted);">Analyse et formatage automatique</span>
                 </div>
-                
-                <textarea id="rawInput" class="w-full flex-1 bg-slate-900 border border-slate-800 text-slate-300 p-4 rounded-xl font-mono text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50 resize-none leading-relaxed" placeholder="Collez votre texte liturgique ici, ou déposez un fichier texte directement dans cette zone..."></textarea>
+
+                <textarea id="rawInput" class="w-full flex-1 p-4 rounded-xl font-mono text-sm focus:outline-none resize-none leading-relaxed" style="background:var(--deep);border:1px solid rgba(201,168,76,0.2);color:var(--parchment-dark);" placeholder="Collez votre texte liturgique ici, ou déposez un fichier texte directement dans cette zone..."></textarea>
             </div>
 
             <!-- Guide syntaxe rapide -->
-            <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-800/80">
-                <h3 class="text-slate-300 text-xs font-bold uppercase tracking-wider mb-2">Guide d'analyse automatique :</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-400">
-                    <div class="flex items-start gap-1"><span class="text-amber-500">=== PAGE X ===</span> définit une nouvelle page.</div>
-                    <div class="flex items-start gap-1"><span class="text-amber-500">Dia. / Cél. / Ts.</span> colore les dialogues.</div>
-                    <div class="flex items-start gap-1"><span class="text-amber-500">Lignes MAJUSCULES</span> deviennent des titres.</div>
-                    <div class="flex items-start gap-1"><span class="text-amber-500">Patriarcat... 3</span> crée le bas de page.</div>
+            <div class="rounded-xl p-4" style="background:rgba(13,10,6,0.5);border:1px solid rgba(201,168,76,0.15);">
+                <h3 class="text-xs font-bold uppercase tracking-wider mb-2" style="color:var(--parchment-dark);font-family:'Cinzel',serif;">Guide d'analyse automatique :</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs" style="color:var(--muted);">
+                    <div class="flex items-start gap-1"><span style="color:var(--gold);">=== PAGE X ===</span> définit une nouvelle page.</div>
+                    <div class="flex items-start gap-1"><span style="color:var(--gold);">Dia. / Cél. / Ts.</span> colore les dialogues.</div>
+                    <div class="flex items-start gap-1"><span style="color:var(--gold);">Lignes MAJUSCULES</span> deviennent des titres.</div>
+                    <div class="flex items-start gap-1"><span style="color:var(--gold);">Patriarcat... 3</span> crée le bas de page.</div>
                 </div>
             </div>
         </section>
 
         <!-- PANNEAU DE RENDER / VISU (DROITE) -->
-        <section class="w-full lg:w-7/12 bg-slate-900 p-4 sm:p-8 flex flex-col gap-6 overflow-y-auto liturgical-preview">
-            <div class="no-print flex justify-between items-center shrink-0 border-b border-slate-800 pb-3">
-                <span class="text-slate-200 text-sm font-semibold flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Rendu Structuré & Esthétique
+        <section class="w-full lg:w-7/12 p-4 sm:p-8 flex flex-col gap-6 overflow-y-auto liturgical-preview" style="background:var(--deep);">
+            <div class="no-print flex justify-between items-center shrink-0 pb-3" style="border-bottom:1px solid rgba(201,168,76,0.15);">
+                <span class="text-sm font-semibold flex items-center gap-2" style="color:var(--parchment-dark);">
+                    <span class="w-2.5 h-2.5 rounded-full" style="background:var(--gold);"></span> Rendu Structuré & Esthétique
                 </span>
-                <span class="text-xs text-slate-400 italic">Prend en charge l'impression directe</span>
+                <span class="text-xs italic" style="color:var(--muted);">Prend en charge l'impression directe</span>
             </div>
 
             <!-- Conteneur global du document rendu -->
@@ -207,19 +243,19 @@
     </main>
 
     <!-- TIROIR LEXIQUE (POPUP EN BAS) -->
-    <div id="lexiconDrawer" class="no-print fixed bottom-6 right-6 max-w-sm w-full bg-slate-950 border border-slate-800 shadow-2xl rounded-2xl p-5 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300 ease-out z-50">
+    <div id="lexiconDrawer" class="no-print fixed bottom-6 right-6 max-w-sm w-full shadow-2xl rounded-2xl p-5 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300 ease-out z-50" style="background:var(--dark);border:1px solid rgba(201,168,76,0.25);">
         <div class="flex justify-between items-start mb-2">
-            <h4 class="text-amber-500 font-bold liturgical-title tracking-wider text-sm flex items-center gap-2">
+            <h4 class="font-bold liturgical-title tracking-wider text-sm flex items-center gap-2" style="color:var(--gold);">
                 📖 LEXIQUE LITURGIQUE
             </h4>
-            <button onclick="closeLexicon()" class="text-slate-400 hover:text-white transition">
+            <button onclick="closeLexicon()" class="transition" style="color:var(--muted);">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
-        <h5 id="lexiconWord" class="text-white font-bold text-lg mb-1">Terme</h5>
-        <p id="lexiconDef" class="text-slate-300 text-sm leading-relaxed">Définition du terme liturgique byzantin...</p>
+        <h5 id="lexiconWord" class="font-bold text-lg mb-1" style="color:var(--parchment);">Terme</h5>
+        <p id="lexiconDef" class="text-sm leading-relaxed" style="color:var(--parchment-dark);">Définition du terme liturgique byzantin...</p>
     </div>
 
     <!-- CODE SCRIPT JAVASCRIPT -->
@@ -263,7 +299,7 @@ Après avoir dit leurs prières, le célébrant et le diacre se rendent à l'aut
 Dia. Bénis, Seigneur.
 
 Patriarcat d’Antioche et de Jérusalem 3`,
-            
+
             4: `=== PAGE 4 ===
 Le célébrant, resté à l'autel, lève l'Evangéliaire et trace sur l'autel le signe de la croix et dit à haute voix :
 
@@ -299,7 +335,66 @@ Ts. Kyrie eleison.
 Dia. Pour la salubrité de l'air, l'abondance des fruits de la terre et la paix des temps. Prions le Seigneur
 Ts. Kyrie eleison.
 
-Patriarcat d’Antioche et de Jérusalem 4`
+Patriarcat d’Antioche et de Jérusalem 4`,
+
+            5: `=== PAGE 5 ===
+Dia. Pour les navigateurs, les aviateurs, les voyageurs, les malades, les affligés, les prisonniers et pour le salut de tous. Prions le Seigneur !
+Ts. Kyrie eleison.
+
+Dia. Pour qu'Il nous délivre de toute affliction, colère, péril et nécessité. Prions le Seigneur !
+Ts. Kyrie eleison.
+
+Dia. Secours-nous, sauve-nous, aie pitié de nous et garde-nous, ô Dieu par ta grâce.
+Ts. Kyrie eleison.
+
+Dia. Faisant mémoire de la toute Sainte, toute Pure, bénie par-dessus tout, notre glorieuse Souveraine la Mère de Dieu et toujours Vierge Marie, avec tous les saints, remettons-nous nous-mêmes les uns les autres et toute notre vie, au Christ notre Dieu !
+Ts. A Toi Seigneur !
+
+Le célébrant, resté à l'autel, pendant cette litanie, à droite de l'autel s'il s'agit d'une liturgie pontificale, devant l'autel s'il s'agit d'une liturgie ordinaire, dit la prière du premier antiphone.
+
+À voix basse :
+
+Cél. Seigneur notre Dieu, Toi dont la force est invincible, la gloire incompréhensible, la miséricorde infinie et l'amour pour l'homme ineffable, Toi Maître, jette, selon ta bonté, un regard sur nous et sur cette sainte maison. Répands sur nous et sur ceux qui prient avec nous, l'abondance de tes miséricordes et de tes largesses.
+
+Patriarcat d’Antioche et de Jérusalem 5`,
+
+            6: `=== PAGE 6 ===
+Élevant la voix :
+
+Cél. Car à Toi conviennent tout honneur, gloire et adoration, Père, Fils et Saint-Esprit, maintenant et toujours et aux siècles des siècles.
+Ts. Amen.
+
+Le diacre se place devant l'icône du Christ. Le chœur chante le premier antiphone.
+
+Ch. Mon âme, bénis le Seigneur, Tu es béni Seigneur. Mon âme bénis le Seigneur, et que tout ce qui est en moi, bénisse son saint nom. Mon âme, bénis le Seigneur et n'oublie aucun de ses bienfaits. Le Seigneur est compatissant et miséricordieux, longanime et plein de miséricorde. Mon âme, bénis le Seigneur, et que tout ce qui est en moi bénisse son saint nom. Tu es béni Seigneur.
+
+Pendant ce chant, le deuxième prêtre et le deuxième diacre font comme précédemment et vont se placer: le prêtre, par la porte de la prothèse, à la gauche de l'autel, le diacre devant l'icône de la Vierge.
+
+Puis le deuxième diacre vient au milieu de l'église chanter la première petite litanie.
+
+Le prêtre reste devant l'autel durant les trois antiphones.
+
+Le diacre, lui, se rend pendant ce chant au milieu de l'église et chante la première petite litanie.
+
+Patriarcat d’Antioche et de Jérusalem 6`,
+
+            7: `=== PAGE 7 ===
+PREMIÈRE PETITE LITANIE
+
+Chantées comme celles du rite de saint Germain :
+
+Dia. Encore et toujours en paix. Prions le Seigneur !
+Ch. Kyrie eleison !
+
+Dia. Protège-nous, sauve-nous, aie pitié de nous et garde-nous, ô Dieu, par ta grâce.
+Ch. Kyrie eleison !
+
+Dia. Faisant mémoire de la toute sainte, toute pure, bénie par dessus tout, notre glorieuse souveraine la Mère de Dieu et toujours Vierge Marie avec tous les saints, remettons-nous nous-mêmes les uns les autres et toute notre vie, au Christ notre Dieu.
+Ch. A Toi, Seigneur !
+
+La liturgie se poursuit par la prière du deuxième antiphone dite à voix basse par le prêtre...
+
+Patriarcat d’Antioche et de Jérusalem 7`
         };
 
         const textarea = document.getElementById('rawInput');
@@ -308,15 +403,11 @@ Patriarcat d’Antioche et de Jérusalem 4`
 
         // Charger un texte exemple au départ
         window.addEventListener('DOMContentLoaded', () => {
-            loadSample('both');
+            loadSample(3);
         });
 
         function loadSample(key) {
-            if (key === 'both') {
-                textarea.value = samples[3] + "\n\n" + samples[4];
-            } else {
-                textarea.value = samples[key];
-            }
+            textarea.value = samples[key];
             processText();
         }
 
@@ -328,7 +419,7 @@ Patriarcat d’Antioche et de Jérusalem 4`
             const raw = textarea.value;
             const lines = raw.split(/\n/);
             let htmlResult = "";
-            
+
             let currentPage = null;
             let pageContent = [];
             let footerText = "Patriarcat d’Antioche et de Jérusalem";
@@ -342,8 +433,8 @@ Patriarcat d’Antioche et de Jérusalem 4`
                 if (inList && listItems.length > 0) {
                     let listHtml = '<ul class="space-y-2.5 my-4 pl-6 relative list-none">';
                     listItems.forEach(item => {
-                        listHtml += `<li class="relative leading-relaxed text-slate-700 font-medium text-[1.05rem]">
-                            <span class="absolute -left-5 text-[var(--primary)] font-bold text-lg">•</span>
+                        listHtml += `<li class="relative leading-relaxed text-[1.05rem]" style="color:#5a4020;font-weight:500;">
+                            <span class="absolute -left-5 font-bold text-lg" style="color:var(--primary);">•</span>
                             ${item}
                         </li>`;
                     });
@@ -381,32 +472,35 @@ Patriarcat d’Antioche et de Jérusalem 4`
                     continue;
                 }
 
-                // Détecter les répliques de dialogue (Dia. Cél. Ts. Chœur. etc.)
-                const dialogueMatch = line.match(/^(Dia\.|Cél\.|Ts\.)\s*(.*)$/i);
+                // Détecter les répliques de dialogue (Dia. Cél. Ts. Ch. etc.)
+                const dialogueMatch = line.match(/^(Dia\.|Cél\.|Ts\.|Ch\.)\s*(.*)$/i);
                 if (dialogueMatch) {
                     flushList();
                     const role = dialogueMatch[1].trim();
                     const text = dialogueMatch[2].trim();
-                    
-                    let roleClass = "text-slate-500";
+
+                    let roleColor = "#8a7050";
                     let roleName = role;
                     if (role.toLowerCase().startsWith("dia")) {
-                        roleClass = "text-sky-600 font-bold";
+                        roleColor = "#2c6e8a";
                         roleName = "Dia.";
                     } else if (role.toLowerCase().startsWith("cél")) {
-                        roleClass = "text-red-600 font-bold";
+                        roleColor = "#6b1a1a";
                         roleName = "Cél.";
                     } else if (role.toLowerCase().startsWith("ts")) {
-                        roleClass = "text-emerald-600 font-bold";
+                        roleColor = "#3f7a52";
                         roleName = "Ts.";
+                    } else if (role.toLowerCase().startsWith("ch")) {
+                        roleColor = "#8b6914";
+                        roleName = "Ch.";
                     }
 
                     const formattedReplique = injectLexicon(text);
 
                     pageContent.push(`
-                        <div class="flex items-start gap-4 my-3 pl-4 border-l-2 border-slate-200">
-                            <span class="${roleClass} min-w-[45px] uppercase tracking-wider text-[0.85rem] mt-1">${roleName}</span>
-                            <span class="italic text-[1.1rem] leading-relaxed text-slate-800">${formattedReplique}</span>
+                        <div class="flex items-start gap-4 my-3 pl-4" style="border-left:2px solid #e8d5b0;">
+                            <span class="min-w-[45px] uppercase tracking-wider text-[0.85rem] mt-1 font-bold" style="color:${roleColor};">${roleName}</span>
+                            <span class="italic text-[1.1rem] leading-relaxed" style="color:#2c1f0a;">${formattedReplique}</span>
                         </div>
                     `);
                     continue;
@@ -434,7 +528,7 @@ Patriarcat d’Antioche et de Jérusalem 4`
                         `);
                     } else {
                         pageContent.push(`
-                            <h3 class="rendered-title text-lg sm:text-xl font-bold tracking-wider mt-8 mb-4 uppercase border-b border-slate-100 pb-2">${line}</h3>
+                            <h3 class="rendered-title text-lg sm:text-xl font-bold tracking-wider mt-8 mb-4 uppercase pb-2" style="border-bottom:1px solid #e8d5b0;">${line}</h3>
                         `);
                     }
                     continue;
@@ -449,14 +543,14 @@ Patriarcat d’Antioche et de Jérusalem 4`
                 if (isRubrique) {
                     pageContent.push(`
                         <div class="rendered-rubrique p-4 sm:p-5 my-6 rounded-r-xl text-[0.95rem] leading-relaxed font-normal shadow-sm">
-                            <span class="font-bold text-xs uppercase tracking-wider block mb-1 text-slate-500">Rubrique</span>
+                            <span class="font-bold text-xs uppercase tracking-wider block mb-1" style="color:#8a7050;">Rubrique</span>
                             ${formattedLine}
                         </div>
                     `);
                 } else {
                     // Paragraphe standard
                     pageContent.push(`
-                        <p class="text-[1.05rem] leading-relaxed text-slate-700 my-4 text-justify">${formattedLine}</p>
+                        <p class="text-[1.05rem] leading-relaxed my-4 text-justify" style="color:#5a4020;">${formattedLine}</p>
                     `);
                 }
             }
@@ -473,9 +567,9 @@ Patriarcat d’Antioche et de Jérusalem 4`
         // Module de rendu HTML de la page
         function renderPageMarkup(num, contentArray, footer) {
             return `
-                <article class="rendered-page w-full max-w-3xl mx-auto rounded-2xl p-6 sm:p-12 transition-all duration-300 relative border border-slate-100 mb-8">
+                <article class="rendered-page w-full max-w-3xl mx-auto rounded-2xl p-6 sm:p-12 transition-all duration-300 relative mb-8" style="border:1px solid #e8d5b0;">
                     <!-- Filigrane de page supérieur -->
-                    <div class="no-print flex justify-between items-center text-xs tracking-widest text-slate-400 font-bold uppercase border-b border-slate-100 pb-4 mb-6">
+                    <div class="no-print flex justify-between items-center text-xs tracking-widest font-bold uppercase pb-4 mb-6" style="color:#8a7050;border-bottom:1px solid #e8d5b0;">
                         <span>Liturgie Byzantine</span>
                         <span>Fiche d'étude : Page ${num}</span>
                     </div>
@@ -486,7 +580,7 @@ Patriarcat d’Antioche et de Jérusalem 4`
                     </div>
 
                     <!-- Pied de page liturgique -->
-                    <footer class="mt-8 pt-4 border-t border-slate-100 flex justify-between items-center text-[0.8rem] text-slate-400 font-semibold tracking-wider">
+                    <footer class="mt-8 pt-4 flex justify-between items-center text-[0.8rem] font-semibold tracking-wider" style="color:#8a7050;border-top:1px solid #e8d5b0;">
                         <span class="uppercase">${footer}</span>
                         <span>Page ${num}</span>
                     </footer>
@@ -497,10 +591,10 @@ Patriarcat d’Antioche et de Jérusalem 4`
         // Injection des termes du lexique avec un événement au clic
         function injectLexicon(text) {
             let processed = text;
-            
+
             // On trie par taille descendante pour éviter qu'un mot court ne casse une partie d'un mot plus long
             const keys = Object.keys(LEXICON).sort((a, b) => b.length - a.length);
-            
+
             keys.forEach(term => {
                 // Créer une regex insensible à la casse et gérant le pluriel/accents simplifiés
                 let regexStr = `\\b(${term}s?)\\b`;
@@ -508,11 +602,11 @@ Patriarcat d’Antioche et de Jérusalem 4`
                 if (term === "celebrant") regexStr = `\\b(Célébrant|célébrant|Célébrants|célébrants)\\b`;
                 if (term === "diacre") regexStr = `\\b(Diacre|diacre|Diacres|diacres)\\b`;
                 if (term === "autel") regexStr = `\\b(Autel|autel|Autels|autels)\\b`;
-                
+
                 const regex = new RegExp(regexStr, "g");
-                
+
                 processed = processed.replace(regex, (match) => {
-                    return `<span class="lexicon-term font-semibold text-[var(--primary)]" onclick="openLexicon(event, '${term}')">${match}</span>`;
+                    return `<span class="lexicon-term font-semibold" style="color:var(--primary);" onclick="openLexicon(event, '${term}')">${match}</span>`;
                 });
             });
 
@@ -539,12 +633,12 @@ Patriarcat d’Antioche et de Jérusalem 4`
 
         // Changement dynamique du thème de couleurs
         function changeTheme(themeName) {
-            document.body.className = `bg-slate-900 min-h-screen flex flex-col theme-${themeName}`;
+            document.body.className = `min-h-screen flex flex-col theme-${themeName}`;
         }
 
         // Glisser-déposer un fichier .txt
         const rawInput = document.getElementById('rawInput');
-        
+
         window.addEventListener('dragenter', (e) => {
             e.preventDefault();
             dropZone.classList.remove('opacity-0', 'pointer-events-none');
@@ -564,7 +658,7 @@ Patriarcat d’Antioche et de Jérusalem 4`
         window.addEventListener('drop', (e) => {
             e.preventDefault();
             dropZone.classList.add('opacity-0', 'pointer-events-none');
-            
+
             const files = e.dataTransfer.files;
             if (files.length > 0) {
                 const file = files[0];
@@ -581,9 +675,3 @@ Patriarcat d’Antioche et de Jérusalem 4`
     </script>
 </body>
 </html>
-
-
-### Quelques astuces pour tirer le meilleur parti de ton application :
-1. **Passe la souris et clique :** Essaye de cliquer sur les mots mis en valeur en surbrillance dorée comme *diaconicon*, *évangéliaire*, ou *litanie* dans la zone de droite. Une fiche lexicale s'ouvrira immédiatement en bas à droite pour expliquer le rôle liturgique de ces éléments.
-2. **Utilise le bouton d'impression :** L'application a été entièrement stylisée pour que l'interface de gauche disparaisse lors de l'impression physique ou de l'exportation PDF. Tu obtiendras ainsi des fiches d'étude claires et nettes à distribuer.
-3. **Glisser-Déposer :** Si tu possèdes d'autres pages sous forme de fichier `.txt` sur ton ordinateur, glisse-les simplement n'importe où sur l'écran pour les importer et les mettre en page instantanément !

@@ -6,33 +6,37 @@
     <title>Liturgie de Saint Jean Chrysostome - Livret Interactif</title>
     <!-- Tailwind CSS pour un design moderne et responsive -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts pour la typographie sacrée et moderne -->
+    <!-- Google Fonts — identiques à la page principale -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0f172a; /* Slate 900 */
+            font-family: 'EB Garamond', serif;
+            background-color: #0d0a06; /* --deep */
         }
-        
+
         .liturgical-font {
-            font-family: 'Playfair Display', Georgia, serif;
+            font-family: 'EB Garamond', Georgia, serif;
         }
 
         .liturgical-title {
             font-family: 'Cinzel', serif;
         }
 
-        /* Thème Or Liturgique */
+        .nav-brand{font-family:'Cinzel',serif;font-size:0.82rem;color:#c9a84c;letter-spacing:0.1em;text-decoration:none;}
+        .nav-back{font-family:'Cinzel',serif;font-size:0.72rem;color:#e8d5b0;letter-spacing:0.12em;text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+        .nav-back:hover{color:#c9a84c;}
+
+        /* Thème Or Liturgique — palette du site */
         :root {
-            --primary: #d4af37;     /* Or liturgique */
-            --primary-dark: #aa841c;
-            --accent: #8e44ad;      /* Violet liturgique pour les transitions/notes */
-            --rubrique-bg: #fffbf0;
-            --rubrique-border: #d4af37;
-            --bg-paper: #fdfcf7;    /* Effet vieux papier noble */
+            --primary: #c9a84c;     /* Or liturgique */
+            --primary-dark: #8b6914;
+            --accent: #6b1a1a;      /* Rouge liturgique pour les transitions/notes */
+            --rubrique-bg: #fdf8ef;
+            --rubrique-border: #c9a84c;
+            --bg-paper: #fdf8ef;    /* Effet vieux papier noble */
         }
 
         /* Style des pages du livret */
@@ -105,25 +109,31 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
+    <!-- NAVIGATION -->
+    <nav class="no-print flex items-center justify-between px-6 py-3 shrink-0" style="background:rgba(13,10,6,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.2);">
+        <a class="nav-brand" href="../../../index.html">✝ Sainte Marie</a>
+        <a class="nav-back" href="../index.html">← Retour au Formateur Liturgique</a>
+    </nav>
+
     <!-- BARRE SUPÉRIEURE (NAVIGATION RAPIDE / THÈMES) -->
-    <header class="no-print bg-slate-950 border-b border-slate-800 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 shrink-0 z-10">
+    <header class="no-print px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 shrink-0 z-10" style="background:#1a1409;border-bottom:1px solid rgba(201,168,76,0.2);">
         <div class="flex items-center gap-3">
-            <div class="p-2 bg-amber-500/10 text-amber-500 rounded-lg">
+            <div class="p-2 rounded-lg" style="background:rgba(201,168,76,0.1);color:#c9a84c;">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
             </div>
             <div>
-                <h1 class="text-white font-bold text-lg leading-tight liturgical-title tracking-wider">LITURGICON INTERACTIF</h1>
-                <p class="text-slate-400 text-xs">Édition d'Étude • Patriarcat d'Antioche et de Jérusalem</p>
+                <h1 class="font-bold text-lg leading-tight liturgical-title tracking-wider" style="color:#e8cc7a;">LITURGICON INTERACTIF</h1>
+                <p class="text-xs" style="color:#8a7050;">Édition d'Étude • Patriarcat d'Antioche et de Jérusalem</p>
             </div>
         </div>
 
         <!-- Sommaire déroulant rapide -->
         <div class="flex items-center gap-4">
             <div class="flex items-center gap-2">
-                <label for="pageSelect" class="text-slate-400 text-xs font-semibold">ALLER À :</label>
-                <select id="pageSelect" onchange="goToPage(this.value)" class="bg-slate-900 border border-slate-800 text-amber-500 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-amber-500">
+                <label for="pageSelect" class="text-xs font-semibold" style="color:#8a7050;">ALLER À :</label>
+                <select id="pageSelect" onchange="goToPage(this.value)" class="text-sm rounded-lg px-3 py-1.5 focus:outline-none" style="background:#0d0a06;border:1px solid rgba(201,168,76,0.2);color:#c9a84c;">
                     <option value="1">Page de Garde (Page 1)</option>
                     <option value="2">Célébration liturgique (Page 2)</option>
                     <option value="3">Début de la Liturgie (Page 3)</option>
@@ -133,7 +143,7 @@
                     <option value="7">Petite Litanie (Page 7)</option>
                 </select>
             </div>
-            <button onclick="window.print()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-lg flex items-center gap-1.5 transition duration-200">
+            <button onclick="window.print()" class="px-4 py-2 font-bold text-xs rounded-lg flex items-center gap-1.5 transition duration-200" style="background:linear-gradient(135deg,#8b6914,#c9a84c,#8b6914);color:#0d0a06;">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                 </svg>
@@ -587,12 +597,12 @@
             </div>
 
             <!-- BOUTONS DE NAVIGATION SANS FILTRAGE IMPRESSION -->
-            <button onclick="prevPage()" class="no-print absolute left-[-60px] top-1/2 -translate-y-1/2 bg-slate-850 hover:bg-amber-500 text-white hover:text-slate-950 p-3 rounded-full transition-all duration-200 shadow-lg border border-slate-700 focus:outline-none" title="Page Précédente">
+            <button onclick="prevPage()" class="no-print absolute left-[-60px] top-1/2 -translate-y-1/2 p-3 rounded-full transition-all duration-200 shadow-lg focus:outline-none" style="background:#1a1409;color:#f5ead8;border:1px solid rgba(201,168,76,0.25);" onmouseover="this.style.background='#c9a84c';this.style.color='#0d0a06';" onmouseout="this.style.background='#1a1409';this.style.color='#f5ead8';" title="Page Précédente">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
-            <button onclick="nextPage()" class="no-print absolute right-[-60px] top-1/2 -translate-y-1/2 bg-slate-850 hover:bg-amber-500 text-white hover:text-slate-950 p-3 rounded-full transition-all duration-200 shadow-lg border border-slate-700 focus:outline-none" title="Page Suivante">
+            <button onclick="nextPage()" class="no-print absolute right-[-60px] top-1/2 -translate-y-1/2 p-3 rounded-full transition-all duration-200 shadow-lg focus:outline-none" style="background:#1a1409;color:#f5ead8;border:1px solid rgba(201,168,76,0.25);" onmouseover="this.style.background='#c9a84c';this.style.color='#0d0a06';" onmouseout="this.style.background='#1a1409';this.style.color='#f5ead8';" title="Page Suivante">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
@@ -601,33 +611,33 @@
     </main>
 
     <!-- BARRE DE STATUT BAS DE PAGE -->
-    <footer class="no-print bg-slate-950 border-t border-slate-800 px-6 py-4 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-3">
+    <footer class="no-print px-6 py-4 flex flex-col sm:flex-row justify-between items-center text-xs gap-3" style="background:#0d0a06;border-top:1px solid rgba(201,168,76,0.15);color:#8a7050;">
         <div>
-            Clavier : utilisez les touches <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-200">←</kbd> et <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-200">→</kbd> pour feuilleter.
+            Clavier : utilisez les touches <kbd class="px-1.5 py-0.5 rounded" style="background:#1a1409;border:1px solid rgba(201,168,76,0.2);color:#e8d5b0;">←</kbd> et <kbd class="px-1.5 py-0.5 rounded" style="background:#1a1409;border:1px solid rgba(201,168,76,0.2);color:#e8d5b0;">→</kbd> pour feuilleter.
         </div>
         <div class="flex items-center gap-1">
             <span>Progression :</span>
-            <div class="w-32 bg-slate-800 h-2 rounded-full overflow-hidden">
-                <div id="progressBar" class="bg-amber-500 h-full transition-all duration-300" style="width: 14.28%;"></div>
+            <div class="w-32 h-2 rounded-full overflow-hidden" style="background:#1a1409;">
+                <div id="progressBar" class="h-full transition-all duration-300" style="width: 14.28%;background:#c9a84c;"></div>
             </div>
-            <span id="progressText" class="font-bold text-amber-500 ml-1">1 / 7</span>
+            <span id="progressText" class="font-bold ml-1" style="color:#c9a84c;">1 / 7</span>
         </div>
     </footer>
 
     <!-- POPUP LEXIQUE DYNAMIQUE -->
-    <div id="lexiconDrawer" class="no-print fixed bottom-6 right-6 max-w-sm w-full bg-slate-950 border border-slate-800 shadow-2xl rounded-2xl p-5 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300 ease-out z-50">
+    <div id="lexiconDrawer" class="no-print fixed bottom-6 right-6 max-w-sm w-full shadow-2xl rounded-2xl p-5 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300 ease-out z-50" style="background:#1a1409;border:1px solid rgba(201,168,76,0.25);">
         <div class="flex justify-between items-start mb-2">
-            <h4 class="text-amber-500 font-bold liturgical-title tracking-wider text-xs flex items-center gap-1.5">
+            <h4 class="font-bold liturgical-title tracking-wider text-xs flex items-center gap-1.5" style="color:#c9a84c;">
                 📖 LEXIQUE LITURGIQUE
             </h4>
-            <button onclick="closeLexicon()" class="text-slate-400 hover:text-white transition">
+            <button onclick="closeLexicon()" class="transition" style="color:#8a7050;">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
-        <h5 id="lexiconWord" class="text-white font-bold text-base mb-1">Terme</h5>
-        <p id="lexiconDef" class="text-slate-300 text-xs leading-relaxed">Définition du terme liturgique byzantin...</p>
+        <h5 id="lexiconWord" class="font-bold text-base mb-1" style="color:#f5ead8;">Terme</h5>
+        <p id="lexiconDef" class="text-xs leading-relaxed" style="color:#e8d5b0;">Définition du terme liturgique byzantin...</p>
     </div>
 
     <!-- CODE COMPORTEMENT LIVRET -->
