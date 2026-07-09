@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiturgoForm - Formateur Liturgique Intelligent</title>
+    <!-- Tailwind CSS pour une interface moderne et soignée -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts pour une typographie liturgique soignée -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        /* Styles de la zone de rendu (Document Liturgique) */
+        .liturgical-preview {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .liturgical-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Thèmes d'accents dynamiques */
+        .theme-gold {
+            --primary: #b38600;
+            --accent: #8e44ad;
+            --rubrique-bg: #fffbf0;
+            --rubrique-border: #d4af37;
+            --bg-liturgic: #fdfcf9;
+        }
+
+        .theme-red {
+            --primary: #c0392b;
+            --accent: #2c3e50;
+            --rubrique-bg: #fdf2f2;
+            --rubrique-border: #e74c3c;
+            --bg-liturgic: #fffafb;
+        }
+
+        .theme-purple {
+            --primary: #6c5ce7;
+            --accent: #d63031;
+            --rubrique-bg: #f8f6ff;
+            --rubrique-border: #a29bfe;
+            --bg-liturgic: #faf9ff;
+        }
+
+        .theme-minimal {
+            --primary: #2d3748;
+            --accent: #4a5568;
+            --rubrique-bg: #f7fafc;
+            --rubrique-border: #cbd5e0;
+            --bg-liturgic: #ffffff;
+        }
+
+        /* Styles appliqués dynamiquement au contenu généré */
+        .rendered-page {
+            background-color: var(--bg-liturgic);
+            color: #1a202c;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .rendered-rubrique {
+            background-color: var(--rubrique-bg);
+            border-left: 4px solid var(--rubrique-border);
+            color: #4a5568;
+        }
+
+        .rendered-title {
+            color: var(--primary);
+            font-family: 'Cinzel', serif;
+        }
+
+        .rendered-subtitle {
+            color: var(--accent);
+        }
+
+        /* Lexique cliquable */
+        .lexicon-term {
+            border-bottom: 2px dashed var(--primary);
+            cursor: help;
+            transition: all 0.2s;
+            padding: 0 2px;
+            background-color: rgba(212, 175, 55, 0.08);
+        }
+        .lexicon-term:hover {
+            background-color: var(--primary);
+            color: white !important;
+            border-radius: 4px;
+        }
+
+        /* Masquage des éléments d'interface à l'impression */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background-color: white !important;
+                padding: 0 !important;
+            }
+            .rendered-page {
+                box-shadow: none !important;
+                border: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 min-h-screen flex flex-col theme-gold">
+
+    <!-- HEADER DE L'APPLI -->
+    <header class="no-print bg-slate-950 border-b border-slate-800 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="p-2 bg-amber-500/10 text-amber-500 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-white font-bold text-lg leading-tight">LiturgoForm</h1>
+                <p class="text-slate-400 text-xs">Convertisseur de manuscrits liturgiques bruts en documents d'étude modernes</p>
+            </div>
+        </div>
+        
+        <!-- Palette Thème & Actions -->
+        <div class="flex flex-wrap items-center gap-3">
+            <span class="text-slate-400 text-xs font-semibold mr-1">THÈME VISUEL :</span>
+            <div class="flex bg-slate-900 p-1 rounded-lg border border-slate-800 gap-1">
+                <button onclick="changeTheme('gold')" class="w-7 h-7 rounded-md bg-amber-500 border border-amber-600 focus:outline-none" title="Or Liturgique"></button>
+                <button onclick="changeTheme('red')" class="w-7 h-7 rounded-md bg-red-600 border border-red-700 focus:outline-none" title="Rouge Pascal"></button>
+                <button onclick="changeTheme('purple')" class="w-7 h-7 rounded-md bg-indigo-600 border border-indigo-700 focus:outline-none" title="Violet de Carême"></button>
+                <button onclick="changeTheme('minimal')" class="w-7 h-7 rounded-md bg-slate-700 border border-slate-600 focus:outline-none" title="Noir & Blanc Pur"></button>
+            </div>
+            
+            <button onclick="window.print()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm rounded-lg flex items-center gap-2 transition duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Imprimer / PDF
+            </button>
+        </div>
+    </header>
+
+    <!-- ZONE DE TRAVAIL PRINCIPALE -->
+    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+        
+        <!-- PANNEAU DE SAISIE (GAUCHE) -->
+        <section class="no-print w-full lg:w-5/12 bg-slate-950/40 p-4 sm:p-6 flex flex-col gap-4 border-r border-slate-800 overflow-y-auto">
+            <div class="flex justify-between items-center">
+                <span class="text-slate-200 text-sm font-semibold flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Texte d'origine (Brut)
+                </span>
+                <div class="flex gap-2">
+                    <button onclick="loadSample(3)" class="text-xs text-amber-500 hover:text-amber-400 bg-amber-500/10 px-2.5 py-1.5 rounded-md transition font-medium">Charger Page 3</button>
+                    <button onclick="loadSample(4)" class="text-xs text-amber-500 hover:text-amber-400 bg-amber-500/10 px-2.5 py-1.5 rounded-md transition font-medium">Charger Page 4</button>
+                    <button onclick="loadSample('both')" class="text-xs text-amber-500 hover:text-amber-400 bg-amber-500/10 px-2.5 py-1.5 rounded-md transition font-medium">Les Deux Pages</button>
+                </div>
+            </div>
+
+            <div class="relative flex-1 min-h-[300px] flex flex-col">
+                <!-- Glisser déposer un fichier -->
+                <div id="dropZone" class="absolute inset-0 bg-slate-900/90 border-2 border-dashed border-slate-700 rounded-xl flex flex-col items-center justify-center p-4 text-center pointer-events-none opacity-0 transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-amber-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <span class="text-sm font-semibold text-white">Déposez votre fichier .txt ici</span>
+                    <span class="text-xs text-slate-400 mt-1">Analyse et formatage automatique</span>
+                </div>
+                
+                <textarea id="rawInput" class="w-full flex-1 bg-slate-900 border border-slate-800 text-slate-300 p-4 rounded-xl font-mono text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50 resize-none leading-relaxed" placeholder="Collez votre texte liturgique ici, ou déposez un fichier texte directement dans cette zone..."></textarea>
+            </div>
+
+            <!-- Guide syntaxe rapide -->
+            <div class="bg-slate-900/60 rounded-xl p-4 border border-slate-800/80">
+                <h3 class="text-slate-300 text-xs font-bold uppercase tracking-wider mb-2">Guide d'analyse automatique :</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-400">
+                    <div class="flex items-start gap-1"><span class="text-amber-500">=== PAGE X ===</span> définit une nouvelle page.</div>
+                    <div class="flex items-start gap-1"><span class="text-amber-500">Dia. / Cél. / Ts.</span> colore les dialogues.</div>
+                    <div class="flex items-start gap-1"><span class="text-amber-500">Lignes MAJUSCULES</span> deviennent des titres.</div>
+                    <div class="flex items-start gap-1"><span class="text-amber-500">Patriarcat... 3</span> crée le bas de page.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANNEAU DE RENDER / VISU (DROITE) -->
+        <section class="w-full lg:w-7/12 bg-slate-900 p-4 sm:p-8 flex flex-col gap-6 overflow-y-auto liturgical-preview">
+            <div class="no-print flex justify-between items-center shrink-0 border-b border-slate-800 pb-3">
+                <span class="text-slate-200 text-sm font-semibold flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Rendu Structuré & Esthétique
+                </span>
+                <span class="text-xs text-slate-400 italic">Prend en charge l'impression directe</span>
+            </div>
+
+            <!-- Conteneur global du document rendu -->
+            <div id="renderOutput" class="space-y-12">
+                <!-- Rendu injecté dynamiquement ici -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TIROIR LEXIQUE (POPUP EN BAS) -->
+    <div id="lexiconDrawer" class="no-print fixed bottom-6 right-6 max-w-sm w-full bg-slate-950 border border-slate-800 shadow-2xl rounded-2xl p-5 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300 ease-out z-50">
+        <div class="flex justify-between items-start mb-2">
+            <h4 class="text-amber-500 font-bold liturgical-title tracking-wider text-sm flex items-center gap-2">
+                📖 LEXIQUE LITURGIQUE
+            </h4>
+            <button onclick="closeLexicon()" class="text-slate-400 hover:text-white transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <h5 id="lexiconWord" class="text-white font-bold text-lg mb-1">Terme</h5>
+        <p id="lexiconDef" class="text-slate-300 text-sm leading-relaxed">Définition du terme liturgique byzantin...</p>
+    </div>
+
+    <!-- CODE SCRIPT JAVASCRIPT -->
+    <script>
+        // Dictionnaire intégré des termes liturgiques pour le surlignage et les infobulles interactives
+        const LEXICON = {
+            "diaconicon": "Le diaconicon (diakonikon) est une pièce située au sud du sanctuaire d'une église byzantine, faisant office de sacristie. Le diacre y prépare les vêtements et les objets liturgiques.",
+            "evangeliaire": "L'Évangéliaire est le livre liturgique contenant les péricopes (passages) des Évangiles pour les lectures divines de l'année. Il est habituellement posé au centre de l'autel.",
+            "autel": "L'Autel (Sainte Table) est le centre spirituel du sanctuaire, représentant le Trône céleste et le tombeau du Christ. Il est consacré avec des reliques sacrées.",
+            "litanie": "Une litanie (ecténie) est une suite de supplications liturgiques rythmées, proclamées par le diacre, auxquelles l'assemblée ou le chœur répond généralement par 'Kyrie eleison'.",
+            "celebrant": "Le célébrant est le ministre ordonné (prêtre ou évêque) qui préside l'office et célèbre les saints mystères divins à l'autel.",
+            "kyrie eleison": "Expression grecque liturgique signifiant 'Seigneur, aie pitié !'. C'est la prière d'intercession et de contrition universelle de l'Église.",
+            "diacre": "Le diacre assiste le prêtre à l'autel, prononce les litanies et lit l'Évangile. Il fait le pont entre le sanctuaire (le divin) et la nef (le peuple).",
+            "patriarcat": "Le territoire ecclésiastique placé sous la juridiction spirituelle d'un patriarche (comme Antioche ou Jérusalem).",
+            "iconostase": "Cloison de bois ou de pierre ornée d'icônes, qui sépare la nef (où se tient l'assemblée) du sanctuaire (où se trouve l'autel).",
+            "sous-diacres": "Clercs mineurs assistant le prêtre ou le diacre pendant l'office, particulièrement chargés du maintien de l'ordre liturgique autour de l'évêque."
+        };
+
+        const samples = {
+            3: `=== PAGE 3 ===
+LITURGIE DE SAINT JEAN CHRYSOSTOME
+Les rubriques encadrées ne concernent que les liturgies pontificales.
+
+Au début de la liturgie, le clergé est disposé de lu façon suivante :
+Sur une estrade se trouvent le (ou les) évêques.
+Les prêtres, se placent à gauche et à droite de l'estrade en avant.
+Derrière l'estrade se tiennent les diacres et derrière eux les sous-diacres.
+
+Au début de la liturgie le premier prêtre s'incline devant celui qui préside, tandis que le premier diacre demande la bénédiction, le prêtre passe par la porte du diaconicon et se place devant l'autel pendant que le premier diacre se place devant l'icône du Christ et chante:
+
+Dia. Bénis, Seigneur.
+
+Le premier Prêtre, à l'autel, élève l'Evangéliaire et trace sur l'autel le signe de la croix en disant à haute voix:
+
+Cél. Béni soit le règne du Père, du Fils et du Saint-Esprit maintenant et toujours et aux siècles des siècles !
+
+Ts. Amen.
+
+Après avoir dit leurs prières, le célébrant et le diacre se rendent à l'autel, Le diacre après avoir reçu la bénédiction du célébrant, sort du sanctuaire et se rend à sa place ordinaire devant les portes royales. Il s'incline trois fois, puis proclame:
+
+Dia. Bénis, Seigneur.
+
+Patriarcat d’Antioche et de Jérusalem 3`,
+            
+            4: `=== PAGE 4 ===
+Le célébrant, resté à l'autel, lève l'Evangéliaire et trace sur l'autel le signe de la croix et dit à haute voix :
+
+Cél. Béni soit le règne du Père, du Fils et du Saint-Esprit, maintenant et toujours et aux siècles des siècles ! Amen.
+
+Le diacre chante alors la première litanie.
+
+PREMIERE OU GRANDE LITANIE
+
+Chantées comme celles de la liturgie de Saint Germain :
+
+Dia. En paix, prions le Seigneur !
+Ts. Kyrie eleison.
+
+Dia. Pour la paix d’en haut et le salut de nos âmes. Prions le Seigneur !
+Ts. Kyrie eleison.
+
+Dia. Pour la paix du monde entier, la stabilité des saintes Eglises de Dieu et l'union de tous. Prions le Seigneur !
+Ts. Kyrie eleison.
+
+Dia. Pour ce saint temple, ceux qui y pénètrent avec foi et crainte de Dieu. Prions le Seigneur !
+Ts. Kyrie eleison.
+
+Dia. Pour notre patriarche Jacques III, notre évêque N…, l'ordre vénérable des prêtres, le diaconat en Christ, pour tout le clergé et le peuple chrétien. Prions le Seigneur !
+Ts. Kyrie eleison.
+
+Dia. Pour notre pays et ceux qui le gouvernent et en particulier pour NN…Prions le Seigneur !
+Ts. Kyrie eleison.
+
+Dia. Pour cette ville (ou ce saint monastère), pour toute ville et contrée et les fidèles qui y demeurent. Prions le Seigneur
+Ts. Kyrie eleison.
+
+Dia. Pour la salubrité de l'air, l'abondance des fruits de la terre et la paix des temps. Prions le Seigneur
+Ts. Kyrie eleison.
+
+Patriarcat d’Antioche et de Jérusalem 4`
+        };
+
+        const textarea = document.getElementById('rawInput');
+        const output = document.getElementById('renderOutput');
+        const dropZone = document.getElementById('dropZone');
+
+        // Charger un texte exemple au départ
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSample('both');
+        });
+
+        function loadSample(key) {
+            if (key === 'both') {
+                textarea.value = samples[3] + "\n\n" + samples[4];
+            } else {
+                textarea.value = samples[key];
+            }
+            processText();
+        }
+
+        // Ecouter les modifications de texte en temps réel
+        textarea.addEventListener('input', processText);
+
+        // Analyseur intelligent
+        function processText() {
+            const raw = textarea.value;
+            const lines = raw.split(/\n/);
+            let htmlResult = "";
+            
+            let currentPage = null;
+            let pageContent = [];
+            let footerText = "Patriarcat d’Antioche et de Jérusalem";
+            let pageNum = "1";
+
+            // Liste de lignes temporaires pour accumuler dans un paragraphe, une liste ou un dialogue
+            let inList = false;
+            let listItems = [];
+
+            function flushList() {
+                if (inList && listItems.length > 0) {
+                    let listHtml = '<ul class="space-y-2.5 my-4 pl-6 relative list-none">';
+                    listItems.forEach(item => {
+                        listHtml += `<li class="relative leading-relaxed text-slate-700 font-medium text-[1.05rem]">
+                            <span class="absolute -left-5 text-[var(--primary)] font-bold text-lg">•</span>
+                            ${item}
+                        </li>`;
+                    });
+                    listHtml += '</ul>';
+                    pageContent.push(listHtml);
+                    inList = false;
+                    listItems = [];
+                }
+            }
+
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i].trim();
+                if (!line) {
+                    flushList();
+                    continue;
+                }
+
+                // Détecter les balises de nouvelles pages === PAGE X ===
+                const pageMatch = line.match(/^===\s*PAGE\s*(\d+)\s*===$/i);
+                if (pageMatch) {
+                    flushList();
+                    if (currentPage !== null) {
+                        htmlResult += renderPageMarkup(pageNum, pageContent, footerText);
+                    }
+                    pageNum = pageMatch[1];
+                    pageContent = [];
+                    currentPage = pageNum;
+                    continue;
+                }
+
+                // Détecter un pied de page spécifique
+                if (line.toLowerCase().includes("patriarcat") && /\d+$/.test(line)) {
+                    flushList();
+                    footerText = line.replace(/\d+$/, '').trim();
+                    continue;
+                }
+
+                // Détecter les répliques de dialogue (Dia. Cél. Ts. Chœur. etc.)
+                const dialogueMatch = line.match(/^(Dia\.|Cél\.|Ts\.)\s*(.*)$/i);
+                if (dialogueMatch) {
+                    flushList();
+                    const role = dialogueMatch[1].trim();
+                    const text = dialogueMatch[2].trim();
+                    
+                    let roleClass = "text-slate-500";
+                    let roleName = role;
+                    if (role.toLowerCase().startsWith("dia")) {
+                        roleClass = "text-sky-600 font-bold";
+                        roleName = "Dia.";
+                    } else if (role.toLowerCase().startsWith("cél")) {
+                        roleClass = "text-red-600 font-bold";
+                        roleName = "Cél.";
+                    } else if (role.toLowerCase().startsWith("ts")) {
+                        roleClass = "text-emerald-600 font-bold";
+                        roleName = "Ts.";
+                    }
+
+                    const formattedReplique = injectLexicon(text);
+
+                    pageContent.push(`
+                        <div class="flex items-start gap-4 my-3 pl-4 border-l-2 border-slate-200">
+                            <span class="${roleClass} min-w-[45px] uppercase tracking-wider text-[0.85rem] mt-1">${roleName}</span>
+                            <span class="italic text-[1.1rem] leading-relaxed text-slate-800">${formattedReplique}</span>
+                        </div>
+                    `);
+                    continue;
+                }
+
+                // Détecter si la ligne est une liste de disposition (commence par "Sur un...", "Les prêtres...", "Derrière...")
+                const listKeywords = ["sur un", "les prêtres", "derrière", "les diacres", "le prêtre se place", "devant l'autel"];
+                const isListItem = listKeywords.some(keyword => line.toLowerCase().startsWith(keyword)) || line.startsWith("-") || line.startsWith("*");
+                if (isListItem) {
+                    let cleanedItem = line.replace(/^[-*]\s*/, "");
+                    listItems.push(injectLexicon(cleanedItem));
+                    inList = true;
+                    continue;
+                } else {
+                    flushList();
+                }
+
+                // Détecter un grand titre (uniquement en majuscule, taille raisonnable, pas juste une litanie de 3 mots)
+                if (line === line.toUpperCase() && line.length > 5 && !line.includes("PATRIARCAT")) {
+                    // Si c'est le tout premier titre de la page
+                    if (pageContent.length === 0) {
+                        pageContent.push(`
+                            <h2 class="rendered-title text-2xl sm:text-3xl font-extrabold tracking-tight mt-2 mb-1 uppercase text-center">${line}</h2>
+                            <p class="rendered-subtitle text-xs text-center font-semibold italic uppercase tracking-widest opacity-80 mb-6">Office Liturgique Byzantin</p>
+                        `);
+                    } else {
+                        pageContent.push(`
+                            <h3 class="rendered-title text-lg sm:text-xl font-bold tracking-wider mt-8 mb-4 uppercase border-b border-slate-100 pb-2">${line}</h3>
+                        `);
+                    }
+                    continue;
+                }
+
+                // Détecter les rubriques (Heuristique : "Les rubriques encadrées...", "Le célébrant, resté...", ou "Le diacre chante...")
+                const rubriqueKeywords = ["rubrique", "encadrées", "resté à l'autel", "le diacre chante alors", "après avoir dit", "au début de la liturgie, le clergé"];
+                const isRubrique = rubriqueKeywords.some(keyword => line.toLowerCase().includes(keyword));
+
+                const formattedLine = injectLexicon(line);
+
+                if (isRubrique) {
+                    pageContent.push(`
+                        <div class="rendered-rubrique p-4 sm:p-5 my-6 rounded-r-xl text-[0.95rem] leading-relaxed font-normal shadow-sm">
+                            <span class="font-bold text-xs uppercase tracking-wider block mb-1 text-slate-500">Rubrique</span>
+                            ${formattedLine}
+                        </div>
+                    `);
+                } else {
+                    // Paragraphe standard
+                    pageContent.push(`
+                        <p class="text-[1.05rem] leading-relaxed text-slate-700 my-4 text-justify">${formattedLine}</p>
+                    `);
+                }
+            }
+
+            // Flush final
+            flushList();
+            if (pageContent.length > 0 || currentPage !== null) {
+                htmlResult += renderPageMarkup(pageNum, pageContent, footerText);
+            }
+
+            output.innerHTML = htmlResult;
+        }
+
+        // Module de rendu HTML de la page
+        function renderPageMarkup(num, contentArray, footer) {
+            return `
+                <article class="rendered-page w-full max-w-3xl mx-auto rounded-2xl p-6 sm:p-12 transition-all duration-300 relative border border-slate-100 mb-8">
+                    <!-- Filigrane de page supérieur -->
+                    <div class="no-print flex justify-between items-center text-xs tracking-widest text-slate-400 font-bold uppercase border-b border-slate-100 pb-4 mb-6">
+                        <span>Liturgie Byzantine</span>
+                        <span>Fiche d'étude : Page ${num}</span>
+                    </div>
+
+                    <!-- Corps de contenu -->
+                    <div class="space-y-4">
+                        ${contentArray.join('\n')}
+                    </div>
+
+                    <!-- Pied de page liturgique -->
+                    <footer class="mt-8 pt-4 border-t border-slate-100 flex justify-between items-center text-[0.8rem] text-slate-400 font-semibold tracking-wider">
+                        <span class="uppercase">${footer}</span>
+                        <span>Page ${num}</span>
+                    </footer>
+                </article>
+            `;
+        }
+
+        // Injection des termes du lexique avec un événement au clic
+        function injectLexicon(text) {
+            let processed = text;
+            
+            // On trie par taille descendante pour éviter qu'un mot court ne casse une partie d'un mot plus long
+            const keys = Object.keys(LEXICON).sort((a, b) => b.length - a.length);
+            
+            keys.forEach(term => {
+                // Créer une regex insensible à la casse et gérant le pluriel/accents simplifiés
+                let regexStr = `\\b(${term}s?)\\b`;
+                if (term === "evangeliaire") regexStr = `\\b(Evangéliaire|évangéliaire|Evangéliaires|évangéliaires)\\b`;
+                if (term === "celebrant") regexStr = `\\b(Célébrant|célébrant|Célébrants|célébrants)\\b`;
+                if (term === "diacre") regexStr = `\\b(Diacre|diacre|Diacres|diacres)\\b`;
+                if (term === "autel") regexStr = `\\b(Autel|autel|Autels|autels)\\b`;
+                
+                const regex = new RegExp(regexStr, "g");
+                
+                processed = processed.replace(regex, (match) => {
+                    return `<span class="lexicon-term font-semibold text-[var(--primary)]" onclick="openLexicon(event, '${term}')">${match}</span>`;
+                });
+            });
+
+            return processed;
+        }
+
+        // Contrôles du lexique
+        function openLexicon(event, term) {
+            event.stopPropagation();
+            const drawer = document.getElementById('lexiconDrawer');
+            const wordSpan = document.getElementById('lexiconWord');
+            const defSpan = document.getElementById('lexiconDef');
+
+            wordSpan.innerText = term.charAt(0).toUpperCase() + term.slice(1);
+            defSpan.innerText = LEXICON[term];
+
+            drawer.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+        }
+
+        function closeLexicon() {
+            const drawer = document.getElementById('lexiconDrawer');
+            drawer.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+        }
+
+        // Changement dynamique du thème de couleurs
+        function changeTheme(themeName) {
+            document.body.className = `bg-slate-900 min-h-screen flex flex-col theme-${themeName}`;
+        }
+
+        // Glisser-déposer un fichier .txt
+        const rawInput = document.getElementById('rawInput');
+        
+        window.addEventListener('dragenter', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('opacity-0', 'pointer-events-none');
+        });
+
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            if (e.relatedTarget === null) {
+                dropZone.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        window.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        window.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('opacity-0', 'pointer-events-none');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type === "text/plain" || file.name.endsWith('.txt')) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        rawInput.value = event.target.result;
+                        processText();
+                    };
+                    reader.readAsText(file);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+### Quelques astuces pour tirer le meilleur parti de ton application :
+1. **Passe la souris et clique :** Essaye de cliquer sur les mots mis en valeur en surbrillance dorée comme *diaconicon*, *évangéliaire*, ou *litanie* dans la zone de droite. Une fiche lexicale s'ouvrira immédiatement en bas à droite pour expliquer le rôle liturgique de ces éléments.
+2. **Utilise le bouton d'impression :** L'application a été entièrement stylisée pour que l'interface de gauche disparaisse lors de l'impression physique ou de l'exportation PDF. Tu obtiendras ainsi des fiches d'étude claires et nettes à distribuer.
+3. **Glisser-Déposer :** Si tu possèdes d'autres pages sous forme de fichier `.txt` sur ton ordinateur, glisse-les simplement n'importe où sur l'écran pour les importer et les mettre en page instantanément !

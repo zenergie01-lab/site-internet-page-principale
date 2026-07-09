@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liturgie de Saint Jean Chrysostome - Livret Interactif</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        liturgic: {
+                            red: '#6B1D2F',     // Rouge liturgique profond
+                            gold: '#D4AF37',    // Or riche
+                            cream: '#FCFAF6',   // Parchemin clair
+                            dark: '#1C1917',    // Ardoise sombre pour lisibilité
+                            goldLight: '#F5E6C4'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Cinzel', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts for Liturgical Elegance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            background-image: radial-gradient(circle at 50% 50%, #1e1b18 0%, #121212 100%);
+        }
+        .page-shadow {
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .parchment {
+            background-color: #FCFAF6;
+            background-image: radial-gradient(circle at 50% 50%, #fefdfb 0%, #fcfaf6 100%);
+            box-shadow: inset 0 0 40px rgba(139, 92, 26, 0.05);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1c1917;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6B1D2F;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+    </style>
+</head>
+<body class="text-stone-200 min-h-screen flex flex-col justify-between">
+
+    <!-- Top Status Bar & Navigation Header -->
+    <header class="border-b border-stone-800 bg-stone-950/80 backdrop-blur-md sticky top-0 z-50 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <span class="text-liturgic-gold text-2xl font-serif tracking-widest font-bold">☦</span>
+                <div>
+                    <h1 class="text-sm font-semibold tracking-wide uppercase text-stone-300">Patriarcat d'Antioche et de Jérusalem</h1>
+                    <p class="text-xs text-stone-500 font-serif">Liturgie de Saint Jean Chrysostome</p>
+                </div>
+            </div>
+            
+            <!-- Global Progress Tracker -->
+            <div class="flex items-center gap-4 w-full sm:w-auto justify-end">
+                <div class="hidden md:flex flex-col text-right">
+                    <span class="text-xs text-stone-400">Progression d'étude</span>
+                    <span id="global-percent" class="text-sm font-bold text-liturgic-gold">0% Validé</span>
+                </div>
+                <div class="w-32 bg-stone-800 h-2.5 rounded-full overflow-hidden relative border border-stone-700">
+                    <div id="global-progress-bar" class="bg-gradient-to-r from-liturgic-red to-liturgic-gold h-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <button onclick="toggleDashboard()" class="bg-stone-900 hover:bg-stone-800 text-stone-300 text-xs py-1.5 px-3 rounded-md border border-stone-700 transition flex items-center gap-1">
+                    📊 Tableau
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Interactive Book Container -->
+    <main class="flex-grow flex items-center justify-center py-6 px-4 md:py-10">
+        <div class="w-full max-w-4xl">
+            
+            <!-- Book Outer Frame -->
+            <div class="relative w-full min-h-[680px] md:min-h-[750px] flex flex-col justify-between rounded-2xl page-shadow border border-stone-800 bg-stone-900/30 overflow-hidden backdrop-blur-sm">
+                
+                <!-- Page Top Deco -->
+                <div class="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-liturgic-red via-liturgic-gold to-liturgic-red"></div>
+                
+                <!-- Content Viewport -->
+                <div class="flex-grow p-4 sm:p-8 md:p-12">
+                    
+                    <!-- PAGE 1: PAGE DE GARDE -->
+                    <div id="page-1" class="book-page parchment text-stone-900 rounded-xl p-6 sm:p-10 flex flex-col justify-between min-h-[500px] border border-amber-900/10 relative">
+                        <div class="absolute top-4 right-4 text-xs font-serif italic text-stone-400">Page 1 / 7</div>
+                        
+                        <!-- Top Header Deco -->
+                        <div class="text-center">
+                            <div class="text-liturgic-red text-sm font-semibold tracking-widest uppercase mb-1">Patriarcat d'Antioche et de Jérusalem</div>
+                            <div class="h-0.5 w-24 bg-liturgic-gold mx-auto my-2"></div>
+                        </div>
+
+                        <!-- Center Logo & Main Title -->
+                        <div class="my-auto flex flex-col items-center text-center">
+                            <!-- SVG and Local Logo combination with dynamic onerror handler -->
+                            <div class="relative w-44 h-44 md:w-56 md:h-56 mb-6 rounded-full overflow-hidden border-2 border-liturgic-gold/40 flex items-center justify-center bg-white shadow-md">
+                                <img id="assoc-logo" src="logo.jpg" alt="Logo de l'association" 
+                                     class="w-full h-full object-contain"
+                                     onerror="this.style.display='none'; document.getElementById('logo-placeholder').style.display='flex';">
+                                
+                                <!-- Elegant Liturgical Fallback Icon if logo.jpg is not found -->
+                                <div id="logo-placeholder" class="hidden absolute inset-0 flex flex-col items-center justify-center p-4 bg-stone-50 text-liturgic-red text-center">
+                                    <span class="text-5xl mb-2">☦</span>
+                                    <span class="text-[9px] font-bold uppercase tracking-wider text-stone-700">Paroisse Sainte Marie</span>
+                                    <span class="text-[7px] italic text-stone-500">Église Orthodoxe Indépendante</span>
+                                </div>
+                            </div>
+
+                            <h2 class="text-liturgic-red font-serif text-3xl md:text-5xl font-bold tracking-tight uppercase leading-tight">Liturgie</h2>
+                            <p class="text-stone-500 text-lg md:text-xl font-serif italic my-1">de</p>
+                            <h3 class="text-stone-800 font-serif text-2xl md:text-3xl font-semibold tracking-wide uppercase">Saint Jean Chrysostome</h3>
+                        </div>
+
+                        <!-- Bottom Footer -->
+                        <div class="text-center mt-6">
+                            <div class="h-0.5 w-32 bg-liturgic-gold mx-auto my-3"></div>
+                            <p class="text-xs text-stone-600 tracking-widest uppercase">Patriarcat d'Antioche et de Jérusalem • 2025</p>
+                        </div>
+                    </div>
+
+                    <!-- PAGE 2: CELEBRATION LITURGIQUE -->
+                    <div id="page-2" class="book-page parchment text-stone-900 rounded-xl p-6 sm:p-10 flex flex-col justify-between min-h-[500px] border border-amber-900/10 relative hidden">
+                        <div class="absolute top-4 right-4 text-xs font-serif italic text-stone-400">Page 2 / 7</div>
+                        
+                        <div class="text-center mb-6">
+                            <span class="text-liturgic-red text-xs uppercase tracking-widest font-semibold">Présentation Officielle</span>
+                            <div class="h-0.5 w-16 bg-liturgic-gold mx-auto mt-2"></div>
+                        </div>
+
+                        <div class="my-auto max-w-xl mx-auto space-y-8 text-center">
+                            <h3 class="text-2xl md:text-3xl font-serif font-bold text-liturgic-red tracking-wide uppercase">Célébration liturgique</h3>
+                            
+                            <div class="p-6 bg-white/60 rounded-xl border border-stone-200/60 shadow-sm space-y-4">
+                                <p class="text-sm font-medium text-stone-600 tracking-wide uppercase">Texte officiel du Patriarcat d'Antioche et de Jérusalem</p>
+                                
+                                <div class="py-4 border-y border-stone-200/80 my-4">
+                                    <p class="text-stone-500 text-xs italic">Imprimatur accordé par</p>
+                                    <p class="text-lg font-serif font-bold text-stone-800">Le Patriarche Jacques III</p>
+                                    <p class="text-xs text-liturgic-red font-semibold mt-1">Le 23 Février 2025</p>
+                                </div>
+                                
+                                <p class="text-sm font-semibold text-stone-700 font-serif">Édition 2025</p>
+                            </div>
+
+                            <p class="text-xs text-stone-500 italic max-w-md mx-auto">Ce livret d'apprentissage interactif permet aux clercs, diacres, sous-diacres et fidèles de se familiariser avec la structure sacrée de la divine liturgie.</p>
+                        </div>
+
+                        <div class="text-center mt-6">
+                            <p class="text-xs text-stone-600 tracking-wider">Patriarcat d'Antioche et de Jérusalem — Page 2</p>
+                        </div>
+                    </div>
+
+                    <!-- PAGE 3: DISPOSITION DU CLERGE -->
+                    <div id="page-3" class="book-page parchment text-stone-900 rounded-xl p-6 sm:p-10 flex flex-col justify-between min-h-[500px] border border-amber-900/10 relative hidden">
+                        <div class="absolute top-4 right-4 text-xs font-serif italic text-stone-400">Page 3 / 7</div>
+                        
+                        <div class="space-y-6">
+                            <!-- Title -->
+                            <div class="border-b border-stone-200 pb-3">
+                                <h3 class="text-xl md:text-2xl font-serif font-bold text-liturgic-red">LITURGIE DE SAINT JEAN CHRYSOSTOME</h3>
+                                <p class="text-xs text-stone-500 italic mt-1">Disposition initiale et bénédiction du Règne</p>
+                            </div>
+
+                            <!-- Rubrique Pontificale Box -->
+                            <div class="border-2 border-dashed border-liturgic-red/60 bg-liturgic-red/5 p-4 rounded-lg my-2">
+                                <p class="text-xs uppercase tracking-wider font-bold text-liturgic-red mb-1">✝ Rubrique Pontificale</p>
+                                <p class="text-xs sm:text-sm text-stone-800 leading-relaxed italic">Les rubriques encadrées ne concernent que les liturgies pontificales.</p>
+                            </div>
+
+                            <!-- Text Content -->
+                            <div class="space-y-4 text-sm sm:text-base text-stone-800 leading-relaxed text-justify">
+                                <p>
+                                    Au début de la liturgie, le clergé est disposé de la façon suivante :
+                                </p>
+                                <ul class="list-disc list-inside pl-4 space-y-1.5 text-stone-700 text-sm">
+                                    <li>Sur une <strong class="text-stone-900">estrade</strong> se trouvent le (ou les) évêques.</li>
+                                    <li>Les <strong class="text-stone-900">prêtres</strong> se placent à gauche et à droite de l'estrade en avant.</li>
+                                    <li>Derrière l'estrade se tiennent les <strong class="text-stone-900">diacres</strong> et derrière eux les <strong class="text-stone-900">sous-diacres</strong>.</li>
+                                </ul>
+
+                                <p>
+                                    Au début de la liturgie, le premier prêtre s'incline devant celui qui préside, tandis que le premier diacre demande la bénédiction. Le prêtre passe par la porte du diaconicon et se place devant l'autel tandis que le premier diacre se place devant l'icône du Christ et chante :
+                                </p>
+
+                                <div class="pl-4 border-l-2 border-liturgic-gold italic py-1 space-y-2">
+                                    <p><strong class="text-liturgic-red not-italic font-sans text-xs uppercase">Dia.</strong> Bénis, Seigneur.</p>
+                                </div>
+
+                                <p>
+                                    Le premier Prêtre, à l'autel, élève l'Évangéliaire et trace sur l'autel le signe de la croix en disant à haute voix :
+                                </p>
+
+                                <div class="pl-4 border-l-2 border-liturgic-red bg-stone-100 p-3 rounded-r-lg font-serif">
+                                    <p><strong class="text-liturgic-red not-italic font-sans text-xs uppercase block mb-1">Cél.</strong> « Béni soit le règne du Père, du Fils et du Saint-Esprit maintenant et toujours et aux siècles des siècles ! »</p>
+                                    <p class="mt-2 text-stone-900"><strong class="text-stone-500 font-sans text-xs uppercase">Ts.</strong> Amen.</p>
+                                </div>
+
+                                <p>
+                                    Après avoir dit leurs prières, le célébrant et le diacre se rendent à l'autel. Le diacre, après avoir reçu la bénédiction du célébrant, sort du sanctuaire et se rend à sa place ordinaire devant les portes royales. Il s'incline trois fois, puis proclame :
+                                </p>
+
+                                <div class="pl-4 border-l-2 border-liturgic-gold italic py-1">
+                                    <p><strong class="text-liturgic-red not-italic font-sans text-xs uppercase">Dia.</strong> Bénis, Seigneur.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-6 border-t border-stone-200 pt-3">
+                            <p class="text-xs text-stone-500 italic">Patriarcat d'Antioche et de Jérusalem — Page 3</p>
+                        </div>
+                    </div>
+
+                    <!-- PAGE 4: PREMIERE OU GRANDE LITANIE -->
+                    <div id="page-4" class="book-page parchment text-stone-900 rounded-xl p-6 sm:p-10 flex flex-col justify-between min-h-[500px] border border-amber-900/10 relative hidden">
+                        <div class="absolute top-4 right-4 text-xs font-serif italic text-stone-400">Page 4 / 7</div>
+                        
+                        <div class="space-y-4">
+                            <div class="border-b border-stone-200 pb-2">
+                                <h3 class="text-lg md:text-xl font-serif font-bold text-liturgic-red">PREMIÈRE OU GRANDE LITANIE</h3>
+                                <p class="text-xs text-stone-500 italic">La supplication pacifique de l'Église</p>
+                            </div>
+
+                            <p class="text-xs text-stone-700 italic leading-relaxed bg-stone-100 p-2.5 rounded border-l-2 border-amber-600">
+                                Le célébrant, resté à l'autel, lève l'Évangéliaire et trace sur l'autel le signe de la croix et dit à haute voix : <br>
+                                <strong class="text-stone-900">Cél.</strong> « Béni soit le règne du Père, du Fils et du Saint-Esprit, maintenant et toujours et aux siècles des siècles ! Amen. » <br>
+                                Le diacre chante alors la première litanie.
+                            </p>
+
+                            <p class="text-xs font-semibold text-stone-500 italic">Chantées comme celles de la liturgie de Saint Germain :</p>
+
+                            <!-- Dialogue box -->
+                            <div class="space-y-3 text-sm max-h-[350px] overflow-y-auto pr-2">
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800">En paix, prions le Seigneur !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison.</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800">Pour la paix d’en haut et le salut de nos âmes. Prions le Seigneur !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison.</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800">Pour la paix du monde entier, la stabilité des saintes Églises de Dieu et l'union de tous. Prions le Seigneur !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison.</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800">Pour ce saint temple, ceux qui y pénètrent avec foi et crainte de Dieu. Prions le Seigneur !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison.</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800 text-xs leading-relaxed">Pour notre patriarche Jacques III, notre évêque N…, l'ordre vénérable des prêtres, le diaconat en Christ, pour tout le clergé et le peuple chrétien. Prions le Seigneur !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison.</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800">Pour notre pays et ceux qui le gouvernent et en particulier pour NN… Prions le Seigneur !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison.</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800">Pour cette ville (ou ce saint monastère), pour toute ville et contrée et les fidèles qui y demeurent. Prions le Seigneur !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison.</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-2 border-b border-stone-200/60">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800">Pour la salubrité de l'air, l'abondance des fruits de la terre et la paix des temps. Prions le Seigneur !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4 border-t border-stone-200 pt-2">
+                            <p class="text-xs text-stone-500 italic">Patriarcat d'Antioche et de Jérusalem — Page 4</p>
+                        </div>
+                    </div>
+
+                    <!-- PAGE 5: GRANDE LITANIE SUITE & PRIERE DE L'ANTIPHONE -->
+                    <div id="page-5" class="book-page parchment text-stone-900 rounded-xl p-6 sm:p-10 flex flex-col justify-between min-h-[500px] border border-amber-900/10 relative hidden">
+                        <div class="absolute top-4 right-4 text-xs font-serif italic text-stone-400">Page 5 / 7</div>
+                        
+                        <div class="space-y-4">
+                            <div class="border-b border-stone-200 pb-2">
+                                <h3 class="text-lg md:text-xl font-serif font-bold text-liturgic-red">GRANDE LITANIE (Suite) & PRIÈRE</h3>
+                                <p class="text-xs text-stone-500 italic">Fin de la Litanie et Première Prière Secrète</p>
+                            </div>
+
+                            <div class="space-y-3.5 text-xs sm:text-sm max-h-[250px] overflow-y-auto pr-2 border-b border-stone-200 pb-4">
+                                <div class="grid grid-cols-12 gap-2">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800">Pour les navigateurs, les aviateurs, les voyageurs, les malades, les affligés, les prisonniers et pour le salut de tous. Prions le Seigneur !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison.</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800">Pour qu’Il nous délivre de toute affliction, colère, péril et nécessité. Prions le Seigneur !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison.</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800">Secours-nous, sauve-nous, aie pitié de nous et garde-nous, ô Dieu par ta grâce.</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison.</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-800 text-xs">Faisant mémoire de la toute Sainte, toute Pure, bénie par-dessus tout, notre glorieuse Souveraine la Mère de Dieu et toujours Vierge Marie, avec tous les saints, remettons-nous nous-mêmes les uns les autres et toute notre vie, au Christ notre Dieu !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ts.</span>
+                                    <span class="col-span-10 text-stone-900">À Toi Seigneur !</span>
+                                </div>
+                            </div>
+
+                            <!-- Secret prayer ritual context -->
+                            <div class="bg-amber-50 p-3 rounded border border-amber-200 text-xs space-y-1 text-stone-700">
+                                <p class="font-semibold text-liturgic-red uppercase tracking-wider text-[10px]">Rituel des prêtres :</p>
+                                <p>Pendant cette litanie, le célébrant, à droite de l'autel (liturgie pontificale) ou devant l'autel (liturgie ordinaire), dit la prière du premier antiphone.</p>
+                            </div>
+
+                            <div class="space-y-2">
+                                <span class="text-xs italic text-stone-500 uppercase block">À voix basse :</span>
+                                <p class="text-xs sm:text-sm font-serif italic text-stone-800 leading-relaxed bg-white p-3 rounded-md shadow-inner border border-stone-100">
+                                    « Seigneur notre Dieu, Toi dont la force est invincible, la gloire incompréhensible, la miséricorde infinie et l'amour pour l’homme ineffable, Toi Maître, jette, selon ta bonté, un regard sur nous et sur cette sainte maison. Répands sur nous et sur ceux qui prient avec nous, l’abondance de tes miséricordes et de tes largesses. »
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4 border-t border-stone-200 pt-2">
+                            <p class="text-xs text-stone-500 italic">Patriarcat d'Antioche et de Jérusalem — Page 5</p>
+                        </div>
+                    </div>
+
+                    <!-- PAGE 6: PREMIER ANTIPHONE -->
+                    <div id="page-6" class="book-page parchment text-stone-900 rounded-xl p-6 sm:p-10 flex flex-col justify-between min-h-[500px] border border-amber-900/10 relative hidden">
+                        <div class="absolute top-4 right-4 text-xs font-serif italic text-stone-400">Page 6 / 7</div>
+                        
+                        <div class="space-y-4">
+                            <div class="border-b border-stone-200 pb-2">
+                                <h3 class="text-lg md:text-xl font-serif font-bold text-liturgic-red">PREMIER ANTIPHONE</h3>
+                                <p class="text-xs text-stone-500 italic">Doxologie et premier chant d'action de grâce</p>
+                            </div>
+
+                            <div class="space-y-3 text-sm text-stone-800">
+                                <span class="text-xs italic text-stone-500 uppercase block">Élevant la voix :</span>
+                                <p class="font-serif text-base text-stone-900 pl-4 border-l-2 border-liturgic-red">
+                                    « Car à Toi conviennent tout honneur, gloire et adoration, Père, Fils et Saint-Esprit, maintenant et toujours et aux siècles des siècles. »
+                                </p>
+                                <p class="font-medium"><strong class="text-stone-500 text-xs uppercase font-sans">Ts.</strong> Amen.</p>
+
+                                <p class="text-xs text-stone-600 italic bg-stone-100 p-2.5 rounded">
+                                    Le diacre se place devant l'icône du Christ. Le chœur chante le premier antiphone.
+                                </p>
+
+                                <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-900/10 font-serif space-y-1">
+                                    <span class="text-xs font-bold text-stone-500 uppercase font-sans block mb-1">Ch. (Chœur)</span>
+                                    <p class="text-stone-900 leading-relaxed text-sm">
+                                        « Mon âme, bénis le Seigneur, Tu es béni Seigneur. Mon âme bénis le Seigneur, et que tout ce qui est en moi, bénisse son saint nom. Mon âme, bénis le Seigneur et n'oublie aucun de ses bienfaits. Le Seigneur est compatissant et miséricordieux, longanime et plein de miséricorde. Mon âme, bénis le Seigneur, et que tout ce qui est en moi bénisse son saint nom. Tu es béni Seigneur. »
+                                    </p>
+                                </div>
+
+                                <div class="text-xs text-stone-700 leading-relaxed space-y-2 pt-2">
+                                    <p>
+                                        Pendant ce chant, le deuxième prêtre et le deuxième diacre font comme précédemment et vont se placer : le prêtre, par la porte de la prothèse, à la gauche de l'autel, le diacre devant l'icône de la Vierge.
+                                    </p>
+                                    <p>
+                                        Puis le deuxième diacre vient au milieu de l'église chanter la première petite litanie. Le prêtre reste devant l'autel durant les trois antiphones. Le diacre, lui, se rend pendant ce chant au milieu de l'église et chante la première petite litanie.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4 border-t border-stone-200 pt-2">
+                            <p class="text-xs text-stone-500 italic">Patriarcat d'Antioche et de Jérusalem — Page 6</p>
+                        </div>
+                    </div>
+
+                    <!-- PAGE 7: PREMIERE PETITE LITANIE -->
+                    <div id="page-7" class="book-page parchment text-stone-900 rounded-xl p-6 sm:p-10 flex flex-col justify-between min-h-[500px] border border-amber-900/10 relative hidden">
+                        <div class="absolute top-4 right-4 text-xs font-serif italic text-stone-400">Page 7 / 7</div>
+                        
+                        <div class="space-y-4">
+                            <div class="border-b border-stone-200 pb-2">
+                                <h3 class="text-lg md:text-xl font-serif font-bold text-liturgic-red">PREMIÈRE PETITE LITANIE</h3>
+                                <p class="text-xs text-stone-500 italic">Le renouvellement de notre abandon en Dieu</p>
+                            </div>
+
+                            <p class="text-xs font-semibold text-stone-500 italic">Chantées comme celles du rite de saint Germain :</p>
+
+                            <!-- Litany dialogue -->
+                            <div class="space-y-4 text-sm sm:text-base text-stone-800">
+                                <div class="grid grid-cols-12 gap-2 pb-3 border-b border-stone-200/60">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-900 font-serif">« Encore et toujours en paix. Prions le Seigneur ! »</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-3 border-b border-stone-200/60 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ch.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-3 border-b border-stone-200/60">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-900 font-serif">« Protège-nous, sauve-nous, aie pitié de nous et garde-nous, ô Dieu, par ta grâce. »</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-3 border-b border-stone-200/60 font-medium">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ch.</span>
+                                    <span class="col-span-10 text-stone-900">Kyrie eleison !</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 pb-3">
+                                    <span class="col-span-2 text-xs font-bold text-liturgic-red uppercase">Dia.</span>
+                                    <span class="col-span-10 text-stone-900 text-xs sm:text-sm font-serif leading-relaxed">« Faisant mémoire de la toute sainte, toute pure, bénie par dessus tout, notre glorieuse souveraine la Mère de Dieu et toujours Vierge Marie avec tous les saints, remettons-nous nous-mêmes les uns les autres et toute notre vie, au Christ notre Dieu. »</span>
+                                </div>
+                                <div class="grid grid-cols-12 gap-2 font-medium bg-amber-50 p-2.5 rounded border border-amber-100">
+                                    <span class="col-span-2 text-xs font-bold text-stone-500 uppercase">Ch.</span>
+                                    <span class="col-span-10 text-liturgic-red font-serif font-bold">À Toi, Seigneur !</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 p-4 bg-white/70 border border-stone-200 rounded-lg text-xs text-stone-600 text-center">
+                                <span class="font-semibold block text-stone-800 mb-1">🕊 Fin du Premier Livret</span>
+                                <p>Félicitations, vous êtes parvenu à la fin du premier volet de la Liturgie de Saint Jean Chrysostome ! Évaluez cette page et validez le quiz final pour finaliser votre parcours.</p>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4 border-t border-stone-200 pt-2">
+                            <p class="text-xs text-stone-500 italic">Patriarcat d'Antioche et de Jérusalem — Page 7</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer Section (Status selector & Quiz Trigger) - Dynamically hidden on Page 1 & 2 -->
+                <div id="interactive-footer" class="border-t border-amber-900/10 bg-amber-50/70 p-4 sm:px-8 space-y-4 hidden">
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
+                        
+                        <!-- Status Buttons -->
+                        <div class="flex flex-col items-center sm:items-start gap-1">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-stone-500">Statut de la page</span>
+                            <div class="flex gap-2">
+                                <button onclick="setPageStatus('non-acquis')" id="btn-status-non" class="px-2.5 py-1 text-xs font-medium rounded border transition-all duration-200 bg-white hover:bg-red-50 text-red-700 border-red-200">
+                                    🔴 Non acquis
+                                </button>
+                                <button onclick="setPageStatus('en-cours')" id="btn-status-cours" class="px-2.5 py-1 text-xs font-medium rounded border transition-all duration-200 bg-white hover:bg-amber-50 text-amber-700 border-amber-200">
+                                    🟡 En cours
+                                </button>
+                                <button onclick="setPageStatus('acquis')" id="btn-status-acquis" class="px-2.5 py-1 text-xs font-medium rounded border transition-all duration-200 bg-white hover:bg-emerald-50 text-emerald-700 border-emerald-200">
+                                    🟢 Acquis
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quiz Action Button -->
+                        <div>
+                            <button id="quiz-trigger" onclick="openQuiz()" class="w-full sm:w-auto bg-liturgic-red hover:bg-red-950 text-white font-sans text-xs font-semibold px-4 py-2 rounded-lg shadow-sm border border-liturgic-red flex items-center justify-center gap-1.5 transition duration-200">
+                                📝 Lancer le Quiz de validation
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Page Navigation Panel -->
+                <div class="border-t border-stone-800 bg-stone-950 px-4 py-3 sm:px-8 flex justify-between items-center">
+                    <button id="btn-prev" onclick="prevPage()" class="opacity-50 cursor-not-allowed bg-stone-900 text-stone-300 hover:text-stone-100 text-xs py-2 px-4 rounded border border-stone-700 flex items-center gap-1 transition">
+                        ← Précédent
+                    </button>
+                    
+                    <span id="page-indicator" class="text-xs font-serif text-stone-400">Page 1 / 7</span>
+                    
+                    <button id="btn-next" onclick="nextPage()" class="bg-stone-900 text-stone-300 hover:text-stone-100 text-xs py-2 px-4 rounded border border-stone-700 flex items-center gap-1 transition">
+                        Suivant →
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Quiz Overlay / Modal -->
+    <div id="quiz-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-stone-900 border border-stone-800 text-stone-200 w-full max-w-xl rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+            <!-- Modal Header -->
+            <div class="bg-stone-950 px-6 py-4 border-b border-stone-800 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <span class="text-liturgic-gold text-xl">☦</span>
+                    <h4 class="text-sm font-semibold tracking-wide uppercase font-serif" id="quiz-modal-title">Quiz de la Page 3</h4>
+                </div>
+                <button onclick="closeQuiz()" class="text-stone-400 hover:text-stone-100 text-lg">&times;</button>
+            </div>
+            
+            <!-- Modal Body (Questions) -->
+            <div class="p-6 overflow-y-auto max-h-[500px] space-y-6" id="quiz-questions-container">
+                <!-- Dynamically injected via JS -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="bg-stone-950 px-6 py-4 border-t border-stone-800 flex justify-between items-center">
+                <p id="quiz-feedback" class="text-xs text-stone-400 italic">Veuillez répondre aux 3 questions.</p>
+                <button id="btn-submit-quiz" onclick="submitQuiz()" class="bg-liturgic-gold hover:bg-amber-600 text-stone-950 font-bold text-xs py-2 px-4 rounded-lg transition">
+                    Valider mes réponses
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Overlay / Modal -->
+    <div id="dashboard-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-stone-900 border border-stone-800 text-stone-200 w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+            
+            <div class="bg-stone-950 px-6 py-4 border-b border-stone-800 flex justify-between items-center">
+                <h4 class="text-sm font-semibold uppercase font-serif tracking-wider text-liturgic-gold">📊 Tableau de bord d'Apprentissage</h4>
+                <button onclick="toggleDashboard()" class="text-stone-400 hover:text-stone-100 text-lg">&times;</button>
+            </div>
+            
+            <div class="p-6 space-y-6">
+                <!-- Mini Stats cards -->
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div class="bg-stone-800/40 p-3 rounded-lg border border-stone-800">
+                        <span class="block text-2xl font-bold text-emerald-500" id="stat-acquis">0</span>
+                        <span class="text-[10px] text-stone-400 uppercase tracking-wider">Pages Acquises</span>
+                    </div>
+                    <div class="bg-stone-800/40 p-3 rounded-lg border border-stone-800">
+                        <span class="block text-2xl font-bold text-amber-500" id="stat-cours">0</span>
+                        <span class="text-[10px] text-stone-400 uppercase tracking-wider">En cours</span>
+                    </div>
+                    <div class="bg-stone-800/40 p-3 rounded-lg border border-stone-800">
+                        <span class="block text-2xl font-bold text-red-500" id="stat-non">0</span>
+                        <span class="text-[10px] text-stone-400 uppercase tracking-wider">Non Acquises</span>
+                    </div>
+                </div>
+
+                <!-- Page progress list -->
+                <div class="space-y-3">
+                    <h5 class="text-xs font-bold text-stone-400 uppercase tracking-wider">Détails par page</h5>
+                    <div class="space-y-2" id="dashboard-list">
+                        <!-- Dynamically generated via JS -->
+                    </div>
+                </div>
+
+                <div class="p-3 bg-stone-950/40 rounded-lg border border-stone-800 text-xs text-stone-400 leading-relaxed">
+                    💡 <strong class="text-stone-300">Note pédagogique :</strong> Pour finaliser l'acquisition complète d'une page, vous devez répondre correctement au quiz d'évaluation correspondant et marquer la page comme <span class="text-emerald-500 font-semibold">« Acquis »</span>. Vos données sont sauvegardées localement.
+                </div>
+            </div>
+
+            <div class="bg-stone-950 px-6 py-4 border-t border-stone-800 flex justify-end gap-3">
+                <button onclick="resetAllProgress()" class="text-red-400 hover:text-red-300 text-xs px-3 py-1.5 rounded bg-red-950/20 border border-red-900/30 transition">
+                    Réinitialiser tout le progrès
+                </button>
+                <button onclick="toggleDashboard()" class="bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs py-1.5 px-4 rounded-lg transition">
+                    Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Global Feedback Toast -->
+    <div id="feedback-toast" class="fixed bottom-4 right-4 bg-stone-900 border border-stone-700 text-stone-200 px-4 py-3 rounded-lg shadow-xl max-w-sm flex items-center gap-3 transform translate-y-20 opacity-0 transition duration-300 z-50">
+        <span id="toast-icon" class="text-lg">ℹ️</span>
+        <p id="toast-text" class="text-xs font-medium"></p>
+    </div>
+
+    <!-- Footer Credit Line -->
+    <footer class="border-t border-stone-800 bg-stone-950/50 py-3 text-center text-[10px] text-stone-500">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p>© 2025 Patriarcat d'Antioche et de Jérusalem — Diocèse d'Europe</p>
+            <p>Conçu pour l'apprentissage de la Divine Liturgie de Saint Jean Chrysostome</p>
+        </div>
+    </footer>
+
+    <script>
+        // Global State & Data
+        let currentPage = 1;
+        const totalPages = 7;
+        
+        // Progress State: 'non-acquis', 'en-cours', 'acquis' (for page 3 to 7)
+        let pageStatus = {
+            3: 'non-acquis',
+            4: 'non-acquis',
+            5: 'non-acquis',
+            6: 'non-acquis',
+            7: 'non-acquis'
+        };
+
+        // Quiz State for each applicable page (3 to 7)
+        let quizAttempts = {
+            3: { passed: false, score: 0 },
+            4: { passed: false, score: 0 },
+            5: { passed: false, score: 0 },
+            6: { passed: false, score: 0 },
+            7: { passed: false, score: 0 }
+        };
+
+        // Quiz Content Database
+        const quizData = {
+            3: [
+                {
+                    q: "Où se placent les prêtres au début de la Divine Liturgie ?",
+                    options: [
+                        "Derrière l'estrade avec les sous-diacres",
+                        "À gauche et à droite de l'estrade, en avant",
+                        "Directement devant les portes royales"
+                    ],
+                    correct: 1,
+                    explanation: "Les prêtres se placent à gauche et à droite de l'estrade en avant. Les diacres et sous-diacres se tiennent derrière."
+                },
+                {
+                    q: "Que fait le premier prêtre avec l'Évangéliaire à l'autel ?",
+                    options: [
+                        "Il le remet directement au premier diacre",
+                        "Il le pose sur la prothèse pour le rite",
+                        "Il l'élève et trace sur l'autel le signe de la croix"
+                    ],
+                    correct: 2,
+                    explanation: "Le prêtre élève l'Évangéliaire et trace le signe de la croix sur l'autel avant de proclamer le Règne."
+                },
+                {
+                    q: "Combien de fois le diacre s'incline-t-il devant les portes royales avant de proclamer ?",
+                    options: [
+                        "Une seule fois",
+                        "Trois fois",
+                        "Sept fois"
+                    ],
+                    correct: 1,
+                    explanation: "Le texte spécifie que le diacre s'incline trois fois avant de proclamer : 'Bénis, Seigneur'."
+                }
+            ],
+            4: [
+                {
+                    q: "Quelle litanie commence à être chantée par le diacre à la page 4 ?",
+                    options: [
+                        "La Litanie d'intercession de l'Évêque",
+                        "La Première ou Grande Litanie",
+                        "La Litanie des défunts"
+                    ],
+                    correct: 1,
+                    explanation: "Le diacre commence par chanter la Première ou Grande Litanie, après la bénédiction initiale."
+                },
+                {
+                    q: "À quel rite/liturgie ces litanies sont-elles comparées pour le chant ?",
+                    options: [
+                        "La Litanie de Saint Germain",
+                        "La Litanie de Saint Basile",
+                        "La Litanie de Saint Jacques"
+                    ],
+                    correct: 0,
+                    explanation: "La rubrique indique explicitement : 'Chantées comme celles de la liturgie de Saint Germain'."
+                },
+                {
+                    q: "Pour qui prie-t-on immédiatement après le saint temple ?",
+                    options: [
+                        "Pour les voyageurs et les prisonniers",
+                        "Pour notre pays et nos gouvernants",
+                        "Pour notre patriarche Jacques III et le clergé"
+                    ],
+                    correct: 2,
+                    explanation: "L'ordre liturgique prie d'abord pour le Patriarche, l'évêque et le clergé, puis pour le pays."
+                }
+            ],
+            5: [
+                {
+                    q: "De qui fait-on mémoire à la fin de la litanie, juste avant de remettre notre vie au Christ ?",
+                    options: [
+                        "De Saint Jean Chrysostome",
+                        "De la Mère de Dieu et toujours Vierge Marie",
+                        "De tous les fidèles martyrs"
+                    ],
+                    correct: 1,
+                    explanation: "La mémoire solennelle est faite pour la Mère de Dieu, 'la toute Sainte, toute Pure, bénie par-dessus tout'."
+                },
+                {
+                    q: "Où se place le célébrant pour lire la prière du premier antiphone lors d'une liturgie pontificale ?",
+                    options: [
+                        "Devant l'autel",
+                        "À droite de l'autel",
+                        "Sur l'estrade"
+                    ],
+                    correct: 1,
+                    explanation: "S'il s'agit d'une liturgie pontificale, le célébrant dit la prière à la droite de l'autel."
+                },
+                {
+                    q: "Comment est dite la prière du premier antiphone par le célébrant ?",
+                    options: [
+                        "À voix basse",
+                        "En chantant à haute voix",
+                        "En murmurant avec l'assemblée"
+                    ],
+                    correct: 0,
+                    explanation: "Cette première prière est dite 'À voix basse' par le célébrant pendant la litanie."
+                }
+            ],
+            6: [
+                {
+                    q: "Quelle doxologie le prêtre prononce-t-il en élevant la voix ?",
+                    options: [
+                        "« Car à Toi conviennent tout honneur, gloire et adoration... »",
+                        "« Que la bénédiction du Seigneur soit sur vous... »",
+                        "« Par la grâce de ton Fils unique... »"
+                    ],
+                    correct: 0,
+                    explanation: "Le prêtre conclut la prière secrète en élevant la voix avec : 'Car à Toi conviennent tout honneur, gloire et adoration...'"
+                },
+                {
+                    q: "Quel psaume est traditionnellement chanté pour le premier antiphone ?",
+                    options: [
+                        "« Mon âme, bénis le Seigneur... »",
+                        "« Le Seigneur est mon berger... »",
+                        "« Seigneur, écoute ma prière... »"
+                    ],
+                    correct: 0,
+                    explanation: "Le premier antiphone est : 'Mon âme, bénis le Seigneur, Tu es béni Seigneur...'"
+                },
+                {
+                    q: "Où va se placer le deuxième prêtre pendant le chant de l'antiphone ?",
+                    options: [
+                        "À la droite de l'autel, par les portes royales",
+                        "À la gauche de l'autel, par la porte de la prothèse",
+                        "Au milieu de la nef"
+                    ],
+                    correct: 1,
+                    explanation: "Le deuxième prêtre passe par la porte de la prothèse pour se placer à la gauche de l'autel."
+                }
+            ],
+            7: [
+                {
+                    q: "Comment s'appelle la litanie chantée par le deuxième diacre à la page 7 ?",
+                    options: [
+                        "La Litanie des Catéchumènes",
+                        "La Première Petite Litanie",
+                        "La Litanie de congé"
+                    ],
+                    correct: 1,
+                    explanation: "La page 7 contient la 'Première Petite Litanie'."
+                },
+                {
+                    q: "Quelle est l'invocation qui suit l'appel en paix du diacre ?",
+                    options: [
+                        "« Kyrie eleison »",
+                        "« Sagesse ! Soyons attentifs ! »",
+                        "« Amen »"
+                    ],
+                    correct: 0,
+                    explanation: "Après chaque invocation de paix du diacre, l'assemblée ou le chœur répond : 'Kyrie eleison'."
+                },
+                {
+                    q: "Quelle est la réponse finale du chœur à l'invitation d'abandon de soi au Christ ?",
+                    options: [
+                        "« Kyrie eleison »",
+                        "« À Toi, Seigneur ! »",
+                        "« Amen »"
+                    ],
+                    correct: 1,
+                    explanation: "La litanie s'achève par la belle offrande de foi : 'À Toi, Seigneur !'."
+                }
+            ]
+        };
+
+        // Initialize App
+        window.onload = function() {
+            loadProgress();
+            renderPage();
+            updateGlobalProgress();
+        };
+
+        // Load progress from Local Storage
+        function loadProgress() {
+            try {
+                const storedStatus = localStorage.getItem('liturgie_page_status_v1');
+                const storedQuiz = localStorage.getItem('liturgie_quiz_attempts_v1');
+                
+                if (storedStatus) {
+                    pageStatus = JSON.parse(storedStatus);
+                }
+                if (storedQuiz) {
+                    quizAttempts = JSON.parse(storedQuiz);
+                }
+            } catch (e) {
+                console.error("Impossible de charger la progression : ", e);
+            }
+        }
+
+        // Save progress to Local Storage
+        function saveProgress() {
+            try {
+                localStorage.setItem('liturgie_page_status_v1', JSON.stringify(pageStatus));
+                localStorage.setItem('liturgie_quiz_attempts_v1', JSON.stringify(quizAttempts));
+                updateGlobalProgress();
+            } catch (e) {
+                console.error("Impossible de sauvegarder la progression : ", e);
+            }
+        }
+
+        // Update top bar progress and dashboard
+        function updateGlobalProgress() {
+            const totalValidable = 5; // Pages 3, 4, 5, 6, 7
+            let acquiredCount = 0;
+            let inProgressCount = 0;
+            let nonAcquiredCount = 0;
+
+            for (let i = 3; i <= 7; i++) {
+                if (pageStatus[i] === 'acquis' && quizAttempts[i].passed) {
+                    acquiredCount++;
+                } else if (pageStatus[i] === 'acquis' || pageStatus[i] === 'en-cours') {
+                    inProgressCount++;
+                } else {
+                    nonAcquiredCount++;
+                }
+            }
+
+            // Calculate percentage based on (Acquis + Quiz validé)
+            const percentage = Math.round((acquiredCount / totalValidable) * 100);
+            
+            // Update UI elements
+            document.getElementById('global-percent').textContent = `${percentage}% Validé`;
+            document.getElementById('global-progress-bar').style.width = `${percentage}%`;
+
+            // Update stats in Dashboard
+            document.getElementById('stat-acquis').textContent = acquiredCount;
+            document.getElementById('stat-cours').textContent = inProgressCount;
+            document.getElementById('stat-non').textContent = nonAcquiredCount;
+        }
+
+        // Page rendering logic
+        function renderPage() {
+            // Hide all pages
+            for (let i = 1; i <= totalPages; i++) {
+                document.getElementById(`page-${i}`).classList.add('hidden');
+            }
+            
+            // Show active page
+            document.getElementById(`page-${currentPage}`).classList.remove('hidden');
+            
+            // Update indicator
+            document.getElementById('page-indicator').textContent = `Page ${currentPage} / ${totalPages}`;
+            
+            // Update Nav buttons
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            
+            if (currentPage === 1) {
+                btnPrev.classList.add('opacity-50', 'cursor-not-allowed');
+                btnPrev.disabled = true;
+            } else {
+                btnPrev.classList.remove('opacity-50', 'cursor-not-allowed');
+                btnPrev.disabled = false;
+            }
+
+            if (currentPage === totalPages) {
+                btnNext.classList.add('opacity-50', 'cursor-not-allowed');
+                btnNext.disabled = true;
+                btnNext.textContent = 'Fin du livret ✓';
+            } else {
+                btnNext.classList.remove('opacity-50', 'cursor-not-allowed');
+                btnNext.disabled = false;
+                btnNext.textContent = 'Suivant →';
+            }
+
+            // Hide or Show Status / Quiz bar (only pages 3 to 7)
+            const interactiveFooter = document.getElementById('interactive-footer');
+            if (currentPage >= 3) {
+                interactiveFooter.classList.remove('hidden');
+                updateStatusButtonsUI();
+            } else {
+                interactiveFooter.classList.add('hidden');
+            }
+        }
+
+        // Navigation
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderPage();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderPage();
+            }
+        }
+
+        // Set status of current page ('acquis', 'en-cours', 'non-acquis')
+        function setPageStatus(status) {
+            if (currentPage < 3) return;
+            
+            // If marking as Acquis but quiz isn't passed, alert user with toast
+            if (status === 'acquis' && !quizAttempts[currentPage].passed) {
+                showToast("⚠️ Note : Vous devez réussir le quiz de cette page avant de la valider comme acquise !", "warning");
+                // Allow them to select it but don't count full validation until quiz passes
+            }
+
+            pageStatus[currentPage] = status;
+            saveProgress();
+            updateStatusButtonsUI();
+            showToast(`Page ${currentPage} marquée : ${status === 'acquis' ? 'Acquise 🟢' : status === 'en-cours' ? 'En cours d\'acquisition 🟡' : 'Non acquise 🔴'}`);
+        }
+
+        // Update styling of status selector buttons
+        function updateStatusButtonsUI() {
+            const currentStatus = pageStatus[currentPage];
+            const btnNon = document.getElementById('btn-status-non');
+            const btnCours = document.getElementById('btn-status-cours');
+            const btnAcquis = document.getElementById('btn-status-acquis');
+            const quizTrigger = document.getElementById('quiz-trigger');
+
+            // Reset all styles
+            btnNon.className = "px-2.5 py-1 text-xs font-medium rounded border transition-all duration-200 bg-white hover:bg-red-50 text-red-700 border-red-200";
+            btnCours.className = "px-2.5 py-1 text-xs font-medium rounded border transition-all duration-200 bg-white hover:bg-amber-50 text-amber-700 border-amber-200";
+            btnAcquis.className = "px-2.5 py-1 text-xs font-medium rounded border transition-all duration-200 bg-white hover:bg-emerald-50 text-emerald-700 border-emerald-200";
+
+            if (currentStatus === 'non-acquis') {
+                btnNon.className = "px-2.5 py-1 text-xs font-bold rounded border transition-all duration-200 bg-red-600 text-white border-red-700 shadow-sm";
+            } else if (currentStatus === 'en-cours') {
+                btnCours.className = "px-2.5 py-1 text-xs font-bold rounded border transition-all duration-200 bg-amber-500 text-stone-900 border-amber-600 shadow-sm";
+            } else if (currentStatus === 'acquis') {
+                btnAcquis.className = "px-2.5 py-1 text-xs font-bold rounded border transition-all duration-200 bg-emerald-600 text-white border-emerald-700 shadow-sm";
+            }
+
+            // Style Quiz Trigger button depending on success
+            if (quizAttempts[currentPage].passed) {
+                quizTrigger.className = "w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-sans text-xs font-semibold px-4 py-2 rounded-lg shadow-sm border border-emerald-700 flex items-center justify-center gap-1.5 transition duration-200";
+                quizTrigger.innerHTML = "✓ Quiz Validé (" + quizAttempts[currentPage].score + "/3)";
+            } else {
+                quizTrigger.className = "w-full sm:w-auto bg-liturgic-red hover:bg-red-950 text-white font-sans text-xs font-semibold px-4 py-2 rounded-lg shadow-sm border border-liturgic-red flex items-center justify-center gap-1.5 transition duration-200";
+                quizTrigger.innerHTML = "📝 Passer le Quiz (" + quizAttempts[currentPage].score + "/3)";
+            }
+        }
+
+        // Quiz Logic
+        function openQuiz() {
+            const container = document.getElementById('quiz-questions-container');
+            const title = document.getElementById('quiz-modal-title');
+            const data = quizData[currentPage];
+
+            if (!data) return;
+
+            title.textContent = `Évaluation Liturgique : Page ${currentPage}`;
+            container.innerHTML = '';
+
+            data.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "space-y-3 bg-stone-950/40 p-4 rounded-xl border border-stone-800/80";
+                
+                const qText = document.createElement('p');
+                qText.className = "text-sm font-semibold text-stone-100 flex gap-2";
+                qText.innerHTML = `<span class="text-liturgic-gold font-bold">${index + 1}.</span> ${item.q}`;
+                qDiv.appendChild(qText);
+
+                const optGroup = document.createElement('div');
+                optGroup.className = "space-y-2 pl-6";
+
+                item.options.forEach((opt, oIdx) => {
+                    const label = document.createElement('label');
+                    label.className = "flex items-start gap-3 text-xs text-stone-300 hover:text-stone-100 cursor-pointer p-2 rounded hover:bg-stone-800/40 transition";
+                    
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `q-${index}`;
+                    radio.value = oIdx;
+                    radio.className = "mt-0.5 accent-liturgic-gold";
+
+                    label.appendChild(radio);
+                    label.appendChild(document.createTextNode(opt));
+                    optGroup.appendChild(label);
+                });
+
+                qDiv.appendChild(optGroup);
+                container.appendChild(qDiv);
+            });
+
+            document.getElementById('quiz-feedback').textContent = "Sélectionnez une réponse pour chaque question.";
+            document.getElementById('quiz-feedback').className = "text-xs text-stone-400 italic";
+            document.getElementById('quiz-modal').classList.remove('hidden');
+        }
+
+        function closeQuiz() {
+            document.getElementById('quiz-modal').classList.add('hidden');
+        }
+
+        function submitQuiz() {
+            const data = quizData[currentPage];
+            let score = 0;
+            let answeredCount = 0;
+            let allCorrect = true;
+
+            const results = [];
+
+            data.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q-${index}"]:checked`);
+                if (selected) {
+                    answeredCount++;
+                    const val = parseInt(selected.value);
+                    if (val === item.correct) {
+                        score++;
+                        results.push({ index, correct: true });
+                    } else {
+                        allCorrect = false;
+                        results.push({ index, correct: false, selected: val, trueAnswer: item.correct, exp: item.explanation });
+                    }
+                } else {
+                    allCorrect = false;
+                }
+            });
+
+            if (answeredCount < data.length) {
+                document.getElementById('quiz-feedback').textContent = "⚠️ Veuillez répondre à toutes les questions !";
+                document.getElementById('quiz-feedback').className = "text-xs text-red-400 font-bold animate-pulse";
+                return;
+            }
+
+            // Update state
+            const passed = (score === 3); // Must get 3/3 to pass
+            quizAttempts[currentPage] = {
+                passed: passed,
+                score: score
+            };
+
+            saveProgress();
+            updateStatusButtonsUI();
+
+            if (passed) {
+                document.getElementById('quiz-feedback').textContent = "🎉 Excellent ! 3/3 correct.";
+                document.getElementById('quiz-feedback').className = "text-xs text-emerald-400 font-bold";
+                showToast(`Bravo ! Quiz de la page ${currentPage} réussi !`, 'success');
+                setTimeout(() => {
+                    closeQuiz();
+                    // Automatically offer to set status to 'acquis' if not already
+                    if (pageStatus[currentPage] !== 'acquis') {
+                        setPageStatus('acquis');
+                    }
+                }, 1500);
+            } else {
+                // Show explanations for wrong answers
+                document.getElementById('quiz-feedback').textContent = `Score : ${score}/3. Révisez vos réponses.`;
+                document.getElementById('quiz-feedback').className = "text-xs text-amber-400 font-bold";
+                
+                // Highlight incorrect answers in UI
+                results.forEach(res => {
+                    if (!res.correct) {
+                        const inputs = document.getElementsByName(`q-${res.index}`);
+                        inputs.forEach(input => {
+                            if (parseInt(input.value) === res.trueAnswer) {
+                                input.parentElement.classList.add('bg-emerald-950/40', 'border', 'border-emerald-700/50', 'text-emerald-400');
+                            }
+                            if (parseInt(input.value) === res.selected) {
+                                input.parentElement.classList.add('bg-red-950/40', 'border', 'border-red-700/50', 'text-red-400');
+                            }
+                        });
+                    }
+                });
+
+                showToast(`Quiz non validé (${score}/3). Réessayez après relecture !`, 'error');
+            }
+        }
+
+        // Dashboard Overlay
+        function toggleDashboard() {
+            const modal = document.getElementById('dashboard-modal');
+            if (modal.classList.contains('hidden')) {
+                renderDashboardList();
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function renderDashboardList() {
+            const list = document.getElementById('dashboard-list');
+            list.innerHTML = '';
+
+            const pageTitles = {
+                3: "Disposition initiale du clergé",
+                4: "La Première Grande Litanie",
+                5: "Fin de la Grande Litanie",
+                6: "Le Premier Antiphone",
+                7: "La Première Petite Litanie"
+            };
+
+            for (let i = 3; i <= 7; i++) {
+                const card = document.createElement('div');
+                card.className = "flex justify-between items-center bg-stone-950/60 p-3 rounded-xl border border-stone-800 hover:border-stone-700 transition";
+
+                const left = document.createElement('div');
+                left.className = "space-y-0.5";
+                
+                const title = document.createElement('h6');
+                title.className = "text-xs font-semibold text-stone-200";
+                title.textContent = `Page ${i} • ${pageTitles[i]}`;
+                left.appendChild(title);
+
+                const badgeGroup = document.createElement('div');
+                badgeGroup.className = "flex gap-2 items-center text-[10px]";
+
+                // Statut acquisition Badge
+                const statusBadge = document.createElement('span');
+                const status = pageStatus[i];
+                if (status === 'acquis') {
+                    statusBadge.className = "text-emerald-400 font-bold";
+                    statusBadge.textContent = "🟢 Acquis";
+                } else if (status === 'en-cours') {
+                    statusBadge.className = "text-amber-400 font-bold";
+                    statusBadge.textContent = "🟡 En cours";
+                } else {
+                    statusBadge.className = "text-stone-500 font-medium";
+                    statusBadge.textContent = "🔴 Non acquis";
+                }
+                badgeGroup.appendChild(statusBadge);
+
+                // Divider dot
+                const dot = document.createElement('span');
+                dot.className = "text-stone-600";
+                dot.textContent = "•";
+                badgeGroup.appendChild(dot);
+
+                // Quiz status badge
+                const qBadge = document.createElement('span');
+                if (quizAttempts[i].passed) {
+                    qBadge.className = "text-emerald-500 font-semibold";
+                    qBadge.textContent = `✓ Quiz Réussi (${quizAttempts[i].score}/3)`;
+                } else {
+                    qBadge.className = "text-stone-500";
+                    qBadge.textContent = `✗ Quiz non validé (${quizAttempts[i].score}/3)`;
+                }
+                badgeGroup.appendChild(qBadge);
+
+                left.appendChild(badgeGroup);
+                card.appendChild(left);
+
+                // Action / Go button
+                const btnGo = document.createElement('button');
+                btnGo.className = "bg-stone-800 hover:bg-liturgic-red text-stone-300 hover:text-white transition px-3 py-1 text-[10px] rounded border border-stone-700";
+                btnGo.textContent = "Étudier";
+                btnGo.onclick = (function(pageIndex) {
+                    return function() {
+                        currentPage = pageIndex;
+                        renderPage();
+                        toggleDashboard();
+                    };
+                })(i);
+                card.appendChild(btnGo);
+
+                list.appendChild(card);
+            }
+        }
+
+        function resetAllProgress() {
+            if (confirm("Voulez-vous vraiment réinitialiser l'ensemble de votre progression ?")) {
+                pageStatus = { 3: 'non-acquis', 4: 'non-acquis', 5: 'non-acquis', 6: 'non-acquis', 7: 'non-acquis' };
+                quizAttempts = {
+                    3: { passed: false, score: 0 },
+                    4: { passed: false, score: 0 },
+                    5: { passed: false, score: 0 },
+                    6: { passed: false, score: 0 },
+                    7: { passed: false, score: 0 }
+                };
+                saveProgress();
+                renderPage();
+                renderDashboardList();
+                showToast("Progrès réinitialisé.");
+            }
+        }
+
+        // Global feedback toast notification system
+        function showToast(message, type = "info") {
+            const toast = document.getElementById('feedback-toast');
+            const text = document.getElementById('toast-text');
+            const icon = document.getElementById('toast-icon');
+
+            text.textContent = message;
+
+            if (type === "success") {
+                icon.textContent = "🎉";
+                toast.className = "fixed bottom-4 right-4 bg-emerald-900 border border-emerald-700 text-stone-100 px-4 py-3 rounded-lg shadow-xl max-w-sm flex items-center gap-3 transform translate-y-0 opacity-100 transition duration-300 z-50";
+            } else if (type === "error") {
+                icon.textContent = "❌";
+                toast.className = "fixed bottom-4 right-4 bg-red-900 border border-red-700 text-stone-100 px-4 py-3 rounded-lg shadow-xl max-w-sm flex items-center gap-3 transform translate-y-0 opacity-100 transition duration-300 z-50";
+            } else if (type === "warning") {
+                icon.textContent = "⚠️";
+                toast.className = "fixed bottom-4 right-4 bg-amber-900 border border-amber-700 text-stone-100 px-4 py-3 rounded-lg shadow-xl max-w-sm flex items-center gap-3 transform translate-y-0 opacity-100 transition duration-300 z-50";
+            } else {
+                icon.textContent = "☦";
+                toast.className = "fixed bottom-4 right-4 bg-stone-900 border border-stone-700 text-stone-200 px-4 py-3 rounded-lg shadow-xl max-w-sm flex items-center gap-3 transform translate-y-0 opacity-100 transition duration-300 z-50";
+            }
+
+            // Slide out after 3 seconds
+            setTimeout(() => {
+                toast.className = "fixed bottom-4 right-4 bg-stone-900 border border-stone-700 text-stone-200 px-4 py-3 rounded-lg shadow-xl max-w-sm flex items-center gap-3 transform translate-y-20 opacity-0 transition duration-300 z-50 pointer-events-none";
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

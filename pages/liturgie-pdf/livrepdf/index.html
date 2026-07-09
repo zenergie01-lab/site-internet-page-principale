@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liturgie de Saint Jean Chrysostome - Livret Interactif</title>
+    <!-- Tailwind CSS pour un design moderne et responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts pour la typographie sacrée et moderne -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+        }
+        
+        .liturgical-font {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .liturgical-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Thème Or Liturgique */
+        :root {
+            --primary: #d4af37;     /* Or liturgique */
+            --primary-dark: #aa841c;
+            --accent: #8e44ad;      /* Violet liturgique pour les transitions/notes */
+            --rubrique-bg: #fffbf0;
+            --rubrique-border: #d4af37;
+            --bg-paper: #fdfcf7;    /* Effet vieux papier noble */
+        }
+
+        /* Style des pages du livret */
+        .book-page {
+            background-color: var(--bg-paper);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            transition: transform 0.5s ease-in-out, opacity 0.3s ease-in-out;
+            min-height: 750px;
+        }
+
+        /* Lexique cliquable */
+        .lexicon-term {
+            border-bottom: 2px dashed var(--primary-dark);
+            cursor: help;
+            transition: all 0.2s;
+            padding: 0 2px;
+            background-color: rgba(212, 175, 55, 0.08);
+            font-weight: 600;
+        }
+        .lexicon-term:hover {
+            background-color: var(--primary-dark);
+            color: white !important;
+            border-radius: 4px;
+        }
+
+        /* Encart de rubriques */
+        .rendered-rubrique {
+            background-color: var(--rubrique-bg);
+            border-left: 4px solid var(--rubrique-border);
+            color: #4a5568;
+        }
+
+        /* Effet de transition de page */
+        .page-active {
+            display: block;
+            animation: fadeInPage 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Masquage de l'UI à l'impression */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background-color: white !important;
+                color: black !important;
+            }
+            .book-page {
+                box-shadow: none !important;
+                border: none !important;
+                display: block !important;
+                page-break-after: always;
+                min-height: auto;
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- BARRE SUPÉRIEURE (NAVIGATION RAPIDE / THÈMES) -->
+    <header class="no-print bg-slate-950 border-b border-slate-800 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 shrink-0 z-10">
+        <div class="flex items-center gap-3">
+            <div class="p-2 bg-amber-500/10 text-amber-500 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-white font-bold text-lg leading-tight liturgical-title tracking-wider">LITURGICON INTERACTIF</h1>
+                <p class="text-slate-400 text-xs">Édition d'Étude • Patriarcat d'Antioche et de Jérusalem</p>
+            </div>
+        </div>
+
+        <!-- Sommaire déroulant rapide -->
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2">
+                <label for="pageSelect" class="text-slate-400 text-xs font-semibold">ALLER À :</label>
+                <select id="pageSelect" onchange="goToPage(this.value)" class="bg-slate-900 border border-slate-800 text-amber-500 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-amber-500">
+                    <option value="1">Page de Garde (Page 1)</option>
+                    <option value="2">Célébration liturgique (Page 2)</option>
+                    <option value="3">Début de la Liturgie (Page 3)</option>
+                    <option value="4">Première Litanie (Page 4)</option>
+                    <option value="5">Grande Litanie (Suite) (Page 5)</option>
+                    <option value="6">Premier Antiphone (Page 6)</option>
+                    <option value="7">Petite Litanie (Page 7)</option>
+                </select>
+            </div>
+            <button onclick="window.print()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-lg flex items-center gap-1.5 transition duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                PDF / Imprimer
+            </button>
+        </div>
+    </header>
+
+    <!-- ZONE DE LECTURE DU LIVRET (CENTRE) -->
+    <main class="flex-1 flex items-center justify-center p-4 sm:p-8">
+        
+        <!-- CONTENEUR DU LIVRET -->
+        <div class="w-full max-w-2xl relative">
+            
+            <!-- PAGE 1 : PAGE DE GARDE -->
+            <div id="page-1" class="book-page page-active p-8 sm:p-16 flex flex-col justify-between text-center border-l-8 border-amber-600">
+                <div class="text-xs uppercase tracking-[0.25em] text-amber-800 font-semibold mb-6">Patriarcat d'Antioche et de Jérusalem</div>
+                
+                <div class="my-auto py-10 space-y-8">
+                    <span class="text-2xl sm:text-3xl tracking-[0.2em] text-slate-400 block font-light">LITURGIE</span>
+                    <span class="text-lg sm:text-xl tracking-[0.15em] text-slate-500 block italic">DE</span>
+                    <h2 class="liturgical-title text-4xl sm:text-5xl font-black text-amber-700 leading-tight drop-shadow-sm py-4 border-y-2 border-amber-200">
+                        SAINT JEAN CHRYSOSTOME
+                    </h2>
+                </div>
+
+                <div class="text-xs tracking-wider text-slate-400 mt-6 border-t border-slate-200/60 pt-4">
+                    Patriarcat d'Antioche et de Jérusalem • Page 1 • 2025
+                </div>
+            </div>
+
+            <!-- PAGE 2 : CRÉDITS ET AUTORISATIONS -->
+            <div id="page-2" class="book-page hidden p-8 sm:p-16 flex flex-col justify-between text-center border-l-4 border-slate-300">
+                <div class="text-xs uppercase tracking-widest text-slate-400 font-bold mb-6">Introduction</div>
+                
+                <div class="my-auto max-w-md mx-auto space-y-8">
+                    <h3 class="liturgical-title text-2xl text-amber-700 font-bold">Célébration liturgique</h3>
+                    
+                    <div class="w-16 h-0.5 bg-amber-500/30 mx-auto"></div>
+                    
+                    <p class="liturgical-font text-lg text-slate-700 italic leading-relaxed">
+                        Texte officiel du Patriarcat d'Antioche et de Jérusalem
+                    </p>
+                    
+                    <div class="bg-amber-50/50 p-6 rounded-xl border border-amber-100 italic text-slate-600 text-sm space-y-2">
+                        <p class="font-bold text-amber-800 not-italic">Imprimatur</p>
+                        <p>du Patriarche Jacques III</p>
+                        <p class="text-xs text-slate-400">Décrété le 23 février 2025</p>
+                    </div>
+
+                    <p class="text-xs text-slate-400 tracking-widest uppercase">Edition 2025</p>
+                </div>
+
+                <div class="text-xs tracking-wider text-slate-400 mt-6 border-t border-slate-200/60 pt-4">
+                    Patriarcat d'Antioche et de Jérusalem • Page 2
+                </div>
+            </div>
+
+            <!-- PAGE 3 : LITURGIE DE SAINT JEAN CHRYSOSTOME (DÉBUT) -->
+            <div id="page-3" class="book-page hidden p-6 sm:p-12 flex flex-col justify-between border-l-4 border-amber-600">
+                <div>
+                    <!-- En-tête -->
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3 mb-6">
+                        <h3 class="liturgical-title text-sm font-bold text-amber-700">Liturgie de St Jean Chrysostome</h3>
+                        <span class="text-xs font-mono font-bold text-slate-400">P. 3</span>
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="space-y-4 text-slate-800">
+                        <div class="rendered-rubrique p-4 rounded-r-xl text-sm leading-relaxed shadow-sm">
+                            <span class="font-bold text-xs uppercase tracking-wider block mb-1 text-amber-800">Note Pontificale</span>
+                            Les rubriques encadrées ne concernent que les liturgies pontificales.
+                        </div>
+
+                        <p class="liturgical-font text-[1.05rem] leading-relaxed text-slate-700">
+                            Au début de la liturgie, le clergé est disposé de la façon suivante :
+                        </p>
+                        
+                        <!-- Liste Clergé -->
+                        <ul class="space-y-2 my-4 pl-6 relative list-none">
+                            <li class="relative text-slate-700 text-sm">
+                                <span class="absolute -left-4 text-amber-600 font-bold">•</span>
+                                Sur une estrade se trouvent le (ou les) <span class="lexicon-term" onclick="openLexicon(event, 'évêques')">évêques</span>.
+                            </li>
+                            <li class="relative text-slate-700 text-sm">
+                                <span class="absolute -left-4 text-amber-600 font-bold">•</span>
+                                Les prêtres se placent à gauche et à droite de l'estrade en avant.
+                            </li>
+                            <li class="relative text-slate-700 text-sm">
+                                <span class="absolute -left-4 text-amber-600 font-bold">•</span>
+                                Derrière l'estrade se tiennent les <span class="lexicon-term" onclick="openLexicon(event, 'diacres')">diacres</span> et derrière eux les <span class="lexicon-term" onclick="openLexicon(event, 'sous-diacres')">sous-diacres</span>.
+                            </li>
+                        </ul>
+
+                        <p class="liturgical-font text-[0.95rem] text-slate-600 leading-relaxed text-justify">
+                            Au début de la liturgie, le premier prêtre s'incline devant celui qui préside, tandis que le premier diacre demande la bénédiction, le prêtre passe par la porte du <span class="lexicon-term" onclick="openLexicon(event, 'diaconicon')">diaconicon</span> et se place devant l'<span class="lexicon-term" onclick="openLexicon(event, 'autel')">autel</span> pendant que le premier diacre se place devant l'icône du Christ et chante :
+                        </p>
+
+                        <!-- Dialogue -->
+                        <div class="flex items-start gap-4 my-2 pl-4 border-l-2 border-sky-300">
+                            <span class="text-sky-600 font-bold min-w-[40px] text-xs mt-1 uppercase tracking-wider">Dia.</span>
+                            <span class="italic text-[1.05rem] text-slate-800 font-serif">Bénis, Seigneur.</span>
+                        </div>
+
+                        <p class="liturgical-font text-[0.95rem] text-slate-600 leading-relaxed text-justify">
+                            Le premier Prêtre, à l'autel, élève l'<span class="lexicon-term" onclick="openLexicon(event, 'evangeliaire')">Évangéliaire</span> et trace sur l'autel le signe de la croix en disant à haute voix :
+                        </p>
+
+                        <div class="flex items-start gap-4 my-2 pl-4 border-l-2 border-red-300">
+                            <span class="text-red-600 font-bold min-w-[40px] text-xs mt-1 uppercase tracking-wider">Cél.</span>
+                            <span class="italic text-[1.05rem] text-slate-800 font-serif">Béni soit le règne du Père, du Fils et du Saint-Esprit maintenant et toujours et aux siècles des siècles !</span>
+                        </div>
+
+                        <div class="flex items-start gap-4 my-2 pl-4 border-l-2 border-emerald-300">
+                            <span class="text-emerald-600 font-bold min-w-[40px] text-xs mt-1 uppercase tracking-wider">Ts.</span>
+                            <span class="italic text-[1.05rem] text-slate-800 font-serif">Amen.</span>
+                        </div>
+
+                        <p class="liturgical-font text-[0.95rem] text-slate-600 leading-relaxed text-justify">
+                            Après avoir dit leurs prières, le célébrant et le diacre se rendent à l'autel, Le diacre après avoir reçu la bénédiction du célébrant, sort du sanctuaire et se rend à sa place ordinaire devant les portes royales. Il s'incline trois fois, puis proclame :
+                        </p>
+
+                        <div class="flex items-start gap-4 my-2 pl-4 border-l-2 border-sky-300">
+                            <span class="text-sky-600 font-bold min-w-[40px] text-xs mt-1 uppercase tracking-wider">Dia.</span>
+                            <span class="italic text-[1.05rem] text-slate-800 font-serif">Bénis, Seigneur.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-xs tracking-wider text-slate-400 mt-6 border-t border-slate-200/60 pt-4 text-center">
+                    Patriarcat d'Antioche et de Jérusalem 3
+                </div>
+            </div>
+
+            <!-- PAGE 4 : PREMIÈRE OU GRANDE LITANIE -->
+            <div id="page-4" class="book-page hidden p-6 sm:p-12 flex flex-col justify-between border-l-4 border-amber-600">
+                <div>
+                    <!-- En-tête -->
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3 mb-6">
+                        <h3 class="liturgical-title text-sm font-bold text-amber-700">Première ou Grande Litanie</h3>
+                        <span class="text-xs font-mono font-bold text-slate-400">P. 4</span>
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="space-y-4 text-slate-800">
+                        <p class="liturgical-font text-[0.95rem] text-slate-600 leading-relaxed text-justify">
+                            Le célébrant, resté à l'autel, lève l'<span class="lexicon-term" onclick="openLexicon(event, 'evangeliaire')">Évangéliaire</span> et trace sur l'autel le signe de la croix et dit à haute voix :
+                        </p>
+
+                        <div class="flex items-start gap-4 my-2 pl-4 border-l-2 border-red-300">
+                            <span class="text-red-600 font-bold min-w-[40px] text-xs mt-1 uppercase tracking-wider">Cél.</span>
+                            <span class="italic text-[1.05rem] text-slate-800 font-serif">Béni soit le règne du Père, du Fils et du Saint-Esprit, maintenant et toujours et aux siècles des siècles ! Amen.</span>
+                        </div>
+
+                        <div class="rendered-rubrique p-3 rounded-r-xl text-xs leading-relaxed italic">
+                            Le diacre chante alors la première litanie.
+                        </div>
+
+                        <h4 class="liturgical-title text-center text-sm font-bold text-amber-700 tracking-wider pt-2">PREMIERE OU GRANDE LITANIE</h4>
+                        <p class="text-center text-xs italic text-slate-500 mb-2">Chantées comme celles de la liturgie de Saint Germain :</p>
+
+                        <!-- Succession de litanies -->
+                        <div class="max-h-[350px] overflow-y-auto pr-2 space-y-3">
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">En paix, prions le Seigneur !</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800"><span class="lexicon-term" onclick="openLexicon(event, 'kyrie eleison')">Kyrie eleison</span>.</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">Pour la paix d’en haut et le salut de nos âmes. Prions le Seigneur !</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800">Kyrie eleison.</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">Pour la paix du monde entier, la stabilité des saintes Églises de Dieu et l'union de tous. Prions le Seigneur !</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800">Kyrie eleison.</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">Pour ce saint temple, ceux qui y pénètrent avec foi et crainte de Dieu. Prions le Seigneur !</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800">Kyrie eleison.</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">Pour notre <span class="lexicon-term" onclick="openLexicon(event, 'patriarcat')">patriarche</span> Jacques III, notre évêque N…, l'ordre vénérable des prêtres, le diaconat en Christ, pour tout le clergé et le peuple chrétien. Prions le Seigneur !</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800">Kyrie eleison.</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">Pour notre pays et ceux qui le gouvernent et en particulier pour NN… Prions le Seigneur !</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800">Kyrie eleison.</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">Pour cette ville (ou ce saint monastère), pour toute ville et contrée et les fidèles qui y demeurent. Prions le Seigneur !</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800">Kyrie eleison.</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">Pour la salubrité de l'air, l'abondance des fruits de la terre et la paix des temps. Prions le Seigneur !</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800">Kyrie eleison.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-xs tracking-wider text-slate-400 mt-6 border-t border-slate-200/60 pt-4 text-center">
+                    Patriarcat d'Antioche et de Jérusalem 4
+                </div>
+            </div>
+
+            <!-- PAGE 5 : GRANDE LITANIE (SUITE & PRIÈRE ANTIPHONE) -->
+            <div id="page-5" class="book-page hidden p-6 sm:p-12 flex flex-col justify-between border-l-4 border-amber-600">
+                <div>
+                    <!-- En-tête -->
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3 mb-6">
+                        <h3 class="liturgical-title text-sm font-bold text-amber-700">Grande Litanie & Prière</h3>
+                        <span class="text-xs font-mono font-bold text-slate-400">P. 5</span>
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="space-y-4 text-slate-800">
+                        <div class="max-h-[300px] overflow-y-auto pr-2 space-y-3">
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">Pour les navigateurs, les aviateurs, les voyageurs, les malades, les affligés, les prisonniers et pour le salut de tous. Prions le Seigneur !</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800">Kyrie eleison.</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">Pour qu'Il nous délivre de toute affliction, colère, péril et nécessité. Prions le Seigneur !</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800">Kyrie eleison.</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">Secours-nous, sauve-nous, aie pitié de nous et garde-nous, ô Dieu par ta grâce.</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800">Kyrie eleison.</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[35px] text-xs">Dia.</span>
+                                    <span class="italic text-sm text-slate-800">Faisant mémoire de la toute Sainte, toute Pure, bénie par-dessus tout, notre glorieuse Souveraine la Mère de Dieu et toujours Vierge Marie, avec tous les saints, remettons-nous nous-mêmes les uns les autres et toute notre vie, au Christ notre Dieu !</span>
+                                </div>
+                                <div class="flex items-start gap-3 pl-3 border-l-2 border-emerald-300">
+                                    <span class="text-emerald-600 font-bold min-w-[35px] text-xs">Ts.</span>
+                                    <span class="font-serif text-sm text-slate-800">A Toi Seigneur !</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rendered-rubrique p-4 rounded-r-xl text-xs leading-relaxed">
+                            <span class="font-bold text-amber-800 uppercase block mb-1">Rubrique d'autel</span>
+                            Pendant cette litanie, le célébrant, à droite de l'autel s'il s'agit d'une liturgie pontificale, devant l'autel s'il s'agit d'une liturgie ordinaire, dit la prière du premier <span class="lexicon-term" onclick="openLexicon(event, 'antiphone')">antiphone</span>.
+                        </div>
+
+                        <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100 space-y-1">
+                            <span class="text-xs font-bold text-slate-400 block uppercase italic">À voix basse :</span>
+                            <div class="flex items-start gap-4 pl-3 border-l-2 border-red-300">
+                                <span class="text-red-600 font-bold text-xs mt-1">Cél.</span>
+                                <span class="italic text-sm text-slate-700 leading-relaxed font-serif">Seigneur notre Dieu, Toi dont la force est invincible, la gloire incompréhensible, la miséricorde infinie et l'amour pour l'homme ineffable, Toi Maître, jette, selon ta bonté, un regard sur nous et sur cette sainte maison. Répands sur nous et sur ceux qui prient avec nous, l'abondance de tes miséricordes et de tes largesses.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-xs tracking-wider text-slate-400 mt-6 border-t border-slate-200/60 pt-4 text-center">
+                    Patriarcat d'Antioche et de Jérusalem 5
+                </div>
+            </div>
+
+            <!-- PAGE 6 : PREMIER ANTIPHONE -->
+            <div id="page-6" class="book-page hidden p-6 sm:p-12 flex flex-col justify-between border-l-4 border-amber-600">
+                <div>
+                    <!-- En-tête -->
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3 mb-6">
+                        <h3 class="liturgical-title text-sm font-bold text-amber-700">Le Premier Antiphone</h3>
+                        <span class="text-xs font-mono font-bold text-slate-400">P. 6</span>
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="space-y-4 text-slate-800">
+                        <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100 space-y-1">
+                            <span class="text-xs font-bold text-slate-400 block uppercase italic">Élevant la voix :</span>
+                            <div class="flex items-start gap-4 pl-3 border-l-2 border-red-300">
+                                <span class="text-red-600 font-bold text-xs mt-1">Cél.</span>
+                                <span class="italic text-sm text-slate-700 leading-relaxed font-serif">Car à Toi conviennent tout honneur, gloire et adoration, Père, Fils et Saint-Esprit, maintenant et toujours et aux siècles des siècles.</span>
+                            </div>
+                            <div class="flex items-start gap-4 pl-3 border-l-2 border-emerald-300">
+                                <span class="text-emerald-600 font-bold text-xs mt-1">Ts.</span>
+                                <span class="italic text-sm text-slate-700 leading-relaxed font-serif">Amen.</span>
+                            </div>
+                        </div>
+
+                        <p class="liturgical-font text-[0.95rem] text-slate-600 leading-relaxed text-justify">
+                            Le <span class="lexicon-term" onclick="openLexicon(event, 'diacre')">diacre</span> se place devant l'icône du Christ. Le chœur chante le premier antiphone.
+                        </p>
+
+                        <!-- Chant du Choeur -->
+                        <div class="flex items-start gap-4 my-3 pl-4 border-l-2 border-amber-400">
+                            <span class="text-amber-700 font-bold min-w-[40px] text-xs mt-1 uppercase tracking-wider">Ch.</span>
+                            <span class="italic text-[1.05rem] text-slate-800 font-serif leading-relaxed">Mon âme, bénis le Seigneur, Tu es béni Seigneur. Mon âme bénis le Seigneur, et que tout ce qui est en moi, bénisse son saint nom. Mon âme, bénis le Seigneur et n'oublie aucun de ses bienfaits. Le Seigneur est compatissant et miséricordieux, longanime et plein de miséricorde. Mon âme, bénis le Seigneur, et que tout ce qui est en moi bénisse son saint nom. Tu es béni Seigneur.</span>
+                        </div>
+
+                        <p class="liturgical-font text-[0.9rem] text-slate-500 leading-relaxed text-justify italic">
+                            Pendant ce chant, le deuxième prêtre et le deuxième diacre font comme précédemment et vont se placer: le prêtre, par la porte de la prothèse, à la gauche de l'autel, le diacre devant l'icône de la Vierge.
+                        </p>
+
+                        <p class="liturgical-font text-[0.9rem] text-slate-500 leading-relaxed text-justify italic">
+                            Puis le deuxième diacre vient au milieu de l'église chanter la première petite litanie.
+                        </p>
+
+                        <p class="liturgical-font text-[0.9rem] text-slate-500 leading-relaxed text-justify italic">
+                            Le prêtre reste devant l'autel durant les trois antiphones.
+                        </p>
+
+                        <p class="liturgical-font text-[0.9rem] text-slate-500 leading-relaxed text-justify italic">
+                            Le diacre, lui, se rend pendant ce chant au milieu de l'église et chante la première petite litanie.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-xs tracking-wider text-slate-400 mt-6 border-t border-slate-200/60 pt-4 text-center">
+                    Patriarcat d'Antioche et de Jérusalem 6
+                </div>
+            </div>
+
+            <!-- PAGE 7 : PREMIÈRE PETITE LITANIE -->
+            <div id="page-7" class="book-page hidden p-6 sm:p-12 flex flex-col justify-between border-l-4 border-amber-600">
+                <div>
+                    <!-- En-tête -->
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3 mb-6">
+                        <h3 class="liturgical-title text-sm font-bold text-amber-700">Première Petite Litanie</h3>
+                        <span class="text-xs font-mono font-bold text-slate-400">P. 7</span>
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="space-y-4 text-slate-800">
+                        <h4 class="liturgical-title text-center text-sm font-bold text-amber-700 tracking-wider">PREMIÈRE PETITE LITANIE</h4>
+                        <p class="text-center text-xs italic text-slate-500 mb-4">Chantées comme celles du rite de saint Germain :</p>
+
+                        <div class="space-y-4">
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-4 pl-4 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[40px] text-xs">Dia.</span>
+                                    <span class="italic text-[1.05rem] text-slate-800 font-serif">Encore et toujours en paix. Prions le Seigneur !</span>
+                                </div>
+                                <div class="flex items-start gap-4 pl-4 border-l-2 border-amber-500">
+                                    <span class="text-amber-700 font-bold min-w-[40px] text-xs">Ch.</span>
+                                    <span class="font-serif text-[1.05rem] text-slate-800">Kyrie eleison !</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-4 pl-4 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[40px] text-xs">Dia.</span>
+                                    <span class="italic text-[1.05rem] text-slate-800 font-serif">Protège-nous, sauve-nous, aie pitié de nous et garde-nous, ô Dieu, par ta grâce.</span>
+                                </div>
+                                <div class="flex items-start gap-4 pl-4 border-l-2 border-amber-500">
+                                    <span class="text-amber-700 font-bold min-w-[40px] text-xs">Ch.</span>
+                                    <span class="font-serif text-[1.05rem] text-slate-800">Kyrie eleison !</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex items-start gap-4 pl-4 border-l-2 border-sky-300">
+                                    <span class="text-sky-600 font-bold min-w-[40px] text-xs">Dia.</span>
+                                    <span class="italic text-[1.05rem] text-slate-800 font-serif">Faisant mémoire de la toute sainte, toute pure, bénie par dessus tout, notre glorieuse souveraine la Mère de Dieu et toujours Vierge Marie avec tous les saints, remettons-nous nous-mêmes les uns les autres et toute notre vie, au Christ notre Dieu.</span>
+                                </div>
+                                <div class="flex items-start gap-4 pl-4 border-l-2 border-amber-500">
+                                    <span class="text-amber-700 font-bold min-w-[40px] text-xs">Ch.</span>
+                                    <span class="font-serif text-[1.05rem] text-slate-800">A Toi, Seigneur !</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rendered-rubrique p-4 rounded-r-xl text-xs leading-relaxed italic mt-6">
+                            La liturgie se poursuit par la prière du deuxième antiphone dite à voix basse par le prêtre...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-xs tracking-wider text-slate-400 mt-6 border-t border-slate-200/60 pt-4 text-center">
+                    Patriarcat d'Antioche et de Jérusalem 7
+                </div>
+            </div>
+
+            <!-- BOUTONS DE NAVIGATION SANS FILTRAGE IMPRESSION -->
+            <button onclick="prevPage()" class="no-print absolute left-[-60px] top-1/2 -translate-y-1/2 bg-slate-850 hover:bg-amber-500 text-white hover:text-slate-950 p-3 rounded-full transition-all duration-200 shadow-lg border border-slate-700 focus:outline-none" title="Page Précédente">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button onclick="nextPage()" class="no-print absolute right-[-60px] top-1/2 -translate-y-1/2 bg-slate-850 hover:bg-amber-500 text-white hover:text-slate-950 p-3 rounded-full transition-all duration-200 shadow-lg border border-slate-700 focus:outline-none" title="Page Suivante">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </main>
+
+    <!-- BARRE DE STATUT BAS DE PAGE -->
+    <footer class="no-print bg-slate-950 border-t border-slate-800 px-6 py-4 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-3">
+        <div>
+            Clavier : utilisez les touches <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-200">←</kbd> et <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-slate-200">→</kbd> pour feuilleter.
+        </div>
+        <div class="flex items-center gap-1">
+            <span>Progression :</span>
+            <div class="w-32 bg-slate-800 h-2 rounded-full overflow-hidden">
+                <div id="progressBar" class="bg-amber-500 h-full transition-all duration-300" style="width: 14.28%;"></div>
+            </div>
+            <span id="progressText" class="font-bold text-amber-500 ml-1">1 / 7</span>
+        </div>
+    </footer>
+
+    <!-- POPUP LEXIQUE DYNAMIQUE -->
+    <div id="lexiconDrawer" class="no-print fixed bottom-6 right-6 max-w-sm w-full bg-slate-950 border border-slate-800 shadow-2xl rounded-2xl p-5 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300 ease-out z-50">
+        <div class="flex justify-between items-start mb-2">
+            <h4 class="text-amber-500 font-bold liturgical-title tracking-wider text-xs flex items-center gap-1.5">
+                📖 LEXIQUE LITURGIQUE
+            </h4>
+            <button onclick="closeLexicon()" class="text-slate-400 hover:text-white transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <h5 id="lexiconWord" class="text-white font-bold text-base mb-1">Terme</h5>
+        <p id="lexiconDef" class="text-slate-300 text-xs leading-relaxed">Définition du terme liturgique byzantin...</p>
+    </div>
+
+    <!-- CODE COMPORTEMENT LIVRET -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 7;
+
+        // Dictionnaire des termes du lexique
+        const LEXICON = {
+            "évêques": "L'Évêque (du grec episkopos, surveillant) est le successeur des apôtres. Dans la liturgie byzantine pontificale, il préside depuis son trône ou son estrade au milieu de la nef au début de l'office.",
+            "diacres": "Le diacre (serviteur) est le premier degré du sacrement de l'Ordre. Il assiste le prêtre à l'autel, proclame les litanies et incite l'assemblée à la prière.",
+            "sous-diacres": "Clercs mineurs d'assistance liturgique. Ils sont responsables du soin de l'autel, de l'habillement liturgique de l'évêque et de l'encens.",
+            "diaconicon": "Le diaconicon (sacristie sud) est l'espace situé à droite de l'autel derrière l'iconostase. C'est de là que partent certaines processions.",
+            "autel": "La Sainte Table (l'Autel) représente le trône divin et le tombeau du Christ. Situé au centre du sanctuaire, il est le lieu du sacrifice eucharistique.",
+            "evangeliaire": "L'Évangéliaire est le livre de la Parole de Dieu, orné et posé sur la Sainte Table. Il symbolise la présence spirituelle du Christ enseignant.",
+            "kyrie eleison": "Prière grecque universelle signifiant 'Seigneur, prends pitié !'. C'est la réponse fondamentale du peuple de Dieu aux supplications du diacre.",
+            "patriarcat": "La circonscription ecclésiastique suprême gouvernée par un patriarche. Le Patriarcat d'Antioche est l'un des sièges apostoliques originels.",
+            "antiphone": "Un antiphone est un chant liturgique alterné entre deux chœurs ou entre le soliste et l'assemblée, souvent basé sur les Psaumes.",
+            "diacre": "Le diacre proclame les litanies, prépare les offrandes et sert d'intermédiaire actif entre le clergé du sanctuaire et le peuple dans la nef."
+        };
+
+        // Navigation clavier
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "ArrowRight") {
+                nextPage();
+            } else if (e.key === "ArrowLeft") {
+                prevPage();
+            }
+        });
+
+        function updateUI() {
+            // Cacher toutes les pages
+            for (let i = 1; i <= totalPages; i++) {
+                const p = document.getElementById(`page-${i}`);
+                if (p) {
+                    p.classList.add('hidden');
+                    p.classList.remove('page-active');
+                }
+            }
+
+            // Afficher la page courante
+            const activePage = document.getElementById(`page-${currentPage}`);
+            if (activePage) {
+                activePage.classList.remove('hidden');
+                activePage.classList.add('page-active');
+            }
+
+            // Mettre à jour la liste déroulante
+            document.getElementById('pageSelect').value = currentPage;
+
+            // Mettre à jour la barre de progression
+            const percent = (currentPage / totalPages) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+            document.getElementById('progressText').innerText = `${currentPage} / ${totalPages}`;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateUI();
+                closeLexicon();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateUI();
+                closeLexicon();
+            }
+        }
+
+        function goToPage(num) {
+            currentPage = parseInt(num);
+            updateUI();
+            closeLexicon();
+        }
+
+        // Gestion du tiroir de lexique
+        function openLexicon(event, term) {
+            event.stopPropagation();
+            const drawer = document.getElementById('lexiconDrawer');
+            const wordSpan = document.getElementById('lexiconWord');
+            const defSpan = document.getElementById('lexiconDef');
+
+            // Nettoyage de la clé pour recherche dans l'objet
+            const cleanKey = term.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").trim();
+            const definition = LEXICON[cleanKey] || "Terme de la liturgie byzantine officielle.";
+
+            wordSpan.innerText = term.charAt(0).toUpperCase() + term.slice(1);
+            defSpan.innerText = definition;
+
+            drawer.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+        }
+
+        function closeLexicon() {
+            const drawer = document.getElementById('lexiconDrawer');
+            drawer.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+        }
+
+        // Fermer le tiroir si on clique n'importe où ailleurs sur la page
+        document.addEventListener('click', () => {
+            closeLexicon();
+        });
+    </script>
+</body>
+</html>
