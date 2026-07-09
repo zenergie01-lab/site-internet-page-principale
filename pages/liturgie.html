@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formation Liturgie – Paroisse Sainte Marie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold:#c9a84c;--gold-light:#e8cc7a;--gold-dark:#8b6914;
+      --deep:#0d0a06;--dark:#1a1409;--parchment:#f5ead8;
+      --parchment-dark:#e8d5b0;--muted:#8a7050;--accent:#6b1a1a;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'EB Garamond',serif;background:var(--deep);color:var(--parchment);min-height:100vh;}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,10,6,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.2);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;}
+    .nav-brand{font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold);letter-spacing:0.1em;text-decoration:none;}
+    .nav-back{font-family:'Cinzel',serif;font-size:0.72rem;color:var(--parchment-dark);letter-spacing:0.12em;text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+    .nav-back:hover{color:var(--gold);}
+
+    .page-hero{padding:8rem 2rem 4rem;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.12) 0%,transparent 60%);}
+    .page-label{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+    .page-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.8rem,4vw,3rem);color:var(--gold-light);margin-bottom:1.5rem;}
+    .page-desc{font-size:1.05rem;color:var(--parchment-dark);max-width:600px;margin:0 auto;line-height:1.8;font-style:italic;}
+    .gold-divider{width:80px;height:2px;background:linear-gradient(90deg,var(--gold-dark),var(--gold));margin:2rem auto;}
+
+    .content{max-width:1000px;margin:0 auto;padding:2rem 2rem 6rem;}
+
+    .module-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem;}
+    .module{border:1px solid rgba(201,168,76,0.2);background:rgba(201,168,76,0.03);padding:1.8rem;}
+    .module-num{font-family:'Cinzel Decorative',serif;font-size:1.8rem;color:rgba(201,168,76,0.2);line-height:1;margin-bottom:0.5rem;}
+    .module h3{font-family:'Cinzel',serif;font-size:0.9rem;color:var(--gold-light);letter-spacing:0.08em;margin-bottom:0.8rem;}
+    .module ul{list-style:none;padding:0;}
+    .module ul li{font-size:0.92rem;color:var(--parchment-dark);line-height:1.9;padding-left:1.2rem;position:relative;}
+    .module ul li::before{content:'✦';position:absolute;left:0;color:var(--gold-dark);font-size:0.6rem;top:0.35rem;}
+    .module-duration{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-top:1rem;border-top:1px solid rgba(201,168,76,0.15);padding-top:0.8rem;}
+
+    .section-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(201,168,76,0.2);}
+    .intro-text{font-size:1rem;color:var(--parchment-dark);line-height:1.9;margin-bottom:1.5rem;}
+    blockquote{border-left:3px solid var(--gold);margin:2rem 0;padding:1rem 1.5rem;background:rgba(201,168,76,0.04);font-style:italic;color:var(--parchment-dark);font-size:1rem;line-height:1.8;}
+
+    .cta-block{text-align:center;margin-top:4rem;padding:3rem;border:1px solid rgba(201,168,76,0.2);background:rgba(201,168,76,0.03);}
+    .cta-block h3{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-light);margin-bottom:1rem;}
+    .cta-block p{color:var(--parchment-dark);font-size:0.95rem;margin-bottom:1.5rem;}
+    .btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-dark));color:var(--deep);padding:0.85rem 2rem;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.3s;}
+    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,0.3);}
+
+    /* Sections dépliables liturgiques */
+    details.module-liturgy{margin-top:1rem;border-top:1px solid rgba(201,168,76,0.15);}
+    details.module-liturgy summary{font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;cursor:pointer;padding:0.8rem 0 0.5rem;list-style:none;user-select:none;}
+    details.module-liturgy summary::before{content:'▸ ';}
+    details.module-liturgy[open] summary::before{content:'▾ ';}
+    .liturgy-text{margin-top:0.8rem;font-size:0.85rem;line-height:1.8;color:var(--parchment-dark);}
+    .liturgy-text .section-head{font-family:'Cinzel',serif;font-size:0.72rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin:0.9rem 0 0.3rem;}
+    .liturgy-text .rubrique{font-style:italic;color:var(--muted);font-size:0.82rem;}
+    .liturgy-text .cel{color:var(--parchment);}
+    .liturgy-text .dia{color:var(--parchment-dark);}
+    .liturgy-text .ch{color:rgba(201,168,76,0.75);font-style:italic;}
+    .liturgy-text .ts{color:var(--parchment);}
+    .liturgy-text .role{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.08em;color:var(--gold-dark);margin-right:0.3em;}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="../index.html">✝ Sainte Marie</a>
+  <a class="nav-back" href="../index.html">← Retour à l'accueil</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-label">École des Connaissances · Formation 01</div>
+  <h1 class="page-title">Liturgie Orthodoxe</h1>
+  <div class="gold-divider"></div>
+  <p class="page-desc">
+    Découvrez le rite orthodoxe simplifié de la Paroisse Sainte Marie — accessible à tous,
+    croyants comme non-croyants, sans prérequis.
+  </p>
+</div>
+
+<div class="content">
+  <p class="intro-text">
+    <strong style="color:var(--gold-light);">Qu'est-ce que la liturgie ?</strong> Si la foi est la musique, la liturgie en est la partition. Elle structure le temps spirituel, rend visible l'invisible et donne un rythme à la vie de la communauté. À Sainte Marie, le rite orthodoxe traditionnel a été revu pour parler à tous — sans perdre sa profondeur.
+  </p>
+  <blockquote>
+    « La Paroisse célèbre la divine liturgie selon le rite Orthodoxe traditionnel revu et amélioré afin qu'il parle à tout le monde. » — Présentation Officielle, Art. 4
+  </blockquote>
+
+  <div class="section-title">Catalogue des Modules</div>
+  <div class="module-grid">
+    <div class="module">
+      <div class="module-num">01</div>
+      <h3>Introduction au Rite Orthodoxe</h3>
+      <ul>
+        <li>Origines et histoire de la liturgie orthodoxe</li>
+        <li>Les grandes familles liturgiques (Byzantine, Syriaque, Copte)</li>
+        <li>Structure d'un office orthodoxe</li>
+        <li>Les symboles, gestes et postures</li>
+        <li>Comment participer pour la première fois</li>
+      </ul>
+      <details class="module-liturgy">
+        <summary>Textes de référence — Liturgie de Saint Jean Chrysostome</summary>
+        <div class="liturgy-text">
+          <div class="section-head">Disposition du Clergé</div>
+          <p class="rubrique">Au début de la liturgie, le clergé est disposé de la façon suivante:</p>
+          <p class="rubrique">Sur une estrade se trouvent le (ou les) évêques. Les prêtres se placent à gauche et à droite de l'estrade en avant. Derrière l'estrade se tiennent les diacres et derrière eux les sous-diacres.</p>
+
+          <div class="section-head">Bénédiction Initiale</div>
+          <p class="cel"><span class="role">Cél.</span>Béni soit le règne du Père, du Fils et du Saint-Esprit, maintenant et toujours et aux siècles des siècles!</p>
+          <p class="ts"><span class="role">Ts.</span>Amen.</p>
+
+          <div class="section-head">Grande Litanie</div>
+          <p class="dia"><span class="role">Dia.</span>En paix, prions le Seigneur!</p>
+          <p class="ts"><span class="role">Ts.</span>Kyrie eleison.</p>
+          <p class="dia"><span class="role">Dia.</span>Pour la paix d'en haut et le salut de nos âmes. Prions le Seigneur!</p>
+          <p class="ts"><span class="role">Ts.</span>Kyrie eleison.</p>
+          <p class="dia"><span class="role">Dia.</span>Pour la paix du monde entier, la stabilité des saintes Églises de Dieu et l'union de tous. Prions le Seigneur!</p>
+          <p class="ts"><span class="role">Ts.</span>Kyrie eleison.</p>
+          <p class="dia"><span class="role">Dia.</span>Secours-nous, sauve-nous, aie pitié de nous et garde-nous, ô Dieu par ta grâce.</p>
+          <p class="ts"><span class="role">Ts.</span>Kyrie eleison.</p>
+
+          <div class="section-head">Premier Antiphone</div>
+          <p class="ch"><span class="role">Ch.</span>Mon âme, bénis le Seigneur, Tu es béni Seigneur. Mon âme bénie le Seigneur, et que tout ce qui est en moi, la bénisse son saint nom. Mon âme, bénis le Seigneur et n'oublie aucun de ses bienfaits. Le Seigneur est compatissant et miséricordieux, longanime et plein de miséricorde.</p>
+
+          <div class="section-head">Béatitudes</div>
+          <p class="ch"><span class="role">Ch.</span>Bienheureux les pauvres en esprit, car le royaume des cieux est à eux. Bienheureux les affligés, car ils seront consolés. Bienheureux les doux, car ils hériteront la terre. Bienheureux les affamés et assoiffés de justice, car ils seront rassasiés. Bienheureux les miséricordieux, car ils obtiendront miséricorde. Bienheureux les cœurs purs, car ils verront Dieu. Bienheureux les pacificateurs, car ils seront appelés fils de Dieu. Bienheureux les persécutés pour la justice, car le royaume des cieux est à eux.</p>
+
+          <div class="section-head">Trisagion</div>
+          <p class="ch"><span class="role">Ch.</span>Saint Dieu, Saint Fort, Saint Immortel, aie pitié de nous.</p>
+        </div>
+      </details>
+      <div class="module-duration">Réflexion · Qu'évoque en toi la Paix d'en haut ?</div>
+    </div>
+    <div class="module">
+      <div class="module-num">02</div>
+      <h3>Le Calendrier Liturgique</h3>
+      <ul>
+        <li>L'année liturgique orthodoxe et ses cycles</li>
+        <li>Les Grandes Fêtes chrétiennes (Pâques, Noël, Pentecôte…)</li>
+        <li>Les fêtes mariales et leur signification</li>
+        <li>Les jeûnes et temps de préparation</li>
+        <li>Les saints et leur commémoration</li>
+      </ul>
+      <details class="module-liturgy">
+        <summary>Parties variables — Propre &amp; Commémorations</summary>
+        <div class="liturgy-text">
+          <div class="section-head">Tropaire Dominical</div>
+          <p class="cl"><span class="role">Cl.</span>Venez, adorons et prosternons-nous devant le Christ. Sauve-nous, ô Fils de Dieu, Toi qui es ressuscité des morts, nous qui Te chantons alleluia!</p>
+
+          <div class="section-head">Tropaire en Semaine</div>
+          <p class="cl"><span class="role">Cl.</span>Venez, adorons et prosternons-nous devant le Christ. Sauve-nous, ô Fils de Dieu, Toi qui es admirable dans tes saints nous qui Te chantons alleluia!</p>
+
+          <div class="section-head">Prière du Trisagion</div>
+          <p class="cel"><span class="role">Cél.</span>Dieu saint, Toi qui reposes dans les saints, Toi que louent les séraphins en une hymne trois fois sainte, Toi que glorifient les chérubins et qu'adorent toutes les puissances célestes, Toi qui as amené toutes choses du non-être à l'être, qui a créé l'homme à ton image est à ta ressemblance et l'a orné des dons de ta grâce, Toi qui donnes à qui lui demande la sagesse et l'intelligence, qui ne méprise pas le pécheur mais as établi la pénitence pour le salut, Toi qui nous accordes à nous tes humbles et indignes serviteurs, de nous tenir en ce moment encore devant la gloire de ton saint autel et de T'offrir la glorification et l'adoration qui Te sont dues, accepte aussi Seigneur, de nos bouches de pécheurs, l'hymne trois fois sainte.</p>
+
+          <div class="section-head">Lectures — Graduel et Alleluia</div>
+          <p class="rubrique">Le lecteur lit le graduel du jour que le chœur reprend en chantant (voir Propre). Le lecteur annonce le titre de l'Épître. Après l'Épître, le diacre proclame: Sagesse! Pendant que le chœur chante l'Alléluia, le diacre prend l'encensoir et encense l'autel, le sanctuaire et le peuple.</p>
+
+          <div class="section-head">Prière de l'Évangile</div>
+          <p class="cel"><span class="role">Cél.</span>Fais luire en nos cœurs, Maître Ami de l'homme, la pure lumière de ta divine connaissance. Ouvre les yeux de notre entendement pour la compréhension de tes prédications évangéliques, Place en nous la crainte de tes bienheureux commandements, afin que, foulant aux pieds les désirs de la chair, nous parvenions à la vie spirituelle, dirigeant toutes nos pensées et tous nos actes pour qu'ils Te soient agréables.</p>
+
+          <div class="section-head">Commémorations des Saints</div>
+          <p class="cel"><span class="role">Cél.</span>Pour saint Jean-Baptiste, prophète et précurseur, pour les saints glorieux et illustres apôtres, pour saint N, (du jour) dont nous célébrons la mémoire et pour tous les saints, par les prières desquels, ô Dieu, daigne nous visiter.</p>
+        </div>
+      </details>
+      <div class="module-duration"> Niveau débutant - intermédiaire</div>
+    </div>
+    <div class="module">
+      <div class="module-num">03</div>
+      <h3>Les Sacrements</h3>
+      <ul>
+        <li>Le Baptême : rites et signification</li>
+        <li>L'Eucharistie : cœur de la liturgie</li>
+        <li>La Confession : démarche et accompagnement</li>
+        <li>Le Mariage orthodoxe</li>
+        <li>L'Onction des malades</li>
+      </ul>
+      <details class="module-liturgy">
+        <summary>L'Eucharistie — Canon et Communion</summary>
+        <div class="liturgy-text">
+          <div class="section-head">Credo Eucharistique</div>
+          <p class="ts"><span class="role">Ts.</span>Je crois en un seul Dieu, le Père tout-puissant, Créateur du ciel et de la terre, et de toutes choses visibles et invisibles, et en un seul Seigneur, Jésus-Christ, Fils unique de Dieu, né du Père avant tous les siècles, Lumière de Lumière, vrai Dieu de vrai Dieu, engendré non créé, consubstantiel au Père, par qui tout a été fait, qui pour nous, hommes, et pour notre salut, est descendu des cieux, S'est incarné du Saint-Esprit et de Marie, la Vierge et S'est fait homme. Il a été crucifié pour nous sous Ponce Pilate, a souffert et a été enseveli et Il est ressuscité le troisième jour selon les Écritures.</p>
+
+          <div class="section-head">Canon Eucharistique — Préambule</div>
+          <p class="cel"><span class="role">Cél.</span>Que la grâce de notre Seigneur Jésus-Christ, l'amour de Dieu le Père et la communion du Saint-Esprit soient toujours avec vous.</p>
+          <p class="ts"><span class="role">Ts.</span>Et avec ton esprit!</p>
+          <p class="cel"><span class="role">Cél.</span>Élevons nos cœurs!</p>
+          <p class="ts"><span class="role">Ts.</span>Nous les élevons vers le Seigneur!</p>
+          <p class="cel"><span class="role">Cél.</span>Rendons grâces au Seigneur notre Dieu!</p>
+          <p class="ts"><span class="role">Ts.</span>Cela est digne!</p>
+
+          <div class="section-head">Préface</div>
+          <p class="cel"><span class="role">Cél.</span>Il est digne, il est juste, de Te chanter, de Te bénir, de Te louer, de Te rendre grâces, de T'adorer en tout lieu de ta domination. Car Tu es un Dieu inexprimable, inconcevable, invisible, incompréhensible, existant de toute éternité. Nous Te rendons grâces, aussi, pour cette liturgie que Tu daignes recevoir de nos mains, bien que Tu sois servi par les myriades d'anges, les milliers d'archanges, par les chérubins et les séraphins aux six ailes.</p>
+
+          <div class="section-head">Sanctus</div>
+          <p class="ts"><span class="role">Ts.</span>Saint! Saint! Saint! Le Seigneur Dieu Sabaoth! Les cieux et la terre sont remplis de ta Gloire! Hosanna au plus haut des cieux! Béni soit Celui qui vient au Nom du Seigneur! Hosanna au plus haut des cieux!</p>
+
+          <div class="section-head">Récit de l'Institution</div>
+          <p class="cel"><span class="role">Cél.</span>Et Lui, étant venu, après avoir accompli en notre faveur toute l'économie, la nuit où Il fut livré ou plutôt Se livra Lui-même pour la vie du monde, Il prit du pain dans ses mains saintes, pures et immaculées, rendit grâces, le bénit, le sanctifia, le rompit et le donna à ses saints disciples et apôtres en disant: Prenez et mangez car ceci est mon Corps qui est rompu pour vous en rémission des péchés.</p>
+          <p class="ts"><span class="role">Ts.</span>Amen!</p>
+          <p class="cel"><span class="role">Cél.</span>De même fit-Il après le repas avec la coupe disant: Buvez-en tous, car ceci est mon Sang, celui de la nouvelle alliance qui est répandu pour vous et pour un grand nombre, en rémission des péchés.</p>
+          <p class="ts"><span class="role">Ts.</span>Amen!</p>
+
+          <div class="section-head">Épiclèse — Invocation de l'Esprit Saint</div>
+          <p class="cel"><span class="role">Cél.</span>Nous T'offrons encore ce culte spirituel et non sanglant et T'implorons, Te supplions, Te prions: envoie ton Esprit Saint sur nous, sur les dons ici présents.</p>
+          <p class="cel"><span class="role">Cél.</span>Et fais de ce pain le Corps précieux de ton Christ!</p>
+          <p class="cel"><span class="role">Cél.</span>Et de ce qui est dans ce calice le Sang précieux de ton Christ!</p>
+          <p class="cel"><span class="role">Cél.</span>En les changeant par ton Saint-Esprit!</p>
+
+          <div class="section-head">Prière de Communion</div>
+          <p class="ch"><span class="role">Ch.</span>Je crois et je confesse; Seigneur, que Tu es le Christ, Fils du Dieu Vivant, venu en ce monde sauver les pécheurs dont je suis le premier. Je crois aussi que Ceci est ton Corps très saint et très pur, que Ceci est ton Sang vénérable et précieux. Accepte-moi à ta Cène mystique comme un convive, ô Fils de Dieu. Maître, Ami de l'homme, Seigneur Jésus-Christ mon Dieu que tes saints Dons ne soient pas pour moi condamnation à cause de mon indignité, mais purification de mon âme et de mon corps, gage pour le Royaume et la Vie éternelle.</p>
+
+          <div class="section-head">Distribution — Communion des Fidèles</div>
+          <p class="cel"><span class="role">Cél.</span>Le serviteur de Dieu N. reçoit le Corps et le Sang de notre Seigneur Dieu et Sauveur Jésus-Christ pour la rémission de ses péchés et la vie éternelle.</p>
+        </div>
+      </details>
+      <div class="module-duration"> · Niveau intermédiaire</div>
+    </div>
+    <div class="module">
+      <div class="module-num">04</div>
+      <h3>La Liturgie Mariale</h3>
+      <ul>
+        <li>Place de Marie dans la liturgie orthodoxe</li>
+        <li>L'Acathiste et les hymnes mariales</li>
+        <li>Les Paraclesis et prières d'intercession</li>
+        <li>Spécificités du Patriarcat Marial</li>
+        <li>Pratique de la vénération des icônes</li>
+      </ul>
+      <details class="module-liturgy">
+        <summary>La Mère de Dieu dans la Liturgie</summary>
+        <div class="liturgy-text">
+          <div class="section-head">Litanie — Invocation Mariale</div>
+          <p class="dia"><span class="role">Dia.</span>Faisant mémoire de la toute Sainte, toute Pure, bénie par-dessus tout, notre glorieuse Souveraine la Mère de Dieu et toujours Vierge Marie, avec tous les saints, remettons-nous nous-mêmes les uns les autres et toute notre vie, au Christ notre Dieu!</p>
+          <p class="ts"><span class="role">Ts.</span>À Toi Seigneur!</p>
+
+          <div class="section-head">Deuxième Antiphone</div>
+          <p class="ch"><span class="role">Ch.</span>Fils unique et Verbe de Dieu, Toi qui es immortel et qui daignas pour notre salut, T'incarner de la sainte Mère de Dieu et toujours Vierge Marie, et qui sans changement, Te fit homme, et fut crucifié, ô Christ Dieu, par la mort ayant vaincu la mort, étant l'Un de la sainte Trinité, glorifié avec le Père et le Saint-Esprit, sauve-nous!</p>
+
+          <div class="section-head">Anaphore — Commemoration de la Mère de Dieu</div>
+          <p class="cel"><span class="role">Cél.</span>Surtout pour la toute Sainte, toute Pure, bénie par dessus tout, notre glorieuse Souveraine la Mère de Dieu et toujours Vierge Marie.</p>
+
+          <div class="section-head">Hymne à la Vierge — Axion Estin</div>
+          <p class="ch"><span class="role">Ch.</span>Il est digne en vérité, de te célébrer, toi qui enfantas Dieu, bienheureuse à jamais et Très Pure, et Mère de notre Dieu. Toi plus vénérable que les chérubins, et incomparablement plus glorieuse que les Séraphins, qui sans tache enfantas Dieu le Verbe, toi véritablement la Mère de Dieu, nous t'exaltons.</p>
+
+          <div class="section-head">Mention à la Conclusion</div>
+          <p class="cel"><span class="role">Cél.</span>Que le Christ notre Dieu, par les prières de sa très sainte Mère, des saints N., (du jour) de saint Jean Chrysostome dont nous célébrons la liturgie, aie pitié de nous et nous sauve.</p>
+        </div>
+      </details>
+      <div class="module-duration"> · Niveau intermédiaire</div>
+    </div>
+    <div class="module">
+      <div class="module-num">05</div>
+      <h3>Présidence Liturgique</h3>
+      <ul>
+        <li>Rôle du célébrant et du diacre</li>
+        <li>La voix, la diction et le chant liturgique</li>
+        <li>Préparer et animer un office</li>
+        <li>Encadrement des servants d'autel</li>
+        <li>Adaptation liturgique en contexte itinérant</li>
+      </ul>
+      <details class="module-liturgy">
+        <summary>Rôles &amp; Rubriques — Guide du Célébrant</summary>
+        <div class="liturgy-text">
+          <div class="section-head">Disposition du Clergé à l'Entrée</div>
+          <p class="rubrique">Au début de la liturgie, le clergé est disposé de la façon suivante: Sur une estrade se trouvent le (ou les) évêques. Les prêtres se placent à gauche et à droite de l'estrade en avant. Derrière l'estrade se tiennent les diacres et derrière eux les sous-diacres.</p>
+
+          <div class="section-head">Hymne Chérubique — Grande Entrée</div>
+          <p class="cel"><span class="role">Cél.</span>Nul n'est digne, ô Roi de Gloire, s'il est lié par les désirs charnels et les voluptés, de venir à Toi, de s'approcher de Toi, de T'offrir un sacrifice, car ton service est chose grande et redoutable même pour les Puissances célestes. Mais cependant, à cause de ton ineffable et infinie Bonté, Tu T'es fait homme sans changement, ni mutation de ton être.</p>
+          <p class="ch"><span class="role">Ch.</span>Mystiquement, mystiquement représentant les chérubins et chantant l'hymne trois fois sainte à la vivifiante Trinité, déposons maintenant tous les soucis de ce monde.</p>
+
+          <div class="section-head">Dialogue Célébrant-Diacre à la Consécration</div>
+          <p class="rubrique">À voix basse:</p>
+          <p class="dia"><span class="role">Dia.</span>Bénis, Seigneur, le pain sacré.</p>
+          <p class="cel"><span class="role">Cél.</span>Et fais de ce pain le Corps précieux de ton Christ!</p>
+          <p class="dia"><span class="role">Dia.</span>Amen!</p>
+          <p class="dia"><span class="role">Dia.</span>Bénis, Seigneur, le saint calice!</p>
+          <p class="cel"><span class="role">Cél.</span>Et de ce qui est dans ce calice le Sang précieux de ton Christ!</p>
+          <p class="dia"><span class="role">Dia.</span>Amen!</p>
+
+          <div class="section-head">Appel à l'Ordre — Canon</div>
+          <p class="dia"><span class="role">Dia.</span>Debout! Tenons-nous avec crainte! Soyons attentifs afin d'offrir en paix la sainte oblation!</p>
+          <p class="ch"><span class="role">Ch.</span>L'offrande de paix, le sacrifice de louange!</p>
+
+          <div class="section-head">Prière de l'Ambon — Conclusion</div>
+          <p class="cel"><span class="role">Cél.</span>Toi qui bénis ceux qui Te bénissent et se confient en Toi, Seigneur, sauve ton peuple et bénis ton héritage, garde la plénitude de ton Église, sanctifie ceux qui aiment la beauté de ta Maison, Glorifie-les en retour par ta divine Puissance et ne nous abandonne pas, nous qui espérons en Toi. Accorde la paix à ton univers, à tes Églises, à tes prêtres, à ceux qui nous gouvernent et à tout ton peuple.</p>
+
+          <div class="section-head">Bénédiction Finale</div>
+          <p class="cel"><span class="role">Cél.</span>Que le Christ notre Dieu, par les prières de sa très sainte Mère, des saints du jour de saint Jean Chrysostome dont nous célébrons la liturgie, aie pitié de nous et nous sauve, Lui qui est infiniment bon et plein d'amour pour les hommes.</p>
+        </div>
+      </details>
+      <div class="module-duration">· Niveau avancé</div>
+    </div>
+    <div class="module">
+      <div class="module-num">06</div>
+      <h3>Exorcismes & Guérisons de l'Âme</h3>
+      <ul>
+        <li>Fondements scripturaires et tradition apostolique</li>
+        <li>Discernement des esprits</li>
+        <li>Rites et prières d'exorcisme minor</li>
+        <li>Accompagnement post-libération</li>
+        <li>Formation encadrée par le Code Canon (art. 31-39)</li>
+      </ul>
+      <details class="module-liturgy">
+        <summary>Prières de Délivrance &amp; Purification</summary>
+        <div class="liturgy-text">
+          <div class="section-head">Litanie — Délivrance de l'Affliction</div>
+          <p class="dia"><span class="role">Dia.</span>Pour qu'Il nous délivre de toute affliction, colère, péril et nécessité. Prions le Seigneur!</p>
+          <p class="ts"><span class="role">Ts.</span>Kyrie eleison.</p>
+
+          <div class="section-head">Litanie — Miséricorde pour les Affligés</div>
+          <p class="dia"><span class="role">Dia.</span>Disons tous de toute notre âme, de tout notre esprit disons</p>
+          <p class="ch"><span class="role">Ch.</span>Kyrie eleison!</p>
+          <p class="dia"><span class="role">Dia.</span>Aie pitié de nous, ô Dieu, dans ta grande Miséricorde, nous T'en prions, écoute-nous et prends pitié de nous!</p>
+          <p class="ch"><span class="role">Ch.</span>Kyrie eleison, Kyrie eleison, Kyrie eleison!</p>
+
+          <div class="section-head">Prière Instante — Supputation Sincère</div>
+          <p class="cel"><span class="role">Cél.</span>Seigneur notre Dieu, reçois cette instante supplication de tes serviteurs et prends pitié de nous, selon ta grande Miséricorde. Fais descendre sur nous tes largesses et sur tout ton peuple ton abondante pitié!</p>
+
+          <div class="section-head">Anaphore — Souvenir des Malades</div>
+          <p class="cel"><span class="role">Cél.</span>Souviens-Toi, Seigneur, des navigateurs, des voyageurs, des aviateurs, des malades, des affligés, des captifs et de leur salut à tous. Souviens-Toi, Seigneur, de ceux qui portent fruit et font le bien dans tes saintes Églises, se souviennent des pauvres et envoie sur nous tous tes miséricordes.</p>
+
+          <div class="section-head">Notre Père — Délivrance du Mauvais</div>
+          <p class="ts"><span class="role">Ts.</span>Notre Père qui es aux cieux, que ton Nom soit sanctifié, que ton Règne arrive, que ta volonté soit faite sur la terre comme au ciel. Donne-nous aujourd'hui notre pain substantiel et remets-nous nos dettes comme nous remettons à nos débiteurs et ne nous soumets pas à l'épreuve, mais délivre-nous du malin.</p>
+
+          <div class="section-head">Prière de Communion — Purification et Guérison</div>
+          <p class="ch"><span class="role">Ch.</span>Maître, Ami de l'homme, Seigneur Jésus-Christ mon Dieu que tes saints Dons ne soient pas pour moi condamnation à cause de mon indignité, mais purification de mon âme et de mon corps, gage pour le Royaume et la Vie éternelle. Seigneur, je ne suis pas digne que Tu entres en moi, mais dis une seule parole et mon âme sera guérie.</p>
+
+          <div class="section-head">Post-Communion — Sanctification du Chemin</div>
+          <p class="cel"><span class="role">Cél.</span>Nous Te rendons grâces, Seigneur, Ami de l'homme, Bienfaiteur de nos âmes, de ce que Tu as daigné aujourd'hui nous rendre participants à tes célestes et immortels Mystères. Rends droite notre vie, affermis-nous dans ta crainte, fortifie notre vie, dirige nos pas, par les prières et les supplications de la glorieuse Mère de Dieu et toujours Vierge Marie et de tous les saints.</p>
+        </div>
+      </details>
+      <div class="module-duration"> Réservé aux candidats validés</div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h3>Démarrer la Formation</h3>
+    <p>Les formations se déroulent essentiellement en distanciel asynchrone avec des moments synchrone en visio en groupe et en présentiel selon les localités. Contactez la Paroisse pour connaître les prochaines dates dans votre région.</p>
+    <a href="../index.html#contact" class="btn-gold">Nous Contacter</a>
+  </div>
+</div>
+</body>
+</html>

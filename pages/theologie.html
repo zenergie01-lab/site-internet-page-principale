@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formation Théologie – Paroisse Sainte Marie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--gold:#c9a84c;--gold-light:#e8cc7a;--gold-dark:#8b6914;--deep:#0d0a06;--parchment:#f5ead8;--parchment-dark:#e8d5b0;--muted:#8a7050;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'EB Garamond',serif;background:var(--deep);color:var(--parchment);min-height:100vh;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,10,6,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.2);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;}
+    .nav-brand{font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold);letter-spacing:0.1em;text-decoration:none;}
+    .nav-back{font-family:'Cinzel',serif;font-size:0.72rem;color:var(--parchment-dark);letter-spacing:0.12em;text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+    .nav-back:hover{color:var(--gold);}
+    .page-hero{padding:8rem 2rem 4rem;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.12) 0%,transparent 60%);}
+    .page-label{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+    .page-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.8rem,4vw,3rem);color:var(--gold-light);margin-bottom:1.5rem;}
+    .page-desc{font-size:1.05rem;color:var(--parchment-dark);max-width:600px;margin:0 auto;line-height:1.8;font-style:italic;}
+    .gold-divider{width:80px;height:2px;background:linear-gradient(90deg,var(--gold-dark),var(--gold));margin:2rem auto;}
+    .content{max-width:1000px;margin:0 auto;padding:2rem 2rem 6rem;}
+    .intro-text{font-size:1rem;color:var(--parchment-dark);line-height:1.9;margin-bottom:1.5rem;}
+    blockquote{border-left:3px solid var(--gold);margin:2rem 0;padding:1rem 1.5rem;background:rgba(201,168,76,0.04);font-style:italic;color:var(--parchment-dark);font-size:1rem;line-height:1.8;}
+    .section-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(201,168,76,0.2);}
+    .track-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem;}
+    @media(max-width:700px){.track-grid{grid-template-columns:1fr;}}
+    .track{border:1px solid rgba(201,168,76,0.2);padding:2rem;}
+    .track-badge{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-dark);background:rgba(201,168,76,0.08);padding:0.2rem 0.7rem;display:inline-block;margin-bottom:1rem;}
+    .track h3{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--gold-light);margin-bottom:1rem;}
+    .track ul{list-style:none;padding:0;}
+    .track ul li{font-size:0.92rem;color:var(--parchment-dark);line-height:1.9;padding-left:1.2rem;position:relative;}
+    .track ul li::before{content:'✦';position:absolute;left:0;color:var(--gold-dark);font-size:0.6rem;top:0.35rem;}
+    .track-duration{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-top:1rem;border-top:1px solid rgba(201,168,76,0.15);padding-top:0.8rem;}
+    .authors-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem;}
+    @media(max-width:700px){.authors-grid{grid-template-columns:1fr 1fr;}}
+    .author-card{border:1px solid rgba(201,168,76,0.15);padding:1rem;text-align:center;}
+    .author-card h4{font-family:'Cinzel',serif;font-size:0.75rem;color:var(--gold);letter-spacing:0.05em;margin-bottom:0.3rem;}
+    .author-card p{font-size:0.82rem;color:var(--muted);line-height:1.5;}
+    .cta-block{text-align:center;margin-top:4rem;padding:3rem;border:1px solid rgba(201,168,76,0.2);background:rgba(201,168,76,0.03);}
+    .cta-block h3{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-light);margin-bottom:1rem;}
+    .cta-block p{color:var(--parchment-dark);font-size:0.95rem;margin-bottom:1.5rem;}
+    .btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-dark));color:var(--deep);padding:0.85rem 2rem;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.3s;}
+    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,0.3);}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="../index.html">✝ Sainte Marie</a>
+  <a class="nav-back" href="../index.html">← Retour à l'accueil</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-label">École des Connaissances · Formation 02</div>
+  <h1 class="page-title">Théologie & Dogme</h1>
+  <div class="gold-divider"></div>
+  <p class="page-desc">
+    Les fondements de la foi chrétienne orthodoxe — accessibles à tous,
+    depuis les bases jusqu'à la théologie avancée.
+  </p>
+</div>
+
+<div class="content">
+  <p class="intro-text">
+    <strong style="color:var(--gold-light);">Pourquoi étudier la théologie ?</strong> Comme un architecte qui doit connaître les lois de la physique avant de construire, le croyant qui comprend les fondements de sa foi est mieux armé pour la vivre et la transmettre. La théologie n'est pas réservée aux clercs — c'est la compréhension vivante de la relation entre Dieu et l'homme.
+  </p>
+  <blockquote>
+    « Toute forme de spiritualité pouvant aider à l'épanouissement de l'être humain est bonne à prendre. » — Code Canon, art. 164
+  </blockquote>
+
+  <div class="section-title">Parcours de Formation</div>
+  <div class="track-grid">
+    <div class="track">
+      <div class="track-badge">Fondamentaux</div>
+      <h3>Théologie de Base</h3>
+      <ul>
+        <li>Introduction aux Écritures (Ancien et Nouveau Testament)</li>
+        <li>Les Symboles de foi (Nicée-Constantinople)</li>
+        <li>Théologie trinitaire : Père, Fils, Esprit Saint</li>
+        <li>La Christologie : qui est Jésus-Christ ?</li>
+        <li>L'ecclésiologie : qu'est-ce que l'Église ?</li>
+        <li>La sotériologie : qu'est-ce que le salut ?</li>
+      </ul>
+      <div class="track-duration">6 modules · 3 mois · Niveau débutant</div>
+    </div>
+    <div class="track">
+      <div class="track-badge">Intermédiaire</div>
+      <h3>Mariologie & Tradition</h3>
+      <ul>
+        <li>Marie dans les Écritures et la Tradition</li>
+        <li>Les titres de Marie : Theotokos, Mère de Dieu</li>
+        <li>Le Patriarcat Marial : fondements théologiques</li>
+        <li>Les Pères de l'Église et leur pensée</li>
+        <li>Les Conciles Œcuméniques et leur héritage</li>
+        <li>Théologie apophatique : la voie négative</li>
+      </ul>
+      <div class="track-duration">6 modules · 3 mois · Niveau intermédiaire</div>
+    </div>
+    <div class="track">
+      <div class="track-badge">Avancé</div>
+      <h3>Théologie Patristique</h3>
+      <ul>
+        <li>Athanase, Basile, Grégoire de Nysse</li>
+        <li>Jean Chrysostome et la prédication</li>
+        <li>Maxime le Confesseur et la déification</li>
+        <li>Grégoire Palamas et l'hésychasme</li>
+        <li>Théologie de la Lumière Incréée</li>
+        <li>Hérésies et réponses conciliaires</li>
+      </ul>
+      <div class="track-duration">8 modules · 4 mois · Niveau avancé</div>
+    </div>
+    <div class="track">
+      <div class="track-badge">Spécialisation</div>
+      <h3>Théologie Morale & Pastorale</h3>
+      <ul>
+        <li>Éthique chrétienne dans le monde contemporain</li>
+        <li>L'accompagnement spirituel des personnes</li>
+        <li>Théologie de la souffrance et du mal</li>
+        <li>L'Église face aux défis sociaux actuels</li>
+        <li>Dialogue œcuménique et interreligieux</li>
+        <li>Rédiger une homélie</li>
+      </ul>
+      <div class="track-duration">6 modules · 3 mois · Niveau avancé</div>
+    </div>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <div class="section-title">Auteurs & Sources au Programme</div>
+    <div class="authors-grid">
+      <div class="author-card"><h4>Saint Jean Chrysostome</h4><p>Homélie, prédication, liturgie sociale</p></div>
+      <div class="author-card"><h4>Saint Athanase</h4><p>Christologie, contre l'arianisme</p></div>
+      <div class="author-card"><h4>Saint Grégoire Palamas</h4><p>Hésychasme, Lumière Incréée</p></div>
+      <div class="author-card"><h4>Maxime le Confesseur</h4><p>Déification, théologie cosmique</p></div>
+      <div class="author-card"><h4>Vladimir Lossky</h4><p>Théologie mystique orthodoxe</p></div>
+      <div class="author-card"><h4>Paul Evdokimov</h4><p>Théologie de la beauté, mariologie</p></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h3>Commencer votre Parcours Théologique</h3>
+    <p>Les cours sont dispensés en petit groupe, en présentiel ou à distance. Chaque apprenant progresse à son rythme avec l'accompagnement d'un référent spirituel.</p>
+    <a href="../index.html#contact" class="btn-gold">S'inscrire</a>
+  </div>
+</div>
+</body>
+</html>

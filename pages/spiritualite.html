@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spiritualité & Ésotérisme – Paroisse Sainte Marie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--gold:#c9a84c;--gold-light:#e8cc7a;--gold-dark:#8b6914;--deep:#0d0a06;--parchment:#f5ead8;--parchment-dark:#e8d5b0;--muted:#8a7050;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'EB Garamond',serif;background:var(--deep);color:var(--parchment);min-height:100vh;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,10,6,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.2);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;}
+    .nav-brand{font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold);letter-spacing:0.1em;text-decoration:none;}
+    .nav-back{font-family:'Cinzel',serif;font-size:0.72rem;color:var(--parchment-dark);letter-spacing:0.12em;text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+    .nav-back:hover{color:var(--gold);}
+    .page-hero{padding:8rem 2rem 4rem;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.15) 0%,rgba(107,26,26,0.1) 40%,transparent 70%);}
+    .page-label{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+    .page-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.8rem,4vw,3rem);color:var(--gold-light);margin-bottom:1.5rem;}
+    .page-desc{font-size:1.05rem;color:var(--parchment-dark);max-width:600px;margin:0 auto;line-height:1.8;font-style:italic;}
+    .gold-divider{width:80px;height:2px;background:linear-gradient(90deg,var(--gold-dark),var(--gold));margin:2rem auto;}
+    .content{max-width:1000px;margin:0 auto;padding:2rem 2rem 6rem;}
+    .intro-text{font-size:1rem;color:var(--parchment-dark);line-height:1.9;margin-bottom:1.5rem;}
+    blockquote{border-left:3px solid var(--gold);margin:2rem 0;padding:1rem 1.5rem;background:rgba(201,168,76,0.04);font-style:italic;color:var(--parchment-dark);font-size:1rem;line-height:1.8;}
+    .section-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(201,168,76,0.2);}
+    .paths-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem;}
+    @media(max-width:700px){.paths-grid{grid-template-columns:1fr;}}
+    .path{border:1px solid rgba(201,168,76,0.2);padding:2rem;position:relative;overflow:hidden;}
+    .path::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold-dark),var(--gold));}
+    .path-icon{font-size:2rem;margin-bottom:1rem;display:block;}
+    .path h3{font-family:'Cinzel',serif;font-size:0.92rem;color:var(--gold-light);letter-spacing:0.06em;margin-bottom:0.8rem;}
+    .path p{font-size:0.92rem;color:var(--parchment-dark);line-height:1.8;margin-bottom:1rem;}
+    .path ul{list-style:none;padding:0;}
+    .path ul li{font-size:0.88rem;color:var(--parchment-dark);line-height:1.9;padding-left:1.2rem;position:relative;}
+    .path ul li::before{content:'✦';position:absolute;left:0;color:var(--gold-dark);font-size:0.6rem;top:0.35rem;}
+    .path-duration{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-top:1rem;border-top:1px solid rgba(201,168,76,0.15);padding-top:0.8rem;}
+
+    .notice{background:rgba(107,26,26,0.15);border:1px solid rgba(107,26,26,0.4);padding:1.5rem;margin:2rem 0;}
+    .notice h4{font-family:'Cinzel',serif;font-size:0.78rem;color:#e08080;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.6rem;}
+    .notice p{font-size:0.92rem;color:var(--parchment-dark);line-height:1.7;}
+
+    .cta-block{text-align:center;margin-top:4rem;padding:3rem;border:1px solid rgba(201,168,76,0.2);background:rgba(201,168,76,0.03);}
+    .cta-block h3{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-light);margin-bottom:1rem;}
+    .cta-block p{color:var(--parchment-dark);font-size:0.95rem;margin-bottom:1.5rem;}
+    .btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-dark));color:var(--deep);padding:0.85rem 2rem;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.3s;}
+    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,0.3);}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="../index.html">✝ Sainte Marie</a>
+  <a class="nav-back" href="../index.html">← Retour à l'accueil</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-label">École des Connaissances · Formation 04</div>
+  <h1 class="page-title">Spiritualité & Ésotérisme</h1>
+  <div class="gold-divider"></div>
+  <p class="page-desc">
+    Philosophie, psychologie, méditation, prière contemplative et ouverture aux
+    traditions spirituelles qui favorisent l'épanouissement humain.
+  </p>
+</div>
+
+<div class="content">
+  <p class="intro-text">
+    <strong style="color:var(--gold-light);">Une ouverture d'esprit rare.</strong> La Paroisse Sainte Marie reconnaît que la quête spirituelle ne s'arrête pas aux frontières d'une tradition. Comme un médecin qui utilise toutes les ressources de la médecine pour guérir son patient, notre École des Connaissances s'ouvre à toute sagesse bénéfique à l'épanouissement de l'être humain — en restant ancrée dans la foi chrétienne orthodoxe.
+  </p>
+  <blockquote>
+    « Toute forme de spiritualité pouvant aider à l'épanouissement de l'être humain est bonne à prendre. » — Code Canon, art. 164
+  </blockquote>
+
+  <div class="notice">
+    <h4>⚠ Discernement Spirituel</h4>
+    <p>Les enseignements ésotériques et philosophiques de cette formation sont toujours présentés dans le cadre du discernement chrétien orthodoxe. L'objectif est l'épanouissement intégral de la personne et non la pratique autonome de rituels ésotériques sans accompagnement.</p>
+  </div>
+
+  <div class="section-title">Les Quatre Voies de l'École</div>
+  <div class="paths-grid">
+    <div class="path">
+      <span class="path-icon">🧘</span>
+      <h3>Prière Contemplative & Hésychasme</h3>
+      <p>La tradition orthodoxe possède sa propre forme de méditation profonde : la prière du cœur (hésychasme), enseignée par les Pères du désert et Grégoire Palamas.</p>
+      <ul>
+        <li>La Prière de Jésus : « Seigneur Jésus-Christ, aie pitié de moi »</li>
+        <li>Les techniques de silence intérieur</li>
+        <li>Lectio Divina : la lecture méditée des Écritures</li>
+        <li>Psalmodies et répétitions contemplatives</li>
+        <li>La Lumière Incréée dans la tradition hésychaste</li>
+      </ul>
+      <div class="path-duration">4 modules · Tous niveaux</div>
+    </div>
+    <div class="path">
+      <span class="path-icon">🧠</span>
+      <h3>Psychologie Spirituelle</h3>
+      <p>Comprendre l'âme humaine à la lumière de la psychologie moderne et de la tradition spirituelle — des outils concrets pour accompagner les personnes en difficulté.</p>
+      <ul>
+        <li>Les passions et la thérapie de l'âme (nepsis)</li>
+        <li>Psychologie jungienne et symbolique chrétienne</li>
+        <li>Accompagnement des personnes en deuil</li>
+        <li>Les blessures spirituelles et leur guérison</li>
+        <li>Gestion des états de crise psycho-spirituelle</li>
+      </ul>
+      <div class="path-duration">5 modules · Intermédiaire</div>
+    </div>
+    <div class="path">
+      <span class="path-icon">📜</span>
+      <h3>Philosophie & Sagesse</h3>
+      <p>Les grandes questions de l'existence, explorées à travers la philosophie grecque, la patristique et les traditions sagentielles du monde.</p>
+      <ul>
+        <li>Platon, Aristote et le christianisme</li>
+        <li>Philosophie de la personne et dignité humaine</li>
+        <li>Le mal, la souffrance et la liberté</li>
+        <li>Cosmologie et eschatologie chrétiennes</li>
+        <li>Dialogue entre foi et raison (Fides et Ratio)</li>
+      </ul>
+      <div class="path-duration">4 modules · Tous niveaux</div>
+    </div>
+    <div class="path">
+      <span class="path-icon">🌿</span>
+      <h3>Spiritualités & Traditions du Monde</h3>
+      <p>Une exploration comparée et respectueuse des grandes traditions spirituelles, vue depuis le prisme du discernement chrétien orthodoxe.</p>
+      <ul>
+        <li>Kabbalah et mystique juive</li>
+        <li>Soufisme et mystique islamique</li>
+        <li>Traditions chamaniques et guérison</li>
+        <li>Symbolisme des rites d'initiation</li>
+        <li>Syncrétisme : richesses et dangers</li>
+      </ul>
+      <div class="path-duration">6 modules · Avancé · Encadré</div>
+    </div>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <div class="section-title">Spécialisation : Sciences de l'Âme</div>
+    <p class="intro-text">
+      Pour ceux qui souhaitent aller plus loin, la Paroisse propose une spécialisation en
+      « Sciences de l'Âme » : une formation avancée intégrant théologie, psychologie et
+      pratiques spirituelles pour former des accompagnateurs qualifiés au service de la communauté.
+    </p>
+    <div class="paths-grid">
+      <div class="path">
+        <span class="path-icon">🌙</span>
+        <h3>Accompagnement & Guérison</h3>
+        <p>Formation pratique à l'accompagnement spirituel des personnes en souffrance physique, psychologique ou spirituelle.</p>
+        <ul>
+          <li>Écoute active et présence contemplative</li>
+          <li>Onction des malades : rite et accompagnement</li>
+          <li>Prière d'intercession et de guérison</li>
+          <li>Collaboration avec les professionnels de santé</li>
+        </ul>
+        <div class="path-duration">Accès sur validation · 8 modules</div>
+      </div>
+      <div class="path">
+        <span class="path-icon">⚡</span>
+        <h3>Discernement & Exorcisme Mineur</h3>
+        <p>Réservé aux membres ayant complété la formation liturgique et théologique, sous l'encadrement direct du Métropolite, conformément au Code Canon (art. 31-39 et 244-253).</p>
+        <ul>
+          <li>Discernement des esprits</li>
+          <li>Exorcismes mineurs de l'Église orthodoxe</li>
+          <li>Protection spirituelle personnelle</li>
+          <li>Suivi et accompagnement post-ministère</li>
+        </ul>
+        <div class="path-duration">Accès restreint · Sur désignation du Patriarcat</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h3>Commencer le Chemin Intérieur</h3>
+    <p>Ces formations sont ouvertes à tous — croyants, chercheurs spirituels, ou simplement curieux de mieux se comprendre. Aucun prérequis religieux n'est nécessaire pour les modules de base.</p>
+    <a href="../index.html#contact" class="btn-gold">Nous Rejoindre</a>
+  </div>
+</div>
+</body>
+</html>

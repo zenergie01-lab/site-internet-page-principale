@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formation au Sacerdoce – Paroisse Sainte Marie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--gold:#c9a84c;--gold-light:#e8cc7a;--gold-dark:#8b6914;--deep:#0d0a06;--parchment:#f5ead8;--parchment-dark:#e8d5b0;--muted:#8a7050;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'EB Garamond',serif;background:var(--deep);color:var(--parchment);min-height:100vh;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,10,6,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.2);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;}
+    .nav-brand{font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold);letter-spacing:0.1em;text-decoration:none;}
+    .nav-back{font-family:'Cinzel',serif;font-size:0.72rem;color:var(--parchment-dark);letter-spacing:0.12em;text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+    .nav-back:hover{color:var(--gold);}
+    .page-hero{padding:8rem 2rem 4rem;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,0.12) 0%,transparent 60%);}
+    .page-label{font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+    .page-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.8rem,4vw,3rem);color:var(--gold-light);margin-bottom:1.5rem;}
+    .page-desc{font-size:1.05rem;color:var(--parchment-dark);max-width:600px;margin:0 auto;line-height:1.8;font-style:italic;}
+    .gold-divider{width:80px;height:2px;background:linear-gradient(90deg,var(--gold-dark),var(--gold));margin:2rem auto;}
+    .content{max-width:1000px;margin:0 auto;padding:2rem 2rem 6rem;}
+    .intro-text{font-size:1rem;color:var(--parchment-dark);line-height:1.9;margin-bottom:1.5rem;}
+    blockquote{border-left:3px solid var(--gold);margin:2rem 0;padding:1rem 1.5rem;background:rgba(201,168,76,0.04);font-style:italic;color:var(--parchment-dark);font-size:1rem;line-height:1.8;}
+    .section-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem;padding-bottom:0.8rem;border-bottom:1px solid rgba(201,168,76,0.2);}
+
+    .steps{display:flex;flex-direction:column;gap:0;}
+    .step{display:grid;grid-template-columns:80px 1fr;gap:2rem;padding:2rem 0;border-bottom:1px solid rgba(201,168,76,0.1);}
+    .step-num{font-family:'Cinzel Decorative',serif;font-size:2.5rem;color:rgba(201,168,76,0.2);text-align:center;padding-top:0.2rem;}
+    .step-content h3{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--gold-light);letter-spacing:0.06em;margin-bottom:0.8rem;}
+    .step-content p{font-size:0.95rem;color:var(--parchment-dark);line-height:1.8;margin-bottom:0.6rem;}
+    .step-content ul{list-style:none;padding:0;margin-top:0.5rem;}
+    .step-content ul li{font-size:0.9rem;color:var(--parchment-dark);line-height:1.9;padding-left:1.2rem;position:relative;}
+    .step-content ul li::before{content:'✦';position:absolute;left:0;color:var(--gold-dark);font-size:0.6rem;top:0.35rem;}
+    .step-badge{display:inline-block;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.2rem 0.7rem;margin-bottom:0.5rem;}
+    .badge-req{color:var(--gold);background:rgba(201,168,76,0.08);}
+    .badge-dur{color:var(--muted);background:rgba(138,112,80,0.1);}
+    @media(max-width:600px){.step{grid-template-columns:1fr;}.step-num{display:none;}}
+
+    .ordres-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:1.5rem;}
+    @media(max-width:600px){.ordres-grid{grid-template-columns:1fr;}}
+    .ordre-card{border:1px solid rgba(201,168,76,0.2);padding:1.5rem;text-align:center;}
+    .ordre-icon{font-size:1.8rem;margin-bottom:0.8rem;display:block;}
+    .ordre-card h4{font-family:'Cinzel',serif;font-size:0.82rem;color:var(--gold);letter-spacing:0.08em;margin-bottom:0.6rem;}
+    .ordre-card p{font-size:0.88rem;color:var(--parchment-dark);line-height:1.6;}
+
+    .cta-block{text-align:center;margin-top:4rem;padding:3rem;border:1px solid rgba(201,168,76,0.2);background:rgba(201,168,76,0.03);}
+    .cta-block h3{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold-light);margin-bottom:1rem;}
+    .cta-block p{color:var(--parchment-dark);font-size:0.95rem;margin-bottom:1.5rem;}
+    .btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-dark));color:var(--deep);padding:0.85rem 2rem;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.3s;}
+    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,0.3);}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="../index.html">✝ Sainte Marie</a>
+  <a class="nav-back" href="../index.html">← Retour à l'accueil</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-label">École des Connaissances · Formation 03</div>
+  <h1 class="page-title">Formation au Sacerdoce</h1>
+  <div class="gold-divider"></div>
+  <p class="page-desc">
+    Un parcours complet pour ceux qui ressentent une vocation au ministère —
+    du diaconat à l'ordination sacerdotale.
+  </p>
+</div>
+
+<div class="content">
+  <p class="intro-text">
+    <strong style="color:var(--gold-light);">Le ministère ordonné : une vocation, pas une carrière.</strong> Comme un compagnon qui suit un maître artisan pendant des années avant d'exercer son propre atelier, la formation au sacerdoce est un chemin progressif, exigeant et transformateur. Dans la Paroisse Sainte Marie, chaque frère et sœur subvient à ses propres besoins — le ministère est un service désintéressé.
+  </p>
+  <blockquote>
+    « Chaque frère et sœur se doit de subvenir lui-même à ses besoins et ceux de sa famille et ne sera aucunement rémunéré par la Paroisse. » — Présentation Officielle
+  </blockquote>
+
+  <div class="section-title">Les Saints Ordres</div>
+  <div class="ordres-grid">
+    <div class="ordre-card">
+      <span class="ordre-icon">🕯</span>
+      <h4>Lecteur / Chantre</h4>
+      <p>Premier ordre mineur. Assure la proclamation des Écritures et le chant liturgique lors des offices.</p>
+    </div>
+    <div class="ordre-card">
+      <span class="ordre-icon">✝</span>
+      <h4>Diacre</h4>
+      <p>Ordre intermédiaire. Assiste le prêtre lors des célébrations, administre certains sacrements et assure le service de la charité.</p>
+    </div>
+    <div class="ordre-card">
+      <span class="ordre-icon">☩</span>
+      <h4>Prêtre / Presbytre</h4>
+      <p>Célèbre la Liturgie, administre les sacrements, enseigne et accompagne spirituellement la communauté.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <div class="section-title">Parcours de Formation Pas à Pas</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div><span class="step-badge badge-req">Prérequis</span> <span class="step-badge badge-dur">3 mois</span></div>
+          <h3>Discernement Vocationnel</h3>
+          <p>Avant tout engagement, un accompagnement personnel pour vérifier l'authenticité et la maturité de la vocation.</p>
+          <ul>
+            <li>Entretiens réguliers avec un référent spirituel</li>
+            <li>Lecture et méditation des Évangiles</li>
+            <li>Participation active à la vie liturgique</li>
+            <li>Bilan de vie chrétienne et engagement communautaire</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div><span class="step-badge badge-dur">6 mois</span></div>
+          <h3>Formation Théologique Fondamentale</h3>
+          <p>Les bases indispensables pour tout ministre ordonné.</p>
+          <ul>
+            <li>Théologie dogmatique (Trinité, Christologie, Ecclésiologie)</li>
+            <li>Saintes Écritures : lecture et interprétation</li>
+            <li>Histoire de l'Église et des Pères</li>
+            <li>Liturgique : rites et sacrements</li>
+            <li>Droit Canon de la Paroisse Sainte Marie</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div><span class="step-badge badge-dur">3 mois</span></div>
+          <h3>Stage Diaconal</h3>
+          <p>Mise en pratique concrète des enseignements reçus, sous la supervision d'un prêtre de la Paroisse.</p>
+          <ul>
+            <li>Participation à l'office comme diacre en formation</li>
+            <li>Accompagnement des maraudes et actions caritatives</li>
+            <li>Premières homélies supervisées</li>
+            <li>Visite aux malades et personnes en difficulté</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div><span class="step-badge badge-dur">Sur décision du Patriarcat</span></div>
+          <h3>Ordination Diaconale</h3>
+          <p>Célébration solennelle de l'ordination au diaconat, lors d'un Synode ou d'une assemblée de la Paroisse. Validation par le Métropolite ou le Patriarche.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <div><span class="step-badge badge-dur">6 à 12 mois de ministère diaconal</span></div>
+          <h3>Formation Sacerdotale Avancée</h3>
+          <ul>
+            <li>Théologie sacramentelle approfondie</li>
+            <li>Pastorale et accompagnement spirituel</li>
+            <li>Formation aux exorcismes (si désigné comme médecin spirituel)</li>
+            <li>Administration d'une communauté itinérante</li>
+            <li>Homélie et prédication</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">06</div>
+        <div class="step-content">
+          <div><span class="step-badge badge-dur">Sur décision du Synode</span></div>
+          <h3>Ordination Presbytérale</h3>
+          <p>Sacre solennel au cours du Synode biennal de la Paroisse. La succession apostolique est transmise dans la continuité de la tradition de Pierre, Thomas et Chrysostome.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <h3>Ressentez-vous une Vocation ?</h3>
+    <p>Le premier pas est un entretien confidentiel avec notre référent de formation. Il n'y a aucun engagement à ce stade — juste une conversation fraternelle.</p>
+    <a href="../index.html#contact" class="btn-gold">Prendre Contact</a>
+  </div>
+</div>
+</body>
+</html>
